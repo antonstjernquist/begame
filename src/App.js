@@ -8,7 +8,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <span> Begame </span>
         <Router />
       </div>
     );
