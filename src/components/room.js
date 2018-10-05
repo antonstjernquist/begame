@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
+/* Import actions */
+import { addValueAction } from '../actions/valueActions.js';
 
-class Comp extends Component {
+class Room extends Component {
 
   constructor(props) {
     super(props);
@@ -16,9 +18,17 @@ class Comp extends Component {
 
   }
 
+  handleClick = e => {
+      this.props.dispatch(addValueAction(1));
+  }
+
   render() {
     return (
-      <span> ID specified: {this.state.id}</span>
+      <Fragment>
+        <span> ID specified: {this.state.id}</span>
+        <span> Value from store: {this.props.value}</span>
+        <button onClick={this.handleClick}> Add to value </button>
+      </Fragment>
     )
   }
 }
@@ -28,4 +38,4 @@ let mapStateToProps = state => ({
     value: state.value
 });
 
-export default connect(mapStateToProps)(Comp);
+export default connect(mapStateToProps)(Room);
