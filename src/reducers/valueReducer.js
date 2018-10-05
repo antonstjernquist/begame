@@ -5,8 +5,7 @@ let reducer = (state = { value: 0 }, action ) => {
   switch ( action.type ) {
 
     case ADD_TO_VALUE_EXAMPLE:
-      console.log('Loading in reducer lullululul');
-      return state;
+      return state += action.data ? action.data : 1;
 
     default:
       return state;
