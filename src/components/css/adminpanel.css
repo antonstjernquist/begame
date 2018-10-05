@@ -1,0 +1,18 @@
+.adminpanel {
+    width: 90%;
+    margin: 0 auto;
+}
+
+
+/* The card list */
+.listDiv {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Logged in div */
+.loggedInDiv {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
