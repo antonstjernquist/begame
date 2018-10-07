@@ -15,7 +15,6 @@ class Room extends Component {
 
   compnentDidMount(){
     /* Retrieve room from database. Action > Reducer > */
-
   }
 
   handleClick = e => {
