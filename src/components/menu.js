@@ -25,14 +25,15 @@ const styles = {
 };
 
 function Menu(props) {
-  const { classes } = props;
+  console.log(props);
+  const { classes, history } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className={classes.appHeight}>
           <div className={classes.grow} color="inherit">
           </div>
-          <Button color="inherit">Admin</Button>
+          <Button color="inherit" onClick={() => { history.push('/admin'); }}>Admin</Button>
         </Toolbar>
       </AppBar>
     </div>

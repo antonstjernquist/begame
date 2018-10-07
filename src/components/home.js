@@ -11,6 +11,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Menu from './menu.js';
 const backgroundImage = require('../resources/background_img.jpg');
 const logo = require('../resources/logo.png');
+// const logosmall = require('../resources/logosmall.png');
 
 const styles = () => ({
   main: {
@@ -70,16 +71,17 @@ class Home extends Component {
   };
 
   login = () => {
-    console.log('loggar in');
+    const { username } = this.state;
+    console.log(`Loggar in som ${username}`);
   }
 
   render() {
     const { loading } = this.state;
-    const { classes } = this.props;
+    const { classes, history } = this.props;
 
     return (
       <div>
-      <Menu />
+        <Menu history={history}/>
         {loading && <LinearProgress thickness={2} color='primary' />}
         <div className={classes.main}>
         <img src={logo} alt='Begame' className={classes.logo} width="250px"/>
