@@ -10,7 +10,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Menu from './menu.js';
 const backgroundImage = require('../resources/background_img.jpg');
-// const logo = require('../resources/begame_logo.png');
+const logo = require('../resources/logo.png');
 
 const styles = () => ({
   main: {
@@ -44,6 +44,11 @@ const styles = () => ({
     marginTop: -70,
     color: '#fff',
   },
+  logo: {
+    marginTop: -100,
+    marginBottom: 30,
+    zIndex: 1
+  }
 });
 
 class Home extends Component {
@@ -77,6 +82,7 @@ class Home extends Component {
       <Menu />
         {loading && <LinearProgress thickness={2} color='primary' />}
         <div className={classes.main}>
+        <img src={logo} alt='Begame' className={classes.logo} width="250px"/>
           <Paper className={classes.container}>
           <Typography variant='title' className={classes.welcome}>Välkommen!</Typography>
          <Typography variant='subheading' className={classes.login}>Logga in med användarnamn och #ID</Typography>
