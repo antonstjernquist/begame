@@ -10,9 +10,9 @@ import Home from './components/home.js'
 const theme = createMuiTheme({
   palette: createPalette({
     primary: {
-      light: '#6c7a9d',
-      main: '#2d4059',
-      dark: '#475168',
+      light: '#b6e330',
+      main: '#a7d129',
+      dark: '#90b425',
       contrastText: '#fff',
     },
     secondary: {

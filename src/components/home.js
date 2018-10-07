@@ -9,17 +9,17 @@ import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Menu from './menu.js';
-// const backgroundImage = require('../resources/background_img.jpg');
+const backgroundImage = require('../resources/background_img.jpg');
 // const logo = require('../resources/begame_logo.png');
 
 const styles = () => ({
   main: {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '94.7vh',
+    minHeight: '94.8vh',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(${backgroundImage})`,
+    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .4), rgba(255, 255, 255, .2)), url(${backgroundImage})`,
     backgroundColor: '#fafafa',
     backgroundSize: 'cover',
   },
@@ -42,7 +42,7 @@ const styles = () => ({
     textAlign: 'center',
     fontSize: 11,
     marginTop: -70,
-    color: '#55607b',
+    color: '#fff',
   },
 });
 
