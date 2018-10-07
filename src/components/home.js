@@ -7,9 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Menu from './Menu.js';
-import { showSnackbarError } from '../actions/errorHandlingActions';
 
+import Menu from './Menu.js';
 const backgroundImage = require('../resources/background_img.jpg');
 const logo = require('../resources/logo.png');
 
@@ -62,34 +61,25 @@ class Home extends Component {
     };
   }
 
+  checkAccess = role => (Object.keys(role).includes('admin') && role.admin) || (Object.keys(role).includes('cm') && role.cm) || (Object.keys(role).includes('am') && role.am)
+
   handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
 
-  validation = () => {
-    const { username, roomId } = this.state;
-    const { dispatch } = this.props;
-    if (!username || !roomId) {
-      dispatch(showSnackbarError('Användarnamn eller #ID är fel'));
-    } else {
-      this.login();
-    }
-  }
-
   login = () => {
-    const { username } = this.state;
-    console.log(`Loggar in som ${username}`);
+    console.log('loggar in');
   }
 
   render() {
     const { loading } = this.state;
-    const { classes, history } = this.props;
-    console.log(this.props);
+    const { classes } = this.props;
+
     return (
       <div>
-        <Menu history={history}/>
+      <Menu />
         {loading && <LinearProgress thickness={2} color='primary' />}
         <div className={classes.main}>
         <img src={logo} alt='Begame' className={classes.logo} width="250px"/>
@@ -143,7 +133,7 @@ class Home extends Component {
                 variant='contained'
                 color='primary'
                 fullWidth
-                onClick={this.validation}
+                onClick={this.login}
                 disabled={loading}
                 size='large'
               >

@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
-import Room from './components/room.js'
-import Home from './components/Home'
+import Room from './components/room.js';
+import Home from './components/Home';
 
 // Om någon kommer på ett schysst färgtema eller om vi ska diskutera det tillsammans, ändra färgerna nedanför,
 // därefter kan man använda primary och secondary som color= när man stylar en komponent från material-ui.
