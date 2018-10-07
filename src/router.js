@@ -4,6 +4,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import Room from './components/room.js'
 import Home from './components/home.js'
+import HandleQuestions from './components/handleQuestions.js'
 
 // Om någon kommer på ett schysst färgtema eller om vi ska diskutera det tillsammans, ändra färgerna nedanför,
 // därefter kan man använda primary och secondary som color= när man stylar en komponent.
@@ -36,7 +37,8 @@ const Router = () => (
   <MuiThemeProvider theme={theme}>
     <Switch>
       <Route exact path='/' component={Home}/>
-      <Route exact path='/:id' component={Room} />
+      <Route exact path='/room/:id' component={Room} />
+      <Route exact path='/admin/test' component={HandleQuestions} />
     </Switch>
   </MuiThemeProvider>
 )
