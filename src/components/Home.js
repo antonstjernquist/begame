@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { showSnackbarError } from '../actions/errorHandlingActions';
+import { showSnackbarError, showSnackbarMessage } from '../actions/errorHandlingActions';
 
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
@@ -77,12 +77,13 @@ class Home extends Component {
       console.log('PLS INPUT');
       dispatch(showSnackbarError('Användarnamn eller #ID är fel'));
     } else {
-      this.login();
+      this.login(username);
     }
   }
 
-  login = () => {
-    console.log('loggar in');
+  login = (username) => {
+    const { dispatch } = this.props;
+    dispatch(showSnackbarMessage(`Loggar in som ${username}`));
   }
 
   render() {
