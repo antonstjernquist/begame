@@ -5,6 +5,7 @@ import createPalette from '@material-ui/core/styles/createPalette';
 
 import Room from './components/room.js'
 import Home from './components/Home.js'
+import Adminpanel from './components/adminpanel.js'
 import HandleQuestions from './components/handleQuestions.js'
 
 
@@ -41,6 +42,7 @@ const Router = () => (
       <Route exact path='/' component={Home}/>
       <Route exact path='/room/:id' component={Room} />
       <Route exact path='/admin/test' component={HandleQuestions} />
+      <Route exact path='/adminpanel' component={Adminpanel}/>
     </Switch>
   </MuiThemeProvider>
 )
