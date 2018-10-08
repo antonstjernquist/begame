@@ -61,3 +61,14 @@ h2 {
     font-size: 1.3em;
     margin: 40px 0 10px;
 }
+
+
+/* for chrome */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;}
+
+
+/* for mozilla */
+   input[type=number] {-moz-appearance: textfield;}
