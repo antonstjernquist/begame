@@ -19,7 +19,7 @@ const styles = () => ({
   main: {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '94.8vh',
+    minHeight: 'calc(100vh - 50px)',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .4), rgba(255, 255, 255, .2)), url(${backgroundImage})`,
