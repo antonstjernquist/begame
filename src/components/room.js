@@ -27,8 +27,8 @@ class Room extends Component {
       id: props.match.params.id,
       checkedA: false,
       checkedB: false,
-      checkedF: false,
-      checkedG: false,
+      checkedC: false,
+      checkedD: false,
     }
   }
 
