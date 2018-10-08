@@ -56,7 +56,6 @@ ErrorHandling.propTypes = {
   error: PropTypes.any.isRequired,
   message: PropTypes.any.isRequired,
   dispatch: PropTypes.func.isRequired,
-  translate: PropTypes.func.isRequired,
   classes: PropTypes.any.isRequired,
 };
 
