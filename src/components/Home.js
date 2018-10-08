@@ -7,8 +7,11 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { showSnackbarError } from '../actions/errorHandlingActions';
 
-import Menu from './menu.js';
+import Menu from './Menu.js';
+import ErrorHandling from './ErrorHandling.js';
+
 const backgroundImage = require('../resources/background_img.jpg');
 const logo = require('../resources/logo.png');
 
@@ -61,13 +64,22 @@ class Home extends Component {
     };
   }
 
-  checkAccess = role => (Object.keys(role).includes('admin') && role.admin) || (Object.keys(role).includes('cm') && role.cm) || (Object.keys(role).includes('am') && role.am)
-
   handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
     });
   };
+
+  validation = () => {
+    const { username, roomId } = this.state;
+    const { dispatch } = this.props;
+    if (!username || !roomId) {
+      console.log('PLS INPUT');
+      dispatch(showSnackbarError('Användarnamn eller #ID är fel'));
+    } else {
+      this.login();
+    }
+  }
 
   login = () => {
     console.log('loggar in');
@@ -76,6 +88,8 @@ class Home extends Component {
   render() {
     const { loading } = this.state;
     const { classes } = this.props;
+
+    console.log(this.props);
 
     return (
       <div>
@@ -133,7 +147,7 @@ class Home extends Component {
                 variant='contained'
                 color='primary'
                 fullWidth
-                onClick={this.login}
+                onClick={this.validation}
                 disabled={loading}
                 size='large'
               >
@@ -143,13 +157,16 @@ class Home extends Component {
           </Paper>
         </div>
         <Typography className={classes.copyright}>© Copyright 2018 | All Rights Reserved | Begame</Typography>
+        <ErrorHandling />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  // används senare
+const mapStateToProps = store => ({
+  snackbarOpen: store.errorHandling.snackbarOpen,
+  error: store.errorHandling.error,
+  message: store.errorHandling.message,
 });
 
 export default compose(withStyles(styles), connect(mapStateToProps))(Home);
