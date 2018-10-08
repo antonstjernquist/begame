@@ -3,6 +3,7 @@ import rootReducer from './reducers/rootReducer.js';
 
 const initialState = {
     value: 4,
+    users: [],
 };
 
 export default createStore(rootReducer, initialState,
