@@ -16,7 +16,7 @@ class Project extends Component {
   render() {
     let sortedList = this.state.users.sort((x,y) => x.points < y.points);
     sortedList = sortedList.map(x => (
-      <li>
+      <li key={x.name}>
         <span>{x.name}</span>
         <span>{x.points}</span>
       </li>
@@ -24,7 +24,7 @@ class Project extends Component {
 
     if(sortedList.length){
         return (
-            <div className="realClass">
+            <div className="activeUsersDiv">
                 <div>
                     <h2>Aktiva spelare</h2>
                     <h2>({sortedList.length})</h2>
