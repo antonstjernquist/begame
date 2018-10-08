@@ -77,13 +77,13 @@ class Home extends Component {
       console.log('PLS INPUT');
       dispatch(showSnackbarError('Användarnamn eller #ID är fel'));
     } else {
-      this.login(username);
+      this.login(username, roomId);
     }
   }
 
-  login = (username) => {
+  login = (username, roomId) => {
     const { dispatch } = this.props;
-    dispatch(showSnackbarMessage(`Loggar in som ${username}`));
+    dispatch(showSnackbarMessage(`Välkommen ${username} till #${roomId}`));
   }
 
   render() {
