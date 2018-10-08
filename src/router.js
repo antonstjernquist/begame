@@ -6,7 +6,9 @@ import createPalette from '@material-ui/core/styles/createPalette';
 import Room from './components/Room.js'
 import Home from './components/Home.js'
 import Adminpanel from './components/adminpanel.js'
+import Project from './components/Project.js'
 import HandleQuestions from './components/handleQuestions.js'
+import ActiveUsers from './components/ActiveUsers.js'
 
 
 // Om någon kommer på ett schysst färgtema eller om vi ska diskutera det tillsammans, ändra färgerna nedanför,
@@ -42,7 +44,9 @@ const Router = () => (
       <Route exact path='/' component={Home}/>
       <Route exact path='/room/:id' component={Room} />
       <Route exact path='/admin/test' component={HandleQuestions} />
+      <Route exact path='/admin/users' component={ActiveUsers} />
       <Route exact path='/adminpanel' component={Adminpanel}/>
+      <Route exact path='/project/:id' component={Project}/>
     </Switch>
   </MuiThemeProvider>
 )
