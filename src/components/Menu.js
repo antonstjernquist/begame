@@ -22,7 +22,6 @@ const styles = {
 };
 
 function Menu(props) {
-  console.log(props);
   const { classes, history } = props;
   return (
     <div className={classes.root}>

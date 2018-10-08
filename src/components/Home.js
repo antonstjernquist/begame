@@ -74,7 +74,6 @@ class Home extends Component {
     const { username, roomId } = this.state;
     const { dispatch } = this.props;
     if (!username || !roomId) {
-      console.log('PLS INPUT');
       dispatch(showSnackbarError('Användarnamn eller #ID är fel'));
     } else {
       this.login(username, roomId);
@@ -82,15 +81,14 @@ class Home extends Component {
   }
 
   login = (username, roomId) => {
-    const { dispatch } = this.props;
-    dispatch(showSnackbarMessage(`Välkommen ${username} till #${roomId}`));
+    const { dispatch, history } = this.props;
+    dispatch(showSnackbarMessage(`Välkommen ${username} till rum #${roomId}`));
+    // history.push(`/room/${roomId}`)
   }
 
   render() {
     const { loading } = this.state;
     const { classes, history } = this.props;
-
-    console.log(this.props);
 
     return (
       <div>
