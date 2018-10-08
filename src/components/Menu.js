@@ -18,19 +18,27 @@ const styles = {
   },
   appHeight: {
     minHeight: 50,
+  },
+  roomStyleText: {
+    fontWeight: 500,
   }
 };
 
 function Menu(props) {
-  console.log(props);
-  const { classes, history } = props;
+  const { classes, history, roomId } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className={classes.appHeight}>
           <div className={classes.grow} color="inherit">
+            <p className={classes.roomStyleText}>{roomId}</p>
           </div>
-          <Button color="inherit" onClick={() => { history.push('/admin'); }}>Admin</Button>
+          {!roomId &&
+            <Button color="inherit" onClick={() => { history.push('/admin'); }}>Admin</Button>
+          }
+          {roomId &&
+            <Button color="inherit" onClick={() => { history.goBack('/'); }}>LEAVE ROOM</Button>
+          }
         </Toolbar>
       </AppBar>
     </div>

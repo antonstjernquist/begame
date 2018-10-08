@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 import red from '@material-ui/core/colors/red';
-import green from '@material-ui/core/colors/green';
+// import green from '@material-ui/core/colors/green';
 import { withStyles } from '@material-ui/core';
 import { closeFeedback } from '../actions/errorHandlingActions';
 
@@ -19,7 +19,8 @@ const styles = {
     background: red[500],
   },
   success: {
-    background: green[500],
+    background: '#333',
+    color: '#FAFAFA'
   },
 };
 

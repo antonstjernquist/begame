@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { showSnackbarError, showSnackbarMessage } from '../actions/errorHandlingActions';
+import { showSnackbarError } from '../actions/errorHandlingActions';
 
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
@@ -74,7 +74,6 @@ class Home extends Component {
     const { username, roomId } = this.state;
     const { dispatch } = this.props;
     if (!username || !roomId) {
-      console.log('PLS INPUT');
       dispatch(showSnackbarError('Användarnamn eller #ID är fel'));
     } else {
       this.login(username, roomId);
@@ -82,19 +81,17 @@ class Home extends Component {
   }
 
   login = (username, roomId) => {
-    const { dispatch } = this.props;
-    dispatch(showSnackbarMessage(`Välkommen ${username} till #${roomId}`));
+    const { history } = this.props;
+    history.push(`/room/${roomId}`, username)
   }
 
   render() {
-    const { loading } = this.state;
-    const { classes } = this.props;
-
-    console.log(this.props);
+    const { loading, username } = this.state;
+    const { classes, history } = this.props;
 
     return (
       <div>
-      <Menu />
+      <Menu history={history} username={username} />
         {loading && <LinearProgress thickness={2} color='primary' />}
         <div className={classes.main}>
         <img src={logo} alt='Begame' className={classes.logo} width="250px"/>

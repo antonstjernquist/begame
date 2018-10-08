@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 
-import Room from './components/room.js'
+import Room from './components/Room.js'
 import Home from './components/Home.js'
 import Adminpanel from './components/adminpanel.js'
 import Project from './components/Project.js'
