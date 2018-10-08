@@ -4,7 +4,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 
 import Room from './components/room.js'
-import Home from './components/home.js'
+import Home from './components/Home.js'
 import HandleQuestions from './components/handleQuestions.js'
 
 
