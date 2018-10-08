@@ -110,7 +110,7 @@ class Adminpanel extends Component {
 
         <h1>Adminpanel</h1>
         <div>
-          <Button variant="contained" className={classes.button}>
+          <Button variant="contained" color="primary" className={classes.button}>
             Skapa quiz
           </Button>
           <h2> Starta ett quiz </h2>

@@ -1,6 +1,6 @@
 .adminpanel {
-    width: 90%;
-    margin: 0 auto;
+    width: 95%;
+    margin: 50px auto;
 }
 
 
@@ -8,6 +8,7 @@
 .listDiv {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-space-between;
 }
 
 /* Logged in div */
