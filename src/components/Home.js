@@ -74,7 +74,7 @@ class Home extends Component {
     const { username, roomId } = this.state;
     const { dispatch } = this.props;
     if (!username || !roomId) {
-      dispatch(showSnackbarError('Användarnamn eller #ID är fel'));
+      dispatch(showSnackbarError('Användarnamn eller ID är felaktigt.'));
     } else {
       this.login(username, roomId);
     }
