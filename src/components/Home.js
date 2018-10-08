@@ -88,13 +88,13 @@ class Home extends Component {
 
   render() {
     const { loading } = this.state;
-    const { classes } = this.props;
+    const { classes, history } = this.props;
 
     console.log(this.props);
 
     return (
       <div>
-      <Menu />
+      <Menu history={history}/>
         {loading && <LinearProgress thickness={2} color='primary' />}
         <div className={classes.main}>
         <img src={logo} alt='Begame' className={classes.logo} width="250px"/>
