@@ -37,7 +37,7 @@ function Menu(props) {
             <Button color="inherit" onClick={() => { history.push('/admin'); }}>Admin</Button>
           }
           {roomId &&
-            <Button color="inherit" onClick={() => { history.goBack('/'); }}>LEAVE ROOM</Button>
+            <Button color="inherit" onClick={() => { history.goBack(); }}>Go back</Button>
           }
         </Toolbar>
       </AppBar>
