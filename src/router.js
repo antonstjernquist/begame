@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 
-import Room from './components/Room.js'
+// import Room from './components/Room.js'
 import Home from './components/Home.js'
 import Adminpanel from './components/Adminpanel.js'
 import Register from './components/Register.js'
@@ -23,9 +23,9 @@ const theme = createMuiTheme({
       contrastText: '#fff',
     },
     secondary: {
-      light: '#444',
-      main: '#333',
-      dark: '#222',
+      light: '#1dcaff',
+      main: '#00aced',
+      dark: '#0084b4',
       contrastText: '#fff',
     },
   }),
