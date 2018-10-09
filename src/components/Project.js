@@ -17,6 +17,7 @@ import RadioButtonsGroup from './RadioButtonsGroup';
 /* Components */
 import Menu from './Menu';
 import ActiveUsers from './ActiveUsers';
+import FolderList from './FolderList';
 
 const backgroundImage = require('../resources/background_quiz.jpg');
 
@@ -87,7 +88,8 @@ class Project extends Component {
     return (
           <div className={classes.main}>
               <Menu roomId={this.state.id} history={history}/>
-              <div className="projectPanel">
+              <FolderList />
+              {/* <div className="projectPanel">
                   <div className="questionAndActiveUsersWrapper">
                       <div className="questionComponent">
                           <Paper className={classes.root} elevation={1}>
@@ -118,7 +120,7 @@ class Project extends Component {
                         </Button>
                       }
                 />
-              </div>
+              </div> */}
           </div>
     )
   }
