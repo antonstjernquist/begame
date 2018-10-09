@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 
-import Room from './components/Room.js'
+// import Room from './components/Room.js'
 import Home from './components/Home.js'
 import Adminpanel from './components/Adminpanel.js'
 import Project from './components/Project.js'
@@ -42,7 +42,7 @@ const Router = () => (
   <MuiThemeProvider theme={theme}>
     <Switch>
       <Route exact path='/' component={Home}/>
-      <Route exact path='/room/:id' component={Room} />
+      <Route exact path='/room/:id' component={Project} />
       <Route exact path='/admin/test' component={HandleQuestions} />
       <Route exact path='/admin/users' component={ActiveUsers} />
       <Route exact path='/adminpanel' component={Adminpanel}/>

@@ -18,8 +18,15 @@ import RadioButtonsGroup from './RadioButtonsGroup';
 import Menu from './Menu';
 import ActiveUsers from './ActiveUsers';
 
+const backgroundImage = require('../resources/background_quiz.jpg');
+
 /* Denna komponent visar vilka olika quiz man kan starta samt "Skapa ny quiz" */
 const styles = theme => ({
+  main: {
+    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .4), rgba(255, 255, 255, .2)), url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    minHeight: 'calc(100vh)',
+  },
   input: {
     display: 'none',
   },
@@ -78,7 +85,7 @@ class Project extends Component {
 
     const { classes, theme, history } = this.props;
     return (
-          <div>
+          <div className={classes.main}>
               <Menu roomId={this.state.id} history={history}/>
               <div className="projectPanel">
                   <div className="questionAndActiveUsersWrapper">
@@ -94,7 +101,7 @@ class Project extends Component {
                   </div>
                   <MobileStepper
                       variant="dots"
-                      steps={17}
+                      steps={10}
                       position="static"
                       activeStep={this.state.activeStep}
                       className={classes.stepper}
