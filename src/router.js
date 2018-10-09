@@ -5,11 +5,13 @@ import createPalette from '@material-ui/core/styles/createPalette';
 
 // import Room from './components/Room.js'
 import Home from './components/Home.js'
+import Room from './components/Room.js'
 import Adminpanel from './components/Adminpanel.js'
 import Register from './components/Register.js'
 import Project from './components/Project.js'
 import HandleQuestions from './components/HandleQuestions.js'
 import ActiveUsers from './components/ActiveUsers.js'
+import Timer from './components/TimerBar.js'
 
 
 // Om någon kommer på ett schysst färgtema eller om vi ska diskutera det tillsammans, ändra färgerna nedanför,
@@ -49,6 +51,7 @@ const Router = () => (
       <Route exact path='/admin/users' component={ActiveUsers} />
       <Route exact path='/adminpanel' component={Adminpanel}/>
       <Route exact path='/project/:id' component={Project}/>
+      <Route exact path='/timer' component={Timer}/>
     </Switch>
   </MuiThemeProvider>
 )
