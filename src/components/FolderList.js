@@ -31,7 +31,7 @@ function FolderList(props) {
           <ListItemText
             disableTypography
             primary={<Typography type="body2" style={{ color: '#a7d129', fontSize: '1.1rem', fontWeight: 'bold' }}>sabrinawolfpalm</Typography>}
-            secondary={<Typography type="body2" style={{ color: '#777', fontWeight: '400' }}>poäng: 20</Typography>} />
+            secondary={<Typography type="body2" style={{ color: '#777', fontWeight: '400' }}>poäng: 120</Typography>} />
         </ListItem>
         <ListItem>
           <Avatar>
