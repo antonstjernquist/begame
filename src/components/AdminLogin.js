@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { showSnackbarError } from '../actions/errorHandlingActions';
+import { loginAsAdmin } from '../actions/authActions.js'
 
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
@@ -82,13 +83,15 @@ class AdminLogin extends Component {
     if (!admin || !password) {
       dispatch(showSnackbarError('Användarnamn eller lösenordet är felaktigt.'));
     } else {
-      this.login(admin, password);
+      this.login({admin, password});
     }
   }
 
-  login = (username, admin) => {
-    const { history } = this.props;
-    history.push(`/admin/home`)
+  login = (user) => {
+    const { dispatch } = this.props;
+    dispatch({type:'AUTH_RECEIVED', payload: user});
+    dispatch(loginAsAdmin());
+    // history.push(`/admin/home`)
   }
 
   render() {
