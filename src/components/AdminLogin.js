@@ -12,8 +12,8 @@ import { showSnackbarError } from '../actions/errorHandlingActions';
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
 
-const backgroundImage = require('../resources/background_img.jpg');
-const logo = require('../resources/logo.png');
+const backgroundImage = require('../resources/background_gm.jpg');
+const logo = require('../resources/logo_blue.png');
 
 const styles = () => ({
   main: {
@@ -22,7 +22,7 @@ const styles = () => ({
     minHeight: 'calc(100vh - 50px)',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .4), rgba(255, 255, 255, .2)), url(${backgroundImage})`,
+    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .8), rgba(255, 255, 255, .2)), url(${backgroundImage})`,
     backgroundColor: '#fafafa',
     backgroundSize: 'cover',
   },
@@ -51,7 +51,13 @@ const styles = () => ({
     marginTop: -100,
     marginBottom: 30,
     zIndex: 1
-  }
+  },
+  inputFocused: {
+    width: '40%',
+    borderColor: '#80bdff',
+    boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    backgroundColor: "#00FF00",
+  },
 });
 
 class AdminLogin extends Component {
@@ -74,7 +80,7 @@ class AdminLogin extends Component {
     const { password, admin } = this.state;
     const { dispatch } = this.props;
     if (!admin || !password) {
-      dispatch(showSnackbarError('Adminkonto eller lösenordet är felaktigt.'));
+      dispatch(showSnackbarError('Användarnamn eller lösenordet är felaktigt.'));
     } else {
       this.login(admin, password);
     }
@@ -97,17 +103,16 @@ class AdminLogin extends Component {
         <img src={logo} alt='Begame' className={classes.logo} width="250px"/>
           <Paper className={classes.container}>
           <Typography variant='title' className={classes.welcome}>Välkommen!</Typography>
-         <Typography variant='subheading' className={classes.login}>Logga in med som administaratör</Typography>
+         <Typography variant='subheading' className={classes.login}>Logga in med användarnamn och lösenord</Typography>
             <div className={classes.margin}>
               <TextField
                 type="text"
                 onChange={this.handleChange('admin')}
-                id='input-with-icon-grid'
-                label='Admin konto'
+                id='input-with-icon-grid2'
+                label='Användarnamn'
                 margin='dense'
                 variant='outlined'
                 fullWidth
-                autoFocus
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -121,7 +126,7 @@ class AdminLogin extends Component {
             </div>
             <div className={classes.margin}>
               <TextField
-                type="text"
+                type="password"
                 onChange={this.handleChange('password')}
                 id='input-with-icon-grid2'
                 label='Lösenord'
