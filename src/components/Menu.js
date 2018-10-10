@@ -25,15 +25,22 @@ const styles = {
 };
 
 function Menu(props) {
-  const { classes, history, roomId } = props;
+  const { classes, history, roomId, isAdmin } = props;
+  let setColor = 'primary'
+  if( isAdmin ){
+    setColor = 'secondary'
+  }
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" color={setColor} >
         <Toolbar className={classes.appHeight}>
           <div className={classes.grow} color="inherit">
             <p className={classes.roomStyleText}>{roomId}</p>
           </div>
-          {!roomId &&
+          {!roomId && isAdmin &&
+            <Button color="inherit" onClick={() => { history.push('/'); }}>Pleb</Button>
+          }
+          {!roomId && !isAdmin &&
             <Button color="inherit" onClick={() => { history.push('/admin'); }}>Admin</Button>
           }
           {roomId &&

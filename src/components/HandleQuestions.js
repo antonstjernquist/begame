@@ -7,7 +7,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
+import AddQuest from './AddQuest.js';
 
 const styles = theme => ({
   root: {
@@ -61,20 +61,19 @@ class HandleQuestions extends Component {
         questions[questKey][changeKey] = event.target.value;
       } else {
         questions[questKey].answer[changeKey] = event.target.value;
-        this.setState({ questions: questions});
       }
+
+      this.setState({ questions: questions});
     }
 
   }
 
   renderTableView = () => {
     const { questions } = this.state;
-    console.log('table View körs');
     const { classes } = this.props;
 
     return Object.keys(questions).map( (itemKey ,index) => {
         const item = questions[itemKey];
-        console.log(item);
         return (
           <ExpansionPanel key={index}>
             <ExpansionPanelSummary >
@@ -129,6 +128,7 @@ class HandleQuestions extends Component {
     return (
       <div className={classes.root}>
         { table }
+        <AddQuest />
       </div>
     );
   }
