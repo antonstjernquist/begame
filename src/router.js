@@ -57,6 +57,7 @@ const Router = () => (
       <Route exact path='/' component={Home}/>
       <Route exact path='/room/:id' component={Room} />
       <Route exact path='/admin/' component={AdminLogin} />
+      <Route exact path='/admin/settings' component={Adminpanel} />
       <Route exact path='/admin/test' component={HandleQuestions} />
       <Route exact path='/admin/users' component={ActiveUsers} />
       <Route exact path='/admin/home/' component={Adminpanel}/>

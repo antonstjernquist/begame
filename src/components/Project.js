@@ -10,7 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 
 /* Components */
 import Menu from './Menu';
-import FolderList from './FolderList';
+import ActiveUsers from './ActiveUsers';
 import TimerBar from './TimerBar';
 
 /* Denna komponent visar vilka olika quiz man kan starta samt "Skapa ny quiz" */
@@ -66,7 +66,7 @@ class Project extends Component {
     return (
           <div className={classes.main}>
               <Menu roomId={this.state.id} history={history}/>
-              <FolderList />
+              <ActiveUsers />
               <div style={{width: 800, height: 300, float: 'left', margin: '100px auto', textAlign: 'center', marginLeft: 400, marginTop: 50 }}>
                 <h1 style={{fontSize: '3.5em', color: '#a7d129', fontWeight: 'bold', marginBottom: 100}}>What is a Lizard?</h1>
                 <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 50, flexWrap: 'wrap'}}>

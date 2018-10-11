@@ -1,55 +1,96 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
+import People from '@material-ui/icons/People';
 
-/* Import CSS */
-import './css/activeusers.css';
-
-
-class Project extends Component {
-  constructor(props){
-      super(props);
-      this.state = {
-          users: props.users
-      }
+const styles = theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 250,
+    height: '95vh',
+    backgroundColor: '#a7d129',
+    float: 'left',
+  },
+  userText: {
+    color: '#FAFAFA',
+    fontSize: '1rem',
+    fontWeight: '400'
+  },
+  pointsText: {
+    color: '#FAFAFA',
+    fontWeight: '400'
+  },
+  onlineText: {
+    color: '#FAFAFA',
+    fontWeight: 'bolder',
+    fontSize: 15
+  },
+  rightIcon: {
+    color: '#FAFAFA',
+  },
+  listitem: {
+    paddingTop: 0,
   }
-
-  render() {
-    let sortedList = this.state.users.sort((x,y) => x.points < y.points);
-    sortedList = sortedList.map(x => (
-      <li key={x.name}>
-        <span>{x.name}</span>
-        <span>{x.points}</span>
-      </li>
-    ));
-
-    if(sortedList.length){
-        return (
-            <div className="activeUsersDiv">
-                <div>
-                    <h2>Aktiva spelare</h2>
-                    <h2>({sortedList.length})</h2>
-                </div>
-                <ul>
-                    {sortedList}
-                </ul>
-            </div>
-        )
-    } else {
-        return (
-            <div className="activeUsersDiv">
-                <div>
-                    <h2>Inga aktiva spelare</h2>
-                </div>
-            </div>
-        )
-    }
-  }
-}
-
-
-let mapStateToProps = state => ({
-  value: state.value,
-  users: state.users
 });
 
-export default connect(mapStateToProps)(Project);
+function ActiveUsers(props) {
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
+      <List>
+      <ListItem className={classes.listitem}>
+      <People className={classes.rightIcon} />
+        <ListItemText
+          disableTypography
+          primary={<Typography type="body2" className={classes.onlineText}>6</Typography>} />
+      </ListItem>
+      <ListItem className={classes.listitem}>
+        <ListItemText
+          disableTypography
+          primary={<Typography type="body2" className={classes.userText}>david</Typography>}
+          secondary={<Typography type="body2" className={classes.pointsText}>Game Master</Typography>} />
+      </ListItem>
+        <ListItem className={classes.listitem}>
+          <ListItemText
+            disableTypography
+            primary={<Typography type="body2" className={classes.userText}>sabrinawolfpalm</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 120</Typography>} />
+        </ListItem>
+        <ListItem className={classes.listitem}>
+          <ListItemText
+            disableTypography
+            primary={<Typography type="body2" className={classes.userText}>antonstjernqvist</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 19</Typography>} />
+        </ListItem>
+        <ListItem className={classes.listitem}>
+          <ListItemText
+            disableTypography
+            primary={<Typography type="body2" className={classes.userText}>gustavkarlstrom</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 18</Typography>} />
+        </ListItem>
+        <ListItem className={classes.listitem}>
+          <ListItemText
+            disableTypography
+            primary={<Typography type="body2" className={classes.userText}>johanaugustsson</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 17</Typography>} />
+        </ListItem>
+        <ListItem className={classes.listitem}>
+          <ListItemText
+            disableTypography
+            primary={<Typography type="body2" className={classes.userText}>antonnordgren</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 17</Typography>} />
+        </ListItem>
+      </List>
+    </div>
+  );
+}
+
+ActiveUsers.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ActiveUsers);
