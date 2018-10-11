@@ -68,7 +68,7 @@ class AdminLogin extends Component {
     super(props);
     this.state = {
       loading: false,
-      admin: '',
+      name: '',
       password: '',
     };
   }
@@ -80,12 +80,12 @@ class AdminLogin extends Component {
   };
 
   validation = () => {
-    const { password, admin } = this.state;
+    const { password, name } = this.state;
     const { dispatch } = this.props;
-    if (!admin || !password) {
+    if (!name || !password) {
       dispatch(showSnackbarError('Användarnamn eller lösenordet är felaktigt.'));
     } else {
-      this.login({admin, password});
+      this.login({name, password});
     }
   }
 
@@ -120,7 +120,7 @@ class AdminLogin extends Component {
             <div className={classes.margin}>
               <TextField
                 type="text"
-                onChange={this.handleChange('admin')}
+                onChange={this.handleChange('name')}
                 id='input-with-icon-grid2'
                 label='Användarnamn'
                 margin='dense'

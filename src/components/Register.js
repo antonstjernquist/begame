@@ -78,18 +78,16 @@ class Project extends Component {
 
       fetch('https://stark-ocean-61611.herokuapp.com/api/signup', {
         method: 'POST',
-        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: {
-          name: this.state.inputname,
+        body: JSON.stringify({
           password: this.state.pw1,
-        }
+          name: this.state.inputname,
+        })
       })
-      .then(result => {
-        console.log(result);
-        return result.json();
+      .then(response => {
+        return response.json();
       })
       .then(json => {
         console.log(json);
