@@ -16,6 +16,7 @@ export default function reducer(state = initialState, action) {
     }
     case 'TOKEN_RECIEVED': {
       console.log('New state: ', { ...state, fetched: true, token: action.payload });
+      localStorage.setItem('jwt', action.payload);
       return {
         ...state, fetched: true, token: action.payload, justLoggedIn: true
       };
