@@ -21,11 +21,9 @@ export function setToken(data) {
 // }
 // export const loginAsAdmin = (test,dispatch) => async (dispatch,getState,test) =>{
 //
-export const loginAsAdmin = (history, dispatch) => async (dispatch, getState) =>{
-  const { auth } = getState();
-  console.log('user:', auth.data);
-  const { name } = auth.data;
-  const { password } = auth.data;
+export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) =>{
+  const { history, user } = data;
+  const { name, password } = user;
 
   const rawResponse = await fetch('https://stark-ocean-61611.herokuapp.com/api/authenticate', {
     method: 'POST',

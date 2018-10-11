@@ -92,7 +92,11 @@ class AdminLogin extends Component {
   login = (user) => {
     const { dispatch, history } = this.props;
     dispatch({type:'AUTH_RECEIVED', payload: user});
-    dispatch(loginAsAdmin( history ));
+    const data = {
+      history,
+      user,
+    }
+    dispatch(loginAsAdmin( data ));
     // history.push(`/admin/home`)
   }
 
