@@ -1,7 +1,7 @@
 
 const initialState = {
   fetched: false,
-  data: '',
+  name: '',
   token: null
 }
 
@@ -11,7 +11,7 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case 'AUTH_RECEIVED': {
       return {
-        ...state, fetched: true, data: action.payload,
+        ...state, fetched: true, name: action.payload.name , token: action.payload.token,
       };
     }
     case 'TOKEN_RECIEVED': {

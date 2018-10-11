@@ -8,19 +8,7 @@ export function setUser(data) {
     payload: data,
   };
 }
-export function setToken(data) {
-  return {
-    type: 'TOKEN_RECIEVED',
-    payload: data,
-  };
-}
 
-// export const authData = dispatch => (dispatch,user) => {
-//   console.log(user);
-//   dispatch(setUser(user))
-// }
-// export const loginAsAdmin = (test,dispatch) => async (dispatch,getState,test) =>{
-//
 export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) =>{
   const { history, user } = data;
   const { name, password } = user;
@@ -42,7 +30,11 @@ export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) =>{
   const content = await rawResponse.json();
 
   if(content.success){
-    dispatch(setToken(content.token));
+    const data = {
+      token: content.token,
+      name,
+    }
+    dispatch(setUser(data))
     history.push('/admin/home');
   } else {
     dispatch(showSnackbarError('Fel användarnamn eller lösenord.'));
