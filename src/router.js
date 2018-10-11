@@ -11,7 +11,6 @@ import Room from './components/Room.js'
 import Adminpanel from './components/Adminpanel.js'
 import AdminLogin from './components/AdminLogin.js';
 
-import Register from './components/Register.js'
 import Project from './components/Project.js'
 import HandleQuestions from './components/HandleQuestions.js'
 import ActiveUsers from './components/ActiveUsers.js'

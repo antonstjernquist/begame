@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import { showSnackbarMessage } from '../actions/errorHandlingActions';
-import Paper from '@material-ui/core/Paper';
+
+//Material UI
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import Avatar from '@material-ui/core/Avatar';
+
+//Imported components
 import Menu from './Menu';
 import ErrorHandling from './ErrorHandling.js';
 
@@ -24,6 +27,12 @@ const styles = theme => ({
     maxWidth: 380,
     marginBottom: 30
   },
+  orangeAvatar: {
+    color: '#fff',
+    backgroundColor: '#a7d129',
+    margin: '0px auto',
+    marginBottom: 10,
+  },
 });
 
 class Room extends Component {
@@ -31,10 +40,12 @@ class Room extends Component {
     super(props);
     this.state = {
       id: props.match.params.id,
+      question: 'What is a Lizard?',
       selectedA: false,
       selectedB: false,
       selectedC: false,
       selectedD: false,
+      correctAnswer: 'selectedB'
     }
   }
 
@@ -45,35 +56,14 @@ class Room extends Component {
 
 
   selectedAnswer = (selected) => {
-    console.log(selected);
     if (selected === 'selectedA') {
-      this.setState({
-        selectedA: true,
-        selectedB: false,
-        selectedC: false,
-        selectedD: false,
-      })
+      this.setState({ selectedA: true, selectedB: false, selectedC: false, selectedD: false, answered: true })
     } else if (selected === 'selectedB') {
-      this.setState({
-        selectedA: false,
-        selectedB: true,
-        selectedC: false,
-        selectedD: false,
-      })
+      this.setState({ selectedA: false, selectedB: true, selectedC: false, selectedD: false, answered: true })
     } else if (selected === 'selectedC') {
-      this.setState({
-        selectedA: false,
-        selectedB: false,
-        selectedC: true,
-        selectedD: false,
-      })
+      this.setState({ selectedA: false, selectedB: false, selectedC: true, selectedD: false, answered: true })
     } else if (selected === 'selectedD') {
-      this.setState({
-        selectedA: false,
-        selectedB: false,
-        selectedC: false,
-        selectedD: true,
-      })
+      this.setState({ selectedA: false, selectedB: false, selectedC: false, selectedD: true, answered: true })
     }
   }
 
@@ -88,9 +78,7 @@ class Room extends Component {
             <Card className={classes.card} onClick={() => this.selectedAnswer('selectedA')} raised={this.state.selectedA}>
             <CardActionArea>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  A
-                </Typography>
+              <Avatar className={classes.orangeAvatar}>A</Avatar>
                 <Typography component="p">
                   Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                   across all continents except Antarctica
@@ -101,9 +89,7 @@ class Room extends Component {
           <Card className={classes.card} onClick={() => this.selectedAnswer('selectedB')} raised={this.state.selectedB}>
             <CardActionArea>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  B
-                </Typography>
+                <Avatar className={classes.orangeAvatar}>B</Avatar>
                 <Typography component="p">
                   Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                   across all continents except Antarctica
@@ -114,9 +100,7 @@ class Room extends Component {
           <Card className={classes.card} onClick={() => this.selectedAnswer('selectedC')} raised={this.state.selectedC}>
             <CardActionArea>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  C
-                </Typography>
+                <Avatar className={classes.orangeAvatar}>C</Avatar>
                 <Typography component="p">
                   Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                   across all continents except Antarctica
@@ -127,9 +111,7 @@ class Room extends Component {
           <Card className={classes.card} onClick={() => this.selectedAnswer('selectedD')} raised={this.state.selectedD}>
             <CardActionArea>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  D
-                </Typography>
+                <Avatar className={classes.orangeAvatar}>D</Avatar>
                 <Typography component="p">
                   Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                   across all continents except Antarctica

@@ -1,4 +1,3 @@
-
 import { showSnackbarError, showSnackbarMessage } from './errorHandlingActions.js';
 
 //
