@@ -1,4 +1,6 @@
 
+import { showSnackbarError, showSnackbarMessage } from './errorHandlingActions.js';
+
 //
 export function setUser(data) {
   return {
@@ -40,14 +42,12 @@ export const loginAsAdmin = (history, dispatch) => async (dispatch, getState) =>
   });
 
   const content = await rawResponse.json();
-  //this.validation(content);
 
-  console.log("Response from api", content);
   if(content.success){
     dispatch(setToken(content.token));
     history.push('/admin/home');
   } else {
-    console.log('snackbar?');
+    dispatch(showSnackbarError('Fel användarnamn eller lösenord.'));
   }
 
 }
