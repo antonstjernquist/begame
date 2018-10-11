@@ -76,7 +76,7 @@ class AdminLogin extends Component {
   componentWillMount() {
     const jwt = localStorage.getItem('jwt');
     const { history } = this.props;
-    if (jwt.length > 10) {
+    if (jwt && jwt.length > 10) {
       this.setState({jwt: jwt});
       console.log("JWT found redirecting view", jwt);
       history.push(`/admin/home`);
