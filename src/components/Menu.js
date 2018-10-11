@@ -25,7 +25,7 @@ const styles = {
 };
 
 function Menu(props) {
-  const { classes, history, roomId, isAdmin } = props;
+  const { classes, history, roomId, isAdmin, adminPanel, user } = props;
   let setColor = 'primary'
   if( isAdmin ){
     setColor = 'secondary'
@@ -42,11 +42,17 @@ function Menu(props) {
           {!roomId && isAdmin &&
             <Button color="inherit" onClick={() => { history.push('/'); }}>Student</Button>
           }
-          {!roomId && !isAdmin &&
+          {!roomId && !isAdmin && !adminPanel &&
             <Button color="inherit" onClick={() => { history.push('/admin'); }}>Admin</Button>
           }
           {roomId &&
             <Button color="inherit" onClick={() => { history.goBack(); }}>Go back</Button>
+          }
+          {adminPanel && user &&
+            <div>
+              <span className="loggedInSpan">{user.name}</span>
+              <Button color="inherit" onClick={() => { history.push('/logout'); }}>Logga ut</Button>
+            </div>
           }
         </Toolbar>
       </AppBar>
