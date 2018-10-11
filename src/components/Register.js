@@ -75,15 +75,32 @@ class Project extends Component {
       this.props.dispatch(showSnackbarError('Lösenorden matchar inte'));
     } else {
       this.setState({ open: false });
+
+      fetch('https://stark-ocean-61611.herokuapp.com/api/signup', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          name: this.state.inputname,
+          password: this.state.pw1,
+        }
+      })
+      .then(result => {
+        console.log(result);
+        return result.json();
+      })
+      .then(json => {
+        console.log(json);
+      })
+      .catch(err => console.log(err));
+
     }
   };
 
   handleChange = (event, type) => {
-    this.setState({
-      [type]: event.target.value
-    });
-    console.log('type is: ', type);
-    console.log('Value is: ', event.target.value);
+    this.setState({ [type]: event.target.value });
   }
 
   render() {
