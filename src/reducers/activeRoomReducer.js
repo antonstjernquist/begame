@@ -1,11 +1,16 @@
 const initialState = {
+  ownerId: null,
   roomId: null,
-  quiez: null,
+  quiezId: null,
   currentQuestion: 0,
   timer: {
     started: false,
     stoped: false,
     ended: false,
+  },
+  users: {
+    mats : 2,
+    jonas: 3,
   }
 }
 
