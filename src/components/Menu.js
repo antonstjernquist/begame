@@ -35,7 +35,9 @@ function Menu(props) {
       <AppBar position="static" color={setColor} >
         <Toolbar className={classes.appHeight}>
           <div className={classes.grow} color="inherit">
-            <p className={classes.roomStyleText}>{roomId}</p>
+            {roomId &&
+            <p className={classes.roomStyleText}>{`ID #${roomId}`}</p>
+          }
           </div>
           {!roomId && isAdmin &&
             <Button color="inherit" onClick={() => { history.push('/'); }}>Student</Button>

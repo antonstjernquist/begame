@@ -47,12 +47,15 @@ const theme = createMuiTheme({
  },
 });
 
+// TODO: Routes
+// /student
+// /admin
+
 
 const Router = () => (
   <MuiThemeProvider theme={theme}>
     <Switch>
       <Route exact path='/' component={Home}/>
-      <Route exact path='/register' component={Register}/>
       <Route exact path='/room/:id' component={Room} />
       <Route exact path='/admin/' component={AdminLogin} />
       <Route exact path='/admin/test' component={HandleQuestions} />
