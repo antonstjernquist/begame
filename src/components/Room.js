@@ -42,12 +42,9 @@ class Room extends Component {
     return (
       <Fragment>
         <Menu roomId={this.state.id} history={history}/>
-        <Paper className={classes.root} elevation={1}>
-        <Typography variant="headline" component="h3">
-          Vad returnerar strängen '12' * 9?
-        </Typography>
-        <RadioButtonsGroup />
-      </Paper>
+        <div style={{backgroundColor: 'lighgrey', width: 500, height: 300 }}>
+          
+        </div>
       <ErrorHandling />
       </Fragment>
     )

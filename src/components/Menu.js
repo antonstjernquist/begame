@@ -38,7 +38,7 @@ function Menu(props) {
             <p className={classes.roomStyleText}>{roomId}</p>
           </div>
           {!roomId && isAdmin &&
-            <Button color="inherit" onClick={() => { history.push('/'); }}>Pleb</Button>
+            <Button color="inherit" onClick={() => { history.push('/'); }}>Student</Button>
           }
           {!roomId && !isAdmin &&
             <Button color="inherit" onClick={() => { history.push('/admin'); }}>Admin</Button>

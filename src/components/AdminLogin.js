@@ -12,6 +12,7 @@ import { loginAsAdmin } from '../actions/authActions.js'
 
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
+import Register from './Register'
 
 const backgroundImage = require('../resources/background_gm.jpg');
 const logo = require('../resources/logo_blue.png');
@@ -34,6 +35,7 @@ const styles = () => ({
   },
   margin: {
     width: 350,
+    textAlign: 'center',
   },
   welcome: {
     textAlign: 'center',
@@ -94,6 +96,14 @@ class AdminLogin extends Component {
     // history.push(`/admin/home`)
   }
 
+
+  pressEnterToLogin = (e) => {
+    let key = e.wich;
+    if (key === 13) {
+      this.validation();
+    }
+  }
+
   render() {
     const { loading, username } = this.state;
     const { classes, history } = this.props;
@@ -105,8 +115,8 @@ class AdminLogin extends Component {
         <div className={classes.main}>
         <img src={logo} alt='Begame' className={classes.logo} width="250px"/>
           <Paper className={classes.container}>
-          <Typography variant='title' className={classes.welcome}>Välkommen!</Typography>
-         <Typography variant='subheading' className={classes.login}>Logga in med användarnamn och lösenord</Typography>
+          <Typography variant='h6' className={classes.welcome}>Välkommen!</Typography>
+         <Typography variant='subtitle1' className={classes.login}>Logga in med användarnamn och lösenord</Typography>
             <div className={classes.margin}>
               <TextField
                 type="text"
@@ -159,6 +169,9 @@ class AdminLogin extends Component {
               >
               Logga in
               </Button>
+            </div>
+            <div className={classes.margin}>
+              <Register />
             </div>
           </Paper>
         </div>

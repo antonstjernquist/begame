@@ -23,10 +23,10 @@ const styles = theme => ({
     display: 'none',
   },
   card: {
-    maxWidth: 345,
+    maxWidth: 245,
     marginRight: 15,
     marginBottom: 15,
-    minWidth: 295
+    minWidth: 245
   },
   media: {
     height: 140,
@@ -35,7 +35,7 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    width: 450,
+    width: 250,
     margin: 'auto'
   },
   stepper: {
@@ -90,49 +90,59 @@ class Project extends Component {
     return (
             <div>
               <ErrorHandling />
-              <Button onClick={this.handleClickOpen}>Registrering</Button>
+              <Button onClick={this.handleClickOpen} size='small' style={{fontSize: 12, color: '#999'}}>Skapa konto</Button>
               <Dialog
                 open={this.state.open}
                 onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
               >
-                <DialogTitle id="form-dialog-title">Registrering</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    För att kunna skapa en frågesamling behöver du ett konto.
-                    Vänligen ange namn och lösenord för ditt nya konto.
+                <DialogTitle id="form-dialog-title">Skapa konto</DialogTitle>
+                <DialogContent style={{width: 400, paddingBottom: 10}}>
+                  <DialogContentText style={{fontSize: 13, marginBottom: 20}}>
+                    För att kunna skapa ett quiz behöver du skapa ett konto.
                   </DialogContentText>
                   <TextField
                     onChange={e => { this.handleChange(e, 'inputname') } }
-                    autoFocus
+                    variant='outlined'
                     margin="dense"
                     id="name"
-                    label="Namn"
+                    label="Användarnamn"
                     type="email"
                     fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                   <TextField
                     onChange={e => { this.handleChange(e, 'pw1') } }
+                    variant='outlined'
                     margin="dense"
                     id="pw1"
                     label="Lösenord"
                     type="password"
                     fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                   <TextField
                     onChange={e => { this.handleChange(e, 'pw2') } }
+                    variant='outlined'
                     margin="dense"
                     id="pw2"
                     label="Upprepa lösenord"
                     type="password"
                     fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
+                  <Button onClick={this.handleClose} color="secondary">
                     Avbryt
                   </Button>
-                  <Button onClick={this.handleRegister} color="primary">
+                  <Button onClick={this.handleRegister} color="secondary">
                     Registrera
                   </Button>
                 </DialogActions>

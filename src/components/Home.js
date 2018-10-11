@@ -96,8 +96,8 @@ class Home extends Component {
         <div className={classes.main}>
         <img src={logo} alt='Begame' className={classes.logo} width="250px"/>
           <Paper className={classes.container}>
-          <Typography variant='title' className={classes.welcome}>Välkommen!</Typography>
-         <Typography variant='subheading' className={classes.login}>Logga in med användarnamn och #ID</Typography>
+          <Typography variant='h6' className={classes.welcome}>Välkommen!</Typography>
+         <Typography variant='subtitle1' className={classes.login}>Logga in med användarnamn och #ID</Typography>
             <div className={classes.margin}>
               <TextField
                 type="text"
