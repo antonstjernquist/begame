@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 const styles = {
   root: {
     flexGrow: 1,
+    zIndex: 100,
   },
   grow: {
     flexGrow: 1,

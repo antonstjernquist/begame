@@ -4,11 +4,16 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import TextField from '@material-ui/core/TextField';
-import Chip from '@material-ui/core/Chip';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    marginBottom: 20
   },
   textField: {
    marginTop: 3,
@@ -46,6 +51,7 @@ class TimerBar extends Component {
     inProgress: false,
     lockStart: false,
     showEndTime: false,
+    open: true,
   };
 
   componentWillUnmount() {
@@ -58,7 +64,7 @@ class TimerBar extends Component {
     currentTime += 1;
     if (completed > 100) {
       console.log('finito');
-      this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart: false, showEndTime:true });
+      this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart: false, showEndTime:true, open: true });
       clearInterval(this.timer);
     } else {
       this.setState({ completed,currentTime, inProgress: true });
@@ -90,11 +96,18 @@ class TimerBar extends Component {
     this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart:false, showEndTime: false });
   }
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     const { classes } = this.props;
-    const { inProgress, lockStart, showEndTime } = this.state;
+    const { inProgress, lockStart, showEndTime, open } = this.state;
     return (
       <div>
+        <div className={classes.root}>
+          <LinearProgress variant="determinate" value={this.state.completed} />
+        </div>
         <div className={classes.wrapperButtons}>
           {!lockStart && <Button variant="contained" color="primary" className={classes.button} onClick={this.start}>
             { inProgress ? 'Fortsätt': 'Start'}
@@ -102,10 +115,9 @@ class TimerBar extends Component {
           { lockStart && <Button variant="contained" color="primary" className={classes.button} onClick={this.stop}>
             Stopp
           </Button>}
-          <Button variant="contained" color="secondary" className={classes.button} onClick={this.clearTimer}>
+          <Button color="primary" variant="outlined" className={classes.button} onClick={this.clearTimer}>
             Återställ
           </Button>
-
 
         {inProgress &&
           <TextField
@@ -137,19 +149,28 @@ class TimerBar extends Component {
             variant="outlined"
           />
         }
-
-        { showEndTime && <div className={classes.wrapperChip}>
-          <Chip color="primary" label="TIDEN ÄR UTE!!!!" />
-        </div>}
-
         </div>
-
-        <div className={classes.root}>
-          <LinearProgress variant="determinate" value={this.state.completed} />
-          <br />
-          <LinearProgress color="secondary" variant="determinate" value={this.state.completed} />
-        </div>
-
+        { open && showEndTime &&
+        <Dialog
+          style={{ width: 600, marginLeft: 750, marginTop: -100 }}
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">RÄTT SVAR ÄR B</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              STÄNG
+            </Button>
+          </DialogActions>
+        </Dialog>
+      }
       </div>
     );
   }

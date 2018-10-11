@@ -1,41 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-/* Import CSS */
-import './css/project.css';
-
 /* Material UI */
 import { withStyles } from '@material-ui/core/styles';
-import MobileStepper from '@material-ui/core/MobileStepper';
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import RadioButtonsGroup from './RadioButtonsGroup';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Avatar from '@material-ui/core/Avatar';
 
 /* Components */
 import Menu from './Menu';
-import ActiveUsers from './ActiveUsers';
 import FolderList from './FolderList';
-
-const backgroundImage = require('../resources/background_quiz.jpg');
+import TimerBar from './TimerBar';
 
 /* Denna komponent visar vilka olika quiz man kan starta samt "Skapa ny quiz" */
 const styles = theme => ({
   main: {
-    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .4), rgba(255, 255, 255, .2)), url(${backgroundImage})`,
-    backgroundSize: 'cover',
     minHeight: 'calc(100vh)',
   },
   input: {
     display: 'none',
   },
   card: {
-    maxWidth: 345,
-    marginRight: 15,
-    marginBottom: 15,
-    minWidth: 295
+    maxWidth: 380,
+    marginBottom: 30
   },
   media: {
     height: 140,
@@ -54,73 +42,73 @@ const styles = theme => ({
     width: 725,
     margin: 'auto'
   },
+  orangeAvatar: {
+    color: '#fff',
+    backgroundColor: '#a7d129',
+    margin: '0px auto',
+    marginBottom: 10,
+  },
 });
 
 
 class Project extends Component {
-
-
     constructor(props) {
       super(props);
       this.state = {
         id: props.match.params.id,
-        activeStep: 0,
+        correctAnswer: 'selectedB'
       }
     }
 
-
-    /* Handle steps */
-    handleNext = () => {
-      this.setState(state => ({
-        activeStep: state.activeStep + 1,
-      }));
-    };
-
-    handleBack = () => {
-      this.setState(state => ({
-        activeStep: state.activeStep - 1,
-      }));
-    };
-
   render() {
 
-    const { classes, theme, history } = this.props;
+    const { classes, history } = this.props;
     return (
           <div className={classes.main}>
               <Menu roomId={this.state.id} history={history}/>
               <FolderList />
-              {/* <div className="projectPanel">
-                  <div className="questionAndActiveUsersWrapper">
-                      <div className="questionComponent">
-                          <Paper className={classes.root} elevation={1}>
-                          <Typography variant="h5" component="h3">
-                            Vad returnerar strängen '12' * 9?
-                          </Typography>
-                          <RadioButtonsGroup />
-                        </Paper>
-                      </div>
-                      <ActiveUsers />
-                  </div>
-                  <MobileStepper
-                      variant="dots"
-                      steps={10}
-                      position="static"
-                      activeStep={this.state.activeStep}
-                      className={classes.stepper}
-                      nextButton={
-                        <Button size="small" onClick={this.handleNext} disabled={this.state.activeStep === 16}>
-                          Next
-                          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                        </Button>
-                      }
-                      backButton={
-                        <Button size="small" onClick={this.handleBack} disabled={this.state.activeStep === 0}>
-                          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                          Back
-                        </Button>
-                      }
-                />
-              </div> */}
+              <div style={{width: 800, height: 300, float: 'left', margin: '100px auto', textAlign: 'center', marginLeft: 400, marginTop: 50 }}>
+                <h1 style={{fontSize: '3.5em', color: '#a7d129', fontWeight: 'bold', marginBottom: 100}}>What is a Lizard?</h1>
+                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 50, flexWrap: 'wrap'}}>
+                  <Card className={classes.card} raised={this.state.selectedA}>
+                    <CardContent>
+                    <Avatar className={classes.orangeAvatar}>A</Avatar>
+                      <Typography component="p">
+                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                        across all continents except Antarctica
+                      </Typography>
+                    </CardContent>
+                </Card>
+                <Card className={classes.card} raised={this.state.selectedB}>
+                    <CardContent>
+                      <Avatar className={classes.orangeAvatar}>B</Avatar>
+                      <Typography component="p">
+                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                        across all continents except Antarctica
+                      </Typography>
+                    </CardContent>
+                </Card>
+                <Card className={classes.card} raised={this.state.selectedC}>
+                    <CardContent>
+                      <Avatar className={classes.orangeAvatar}>C</Avatar>
+                      <Typography component="p">
+                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                        across all continents except Antarctica
+                      </Typography>
+                    </CardContent>
+                </Card>
+                <Card className={classes.card} raised={this.state.selectedD}>
+                    <CardContent>
+                      <Avatar className={classes.orangeAvatar}>D</Avatar>
+                      <Typography component="p">
+                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                        across all continents except Antarctica
+                      </Typography>
+                    </CardContent>
+                </Card>
+                </div>
+                <TimerBar />
+              </div>
           </div>
     )
   }

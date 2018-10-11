@@ -4,19 +4,37 @@ import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import StarIcon from '@material-ui/icons/Star';
-import StarBorder from '@material-ui/icons/StarBorder';
 import Typography from '@material-ui/core/Typography';
+import People from '@material-ui/icons/People';
 
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 280,
-    height: '100vh',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    float: 'right',
+    maxWidth: 250,
+    height: '95vh',
+    backgroundColor: '#a7d129',
+    float: 'left',
   },
+  userText: {
+    color: '#FAFAFA',
+    fontSize: '1rem',
+    fontWeight: '400'
+  },
+  pointsText: {
+    color: '#FAFAFA',
+    fontWeight: '400'
+  },
+  onlineText: {
+    color: '#FAFAFA',
+    fontWeight: 'bolder',
+    fontSize: 15
+  },
+  rightIcon: {
+    color: '#FAFAFA',
+  },
+  listitem: {
+    paddingTop: 0,
+  }
 });
 
 function FolderList(props) {
@@ -24,41 +42,47 @@ function FolderList(props) {
   return (
     <div className={classes.root}>
       <List>
-        <ListItem>
-          <Avatar>
-            <StarIcon />
-          </Avatar>
+      <ListItem className={classes.listitem}>
+      <People className={classes.rightIcon} />
+        <ListItemText
+          disableTypography
+          primary={<Typography type="body2" className={classes.onlineText}>6</Typography>} />
+      </ListItem>
+      <ListItem className={classes.listitem}>
+        <ListItemText
+          disableTypography
+          primary={<Typography type="body2" className={classes.userText}>david</Typography>}
+          secondary={<Typography type="body2" className={classes.pointsText}>Game Master</Typography>} />
+      </ListItem>
+        <ListItem className={classes.listitem}>
           <ListItemText
             disableTypography
-            primary={<Typography type="body2" style={{ color: '#a7d129', fontSize: '1.1rem', fontWeight: 'bold' }}>sabrinawolfpalm</Typography>}
-            secondary={<Typography type="body2" style={{ color: '#777', fontWeight: '400' }}>poäng: 120</Typography>} />
+            primary={<Typography type="body2" className={classes.userText}>sabrinawolfpalm</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 120</Typography>} />
         </ListItem>
-        <ListItem>
-          <Avatar>
-            <StarBorder />
-          </Avatar>
+        <ListItem className={classes.listitem}>
           <ListItemText
             disableTypography
-            primary={<Typography type="body2" style={{ color: '#333', fontSize: '1rem', fontWeight: '400' }}>antonstjernqvist</Typography>}
-            secondary={<Typography type="body2" style={{ color: '#777', fontWeight: '400' }}>poäng: 19</Typography>} />
+            primary={<Typography type="body2" className={classes.userText}>antonstjernqvist</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 19</Typography>} />
         </ListItem>
-        <ListItem>
-          <Avatar>
-            <StarBorder />
-          </Avatar>
+        <ListItem className={classes.listitem}>
           <ListItemText
             disableTypography
-            primary={<Typography type="body2" style={{ color: '#333', fontSize: '1rem', fontWeight: '400' }}>gustavkarlstrom</Typography>}
-            secondary={<Typography type="body2" style={{ color: '#777', fontWeight: '400' }}>poäng: 18</Typography>} />
+            primary={<Typography type="body2" className={classes.userText}>gustavkarlstrom</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 18</Typography>} />
         </ListItem>
-        <ListItem>
-          <Avatar>
-            <StarBorder />
-          </Avatar>
+        <ListItem className={classes.listitem}>
           <ListItemText
             disableTypography
-            primary={<Typography type="body2" style={{ color: '#333', fontSize: '1rem', fontWeight: '400' }}>johanaugustsson</Typography>}
-            secondary={<Typography type="body2" style={{ color: '#777', fontWeight: '400' }}>poäng: 17</Typography>} />
+            primary={<Typography type="body2" className={classes.userText}>johanaugustsson</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 17</Typography>} />
+        </ListItem>
+        <ListItem className={classes.listitem}>
+          <ListItemText
+            disableTypography
+            primary={<Typography type="body2" className={classes.userText}>antonnordgren</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 17</Typography>} />
         </ListItem>
       </List>
     </div>
