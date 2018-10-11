@@ -70,7 +70,17 @@ class AdminLogin extends Component {
       loading: false,
       name: '',
       password: '',
+      jwt: '',
     };
+  }
+  componentWillMount() {
+    const jwt = localStorage.getItem('jwt');
+    const { history } = this.props;
+    if (jwt.length > 10) {
+      this.setState({jwt: jwt});
+      console.log("JWT found redirecting view", jwt);
+      history.push(`/admin/home`);
+    }
   }
 
   handleChange = name => (event) => {
@@ -83,7 +93,7 @@ class AdminLogin extends Component {
     const { password, name } = this.state;
     const { dispatch } = this.props;
     if (!name || !password) {
-      dispatch(showSnackbarError('Användarnamn eller lösenordet är felaktigt.'));
+      dispatch(showSnackbarError('Användarnamn och lösenord krävs.'));
     } else {
       this.login({name, password});
     }
@@ -97,7 +107,6 @@ class AdminLogin extends Component {
       user,
     }
     dispatch(loginAsAdmin( data ));
-    // history.push(`/admin/home`)
   }
 
 
