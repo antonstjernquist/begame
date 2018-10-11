@@ -93,7 +93,7 @@ class Project extends Component {
                   <div className="questionAndActiveUsersWrapper">
                       <div className="questionComponent">
                           <Paper className={classes.root} elevation={1}>
-                          <Typography variant="headline" component="h3">
+                          <Typography variant="h5" component="h3">
                             Vad returnerar strängen '12' * 9?
                           </Typography>
                           <RadioButtonsGroup />

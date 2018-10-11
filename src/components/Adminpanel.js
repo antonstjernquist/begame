@@ -80,7 +80,7 @@ class Adminpanel extends Component {
                   />
 
                   <CardContent>
-                    <Typography gutterBottom variant="headline" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2">
                       {x.name}
                     </Typography>
                     <Typography component="p">
