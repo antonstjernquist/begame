@@ -1,11 +1,17 @@
 
 //
-// export function setUser(data) {
-//   return {
-//     type: 'AUTH_RECEIVED',
-//     payload: data,
-//   };
-// }
+export function setUser(data) {
+  return {
+    type: 'AUTH_RECEIVED',
+    payload: data,
+  };
+}
+export function setToken(data) {
+  return {
+    type: 'TOKEN_RECIEVED',
+    payload: data,
+  };
+}
 
 // export const authData = dispatch => (dispatch,user) => {
 //   console.log(user);
@@ -13,11 +19,11 @@
 // }
 // export const loginAsAdmin = (test,dispatch) => async (dispatch,getState,test) =>{
 //
-export const loginAsAdmin = (dispatch) => async (dispatch, getState) =>{
+export const loginAsAdmin = (history, dispatch) => async (dispatch, getState) =>{
   const { auth } = getState();
   console.log('user:', auth.data);
   const { name } = auth.data;
-  const{ password } = auth.data;
+  const { password } = auth.data;
 
   const rawResponse = await fetch('https://stark-ocean-61611.herokuapp.com/api/authenticate', {
     method: 'POST',
@@ -37,6 +43,13 @@ export const loginAsAdmin = (dispatch) => async (dispatch, getState) =>{
   //this.validation(content);
 
   console.log("Response from api", content);
+  if(content.success){
+    dispatch(setToken(content.token));
+    history.push('/admin/home');
+  } else {
+    console.log('snackbar?');
+  }
+
 }
 
 

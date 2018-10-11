@@ -90,9 +90,9 @@ class AdminLogin extends Component {
   }
 
   login = (user) => {
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     dispatch({type:'AUTH_RECEIVED', payload: user});
-    dispatch(loginAsAdmin());
+    dispatch(loginAsAdmin( history ));
     // history.push(`/admin/home`)
   }
 
@@ -186,6 +186,7 @@ const mapStateToProps = store => ({
   snackbarOpen: store.errorHandling.snackbarOpen,
   error: store.errorHandling.error,
   message: store.errorHandling.message,
+  justLoggedIn: store.auth.justLoggedIn,
 });
 
 export default compose(withStyles(styles), connect(mapStateToProps))(AdminLogin);
