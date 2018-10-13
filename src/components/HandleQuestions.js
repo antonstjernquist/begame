@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddQuest from './AddQuest.js';
+import Menu from './Menu.js';
 
 const styles = theme => ({
   root: {
@@ -32,6 +33,7 @@ class HandleQuestions extends Component {
         isLoaded: false,
         questions: {},
         imgUrl: {},
+        description: '',
     }
   }
 
@@ -41,8 +43,8 @@ class HandleQuestions extends Component {
     const collectionId = props.match && props.match.params && props.match.params.id;
 
     if ( collectionId && Object.keys(questionCollections).length > 0 && !isLoaded ) {
-      const { questions, imgUrl, title } = questionCollections[collectionId];
-      return ({questions, imgUrl, title, isLoaded: true })
+      const { questions, imgUrl, title, description } = questionCollections[collectionId];
+      return ({questions, imgUrl, title, description, isLoaded: true })
     }
     return null;
   }
@@ -128,42 +130,57 @@ class HandleQuestions extends Component {
 
   render(){
     const table = this.renderTableView();
-    const { title, imgUrl } = this.state;
+    const { title, imgUrl, description } = this.state;
 
-    const { classes } = this.props;
+    const { classes, history } = this.props;
 
 
     return (
-      <div className={classes.root}>
-        <TextField
-          id="outlined-name"
-          label='Title'
-          className={classes.textField}
-          value={title}
-          onChange={(event)=> this.handleChange(event, 'title')}
-          margin="normal"
-          variant="outlined"
-        />
-        <br/>
-        <TextField
-          id="outlined-name"
-          label='Bild url'
-          value={imgUrl}
-          className={classes.textField}
-          onChange={(event)=> this.handleChange(event, 'imgUrl')}
-          margin="normal"
-          variant="outlined"
-          style={{ width: '95%' }}
-        />
+      <Fragment>
+        <Menu history={ history } adminPanel={true} user={this.props.user}/>
+        <div className={classes.root}>
+          <TextField
+            id="outlined-name"
+            label='Title'
+            className={classes.textField}
+            value={title}
+            onChange={(event)=> this.handleChange(event, 'title')}
+            margin="normal"
+            variant="outlined"
+          />
+          <br/>
+          <TextField
+            id="outlined-name"
+            label='Beskrivning'
+            value={description}
+            className={classes.textField}
+            onChange={(event)=> this.handleChange(event, 'description')}
+            margin="normal"
+            variant="outlined"
+            style={{ width: '95%' }}
+            multiline
+          />
+          <br/>
+          <TextField
+            id="outlined-name"
+            label='Bild url'
+            value={imgUrl}
+            className={classes.textField}
+            onChange={(event)=> this.handleChange(event, 'imgUrl')}
+            margin="normal"
+            variant="outlined"
+            style={{ width: '95%' }}
+          />
 
 
-        <div style={{ display:'flex', justifyContent: 'center'}}>
-          <img src={imgUrl} alt="Bild Saknas" height="300" width='auto' style={{ margin: 50 }} />
+          <div style={{ display:'flex', justifyContent: 'center'}}>
+            <img src={imgUrl} alt="Bild Saknas" height="300" width='auto' style={{ margin: 50 }} />
+          </div>
+
+          { table }
+          <AddQuest />
         </div>
-
-        { table }
-        <AddQuest />
-      </div>
+      </Fragment>
     );
   }
 }
