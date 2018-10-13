@@ -34,38 +34,6 @@ const styles = theme => ({
   },
 });
 
-const cards = [
-    {
-        // eslint-disable-next-line
-        name: 'Javascript: Datatyper',
-        id: 122,
-        image: 'https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&h=350'
-    },
-    {
-        // eslint-disable-next-line
-        name: 'Javascript: Listor',
-        id: 133,
-        image: 'https://images.pexels.com/photos/239898/pexels-photo-239898.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'
-    },
-    {
-        // eslint-disable-next-line
-        name: 'Javascript: Listor',
-        id: 144,
-        image: 'https://images.pexels.com/photos/169573/pexels-photo-169573.jpeg?auto=compress&cs=tinysrgb&h=350'
-    },
-    {
-        // eslint-disable-next-line
-        name: 'Javascript: Loopar',
-        id: 155,
-        image: 'https://images.pexels.com/photos/1089440/pexels-photo-1089440.jpeg?auto=compress&cs=tinysrgb&h=350'
-    },
-    {
-        // eslint-disable-next-line
-        name: 'CSS: Float',
-        id: 166,
-        image: 'https://images.pexels.com/photos/248515/pexels-photo-248515.png?auto=compress&cs=tinysrgb&h=350'
-    },
-]
 
 class Adminpanel extends Component {
 
@@ -109,7 +77,7 @@ class Adminpanel extends Component {
                 {x.name}
               </Typography>
               <Typography component="p">
-                Programming languages all have built-in data structures, but these often differ from one language to another. This quiz attempts to list the built-in data structures available in JavaScript and what properties they have; these can be used to build other data structures.
+                {x.description}
               </Typography>
             </CardContent>
           </CardActionArea>
