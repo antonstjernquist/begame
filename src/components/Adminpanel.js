@@ -18,6 +18,7 @@ import Hashids from 'hashids';
 /* Actions */
 import { getQuestionCollections } from '../actions/questionCollectionActions.js';
 import { setUser } from '../actions/authActions.js';
+import { createRoomAction } from '../actions/roomActions.js';
 
 /* Komponenter */
 import Menu from './Menu.js';
@@ -60,17 +61,29 @@ class Adminpanel extends Component {
     }
   }
 
-
   createRoom = quiz => {
+    const { dispatch, history } = this.props;
+    const roomId                = createRoomId(this.props.auth.name, quiz._id);
+    let owner                   = localStorage.getItem('auth');
 
-    const room_id = createRoomId(this.props.auth.name, quiz._id);
+    if(!owner){
+        return;
+    } else {
+        owner = JSON.parse(owner).name
+    }
 
     const room = {
-      quiz_id: quiz._id,
-      room_id: room_id,
+      roomId,
+      currentQuestion: 0,
+      createdBy: owner,
+      active: false,
+      name: roomId,
+      quiz
     }
-    console.log('User: ',this.props.user);
-    console.log('creating room: ', room);
+    console.log('User: ',this.props.auth);
+    console.log('Creating room: ', room);
+
+    dispatch(createRoomAction({history, room}));
 
   }
 
