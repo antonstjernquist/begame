@@ -73,7 +73,7 @@ class Adminpanel extends Component {
       active: true,
       openForAnswer: false,
       name: roomId,
-      time: Date.now()
+      created: Date.now()
     }
     console.log('Creating room: ', room);
 
