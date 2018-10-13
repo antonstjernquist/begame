@@ -37,9 +37,12 @@ const styles = theme => ({
 
 class Adminpanel extends Component {
   constructor(props){
-    const { collectionFetched, dispatch } = this.props
+    super(props)
+    const { collectionFetched, dispatch } = props
+    console.log(collectionFetched);
     if ( !collectionFetched ){
       // hämta data.
+      console.log("hämta daa");
       dispatch(getQuestionCollections())
     }
   }

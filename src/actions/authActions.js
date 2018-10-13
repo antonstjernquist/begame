@@ -26,11 +26,12 @@ export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) =>{
     )
   });
 
-  const content = await rawResponse.json();
 
-  if(content.success){
+  const response = await rawResponse.json();
+  console.log(response);
+  if(response.success){
+     localStorage.setItem('jwt', response.content.token);
     const data = {
-      token: content.token,
       name,
     }
     dispatch(setUser(data))
