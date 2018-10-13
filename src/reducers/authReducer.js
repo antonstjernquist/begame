@@ -10,8 +10,12 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case 'AUTH_RECEIVED': {
-      localStorage.setItem('token', action.payload.token);
-      localStorage.setItem('auth', JSON.stringify(action.payload));
+      console.log(action);
+      if (!action ) {
+        return state;
+      }
+        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('auth', JSON.stringify(action.payload));
       return {
         ...state, fetched: true, name: action.payload.name , token: action.payload.token,
       };

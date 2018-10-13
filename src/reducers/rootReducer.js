@@ -7,7 +7,7 @@ import errorHandlingReducers from './errorHandlingReducers.js'
 import activeUsersReducer from './activeUsersReducer.js'
 import authReducer from './authReducer.js'
 import collectionsReducer from './collectionsReducer.js'
-import activeRoomReducer from './activeRoomReducer.js'
+import roomReducer from './roomReducer.js'
 
 let rootReducer = combineReducers ({
   editQuiz: quizReducer,
@@ -15,7 +15,7 @@ let rootReducer = combineReducers ({
   users: activeUsersReducer,
   auth: authReducer,
   questionCollections: collectionsReducer,
-  activeRoom: activeRoomReducer,
+  activeRoom: roomReducer,
 });
 
 export default rootReducer;

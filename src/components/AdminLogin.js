@@ -77,25 +77,31 @@ class AdminLogin extends Component {
     };
   }
   componentWillMount() {
-    const jwt = localStorage.getItem('token');
     const { history, dispatch } = this.props;
+    const jwt = localStorage.getItem('token');
+    const userData = JSON.parse(localStorage.getItem('auth'));
+
+    if( userData )
+      dispatch(setUser(JSON.parse(localStorage.getItem('auth'))));
+
     if (jwt && jwt.length > 10) {
       this.setState( { jwt: jwt } );
-      dispatch(setUser(JSON.parse(localStorage.getItem('auth'))));
-      console.log("JWT found redirecting view", jwt);
+       dispatch(setUser(JSON.parse(localStorage.getItem('auth'))));
+       // console.log("JWT found redirecting view", jwt);
       history.push(`/admin/home`);
     }
   }
 
-  componentWillUnmount() {
-    console.log('This state is: ', this.state);
-    this.setState({
-        name: '',
-        password: '',
-        jwt: '',
-    });
-    console.log('This state now is: ', this.state);
-  }
+// staten sätts varje gång komponenten monteras.. böver ej sättas nedan.  
+  // componentWillUnmount() {
+  //   console.log('This state is: ', this.state);
+  //   this.setState({
+  //       name: '',
+  //       password: '',
+  //       jwt: '',
+  //   });
+  //   console.log('This state now is: ', this.state);
+  // }
 
   handleChange = name => (event) => {
     this.setState({

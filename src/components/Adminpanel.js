@@ -63,8 +63,7 @@ class Adminpanel extends Component {
 
   createRoom = quiz => {
     const { dispatch, history } = this.props;
-    const roomId                = createRoomId(this.props.auth.name, quiz._id);
-
+    const roomId = createRoomId(this.props.auth.name, quiz._id);
     const room = {
       roomId,
       quiz,

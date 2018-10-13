@@ -1,3 +1,13 @@
+
+
+export function setRoom(data) {
+  return {
+    type: 'ROOM_RECIVED',
+    payload: data,
+  };
+}
+
+
 export const createRoomAction = (data, dispatch) => async (dispatch, getState) => {
 
   const { history, room } = data;
@@ -25,7 +35,8 @@ export const createRoomAction = (data, dispatch) => async (dispatch, getState) =
 
   if(response.success){
     console.log('Response from createRoom: ', response);
-    history.push('/room/' + response.content.roomId);
+    dispatch(setRoom(response.content))
+    history.push('/project/' + response.content.roomId);
   } else {
       console.log(response);
   }

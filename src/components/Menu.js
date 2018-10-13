@@ -26,7 +26,6 @@ const styles = {
 };
 
 function Menu(props) {
-    console.log('Menu props: ', props);
   const { classes, history, roomId, isAdmin, adminPanel, auth } = props;
   let setColor = 'primary'
   if( isAdmin ){
