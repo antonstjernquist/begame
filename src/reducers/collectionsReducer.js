@@ -2,6 +2,7 @@
 const questData = {
   wedw232332: {
     title: 'Javascript',
+    imgUrl: 'https://images.pexels.com/photos/169573/pexels-photo-169573.jpeg?auto=compress&cs=tinysrgb&h=350',
     questions: {
       dwdwd: {
         question: 'hur många ben finns det i abborre?',
@@ -11,7 +12,7 @@ const questData = {
           c: 1,
           d: 3,
         },
-        rightAnswer: 'a',
+        correctAnswer: 'a',
       },
       dwddefewrkey: {
         question: 'är himmeln blå?',
@@ -19,7 +20,7 @@ const questData = {
           a: 'Nej',
           b: 'Ja',
         },
-        rightAnswer: 'b',
+        correctAnswer: 'b',
       },
       dwdweeer3d: {
         question: 'När inträffar julen?',
@@ -29,12 +30,13 @@ const questData = {
           c: 'Två dagar före julafton',
           d: 'Två dagar före annandag jul',
         },
-        rightAnswer: 'd',
+        correctAnswer: 'd',
       },
     }
   },
   wwewewww: {
     title: 'Javascript Vanilla',
+    imgUrl: 'https://images.pexels.com/photos/248515/pexels-photo-248515.png?auto=compress&cs=tinysrgb&h=350',
     questions: {
       dwdwd: {
         question: 'Vad står nan för?',
@@ -44,7 +46,7 @@ const questData = {
           c: 'not a number',
           d: 'mabe a number',
         },
-        rightAnswer: 'c',
+        correctAnswer: 'c',
       },
       dwddefewrkey: {
         question: 'är vattnet vått?',
@@ -52,7 +54,7 @@ const questData = {
           a: 'Nej',
           b: 'Ja',
         },
-        rightAnswer: 'b',
+        correctAnswer: 'b',
       },
       dwdweeer3d: {
         question: 'är Gustav här?',
@@ -60,7 +62,7 @@ const questData = {
           a: 'Ja',
           b: 'Nej',
         },
-        rightAnswer: 'a',
+        correctAnswer: 'a',
       },
     }
   }
