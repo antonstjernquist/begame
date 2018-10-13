@@ -73,13 +73,10 @@ class HandleQuestions extends Component {
   renderTableView = () => {
     const { classes, questionCollections } = this.props;
     const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
-    console.log('id:', collectionId);
-    console.log('questionCollections:', questionCollections);
     if (Object.keys(questionCollections).length === 0 || !collectionId )
       return null;
 
     const { questions } = questionCollections[collectionId]
-    console.log('questions: ', questions);
     return Object.keys(questions).map( (itemKey ,index) => {
         const item = questions[itemKey];
         return (
