@@ -64,23 +64,17 @@ class Adminpanel extends Component {
   createRoom = quiz => {
     const { dispatch, history } = this.props;
     const roomId                = createRoomId(this.props.auth.name, quiz._id);
-    let owner                   = localStorage.getItem('auth');
-
-    if(!owner){
-        return;
-    } else {
-        owner = JSON.parse(owner).name
-    }
 
     const room = {
       roomId,
+      quiz,
       currentQuestion: 0,
-      createdBy: owner,
-      active: false,
+      createdBy: this.props.auth.name,
+      active: true,
+      openForAnswer: false,
       name: roomId,
-      quiz
+      time: Date.now()
     }
-    console.log('User: ',this.props.auth);
     console.log('Creating room: ', room);
 
     dispatch(createRoomAction({history, room}));
