@@ -30,7 +30,7 @@ export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) =>{
   const response = await rawResponse.json();
   console.log(response);
   if(response.success){
-     localStorage.setItem('jwt', response.content.token);
+     localStorage.setItem('token', response.content.token);
     const data = {
       name,
     }
