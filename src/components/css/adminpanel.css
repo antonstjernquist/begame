@@ -13,8 +13,10 @@
 
 /* Logged in span */
 .loggedInSpan {
-  display: inline-block;
-  margin-right: 5px;
-  padding: 4px 8px;
-  font-size: 1.2em;
+    display: inline-block;
+    margin-right: 1px;
+    padding: 4px 8px;
+    font-size: 1.2em;
+    vertical-align: -1px;
+    font-weight: 100;
 }

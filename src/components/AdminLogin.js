@@ -7,9 +7,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { showSnackbarError } from '../actions/errorHandlingActions';
-import { loginAsAdmin } from '../actions/authActions.js'
 
+/* Actions */
+import { showSnackbarError } from '../actions/errorHandlingActions';
+import { loginAsAdmin, setUser } from '../actions/authActions.js'
+
+/* Components */
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
 import Register from './Register'
@@ -75,12 +78,23 @@ class AdminLogin extends Component {
   }
   componentWillMount() {
     const jwt = localStorage.getItem('token');
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
     if (jwt && jwt.length > 10) {
-      this.setState({jwt: jwt});
+      this.setState( { jwt: jwt } );
+      dispatch(setUser(JSON.parse(localStorage.getItem('auth'))));
       console.log("JWT found redirecting view", jwt);
       history.push(`/admin/home`);
     }
+  }
+
+  componentWillUnmount() {
+    console.log('This state is: ', this.state);
+    this.setState({
+        name: '',
+        password: '',
+        jwt: '',
+    });
+    console.log('This state now is: ', this.state);
   }
 
   handleChange = name => (event) => {
@@ -134,6 +148,7 @@ class AdminLogin extends Component {
               <TextField
                 type="text"
                 onChange={this.handleChange('name')}
+                value={this.state.name}
                 id='input-with-icon-grid2'
                 label='Användarnamn'
                 margin='dense'
@@ -154,6 +169,7 @@ class AdminLogin extends Component {
               <TextField
                 type="password"
                 onChange={this.handleChange('password')}
+                value={this.state.password}
                 id='input-with-icon-grid2'
                 label='Lösenord'
                 margin='dense'
@@ -199,7 +215,6 @@ const mapStateToProps = store => ({
   snackbarOpen: store.errorHandling.snackbarOpen,
   error: store.errorHandling.error,
   message: store.errorHandling.message,
-  justLoggedIn: store.auth.justLoggedIn,
 });
 
 export default compose(withStyles(styles), connect(mapStateToProps))(AdminLogin);

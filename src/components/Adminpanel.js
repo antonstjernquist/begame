@@ -14,7 +14,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Hashids from 'hashids';
-import { getQuestionCollections } from '../actions/questionCollectionActions'
+
+/* Actions */
+import { getQuestionCollections } from '../actions/questionCollectionActions.js';
+import { setUser } from '../actions/authActions.js';
+
 /* Komponenter */
 import Menu from './Menu.js';
 
@@ -38,22 +42,31 @@ const styles = theme => ({
 class Adminpanel extends Component {
   constructor(props){
     super(props)
-    const { collectionFetched, dispatch } = props
-    console.log(collectionFetched);
+    const { collectionFetched, dispatch, history } = props
+    console.log('Fetched collections: ', collectionFetched);
+
     if ( !collectionFetched ){
       // hämta data.
-      console.log("hämta daa");
-      dispatch(getQuestionCollections())
+      console.log('Retrieving collection');
+      dispatch(getQuestionCollections());
+    }
+
+    let auth = JSON.parse(localStorage.getItem('auth'));
+    if(auth && auth.token && auth.token.length > 10){
+        console.log('Setting auth: ', auth);
+        dispatch(setUser(JSON.parse(localStorage.getItem('auth'))));
+    } else {
+        history.push('/');
     }
   }
 
 
   createRoom = quiz => {
 
-    const room_id = createRoomId(this.props.user.name, quiz.id);
+    const room_id = createRoomId(this.props.auth.name, quiz._id);
 
     const room = {
-      quiz_id: quiz.id,
+      quiz_id: quiz._id,
       room_id: room_id,
     }
     console.log('User: ',this.props.user);
@@ -117,7 +130,7 @@ class Adminpanel extends Component {
 
     return (
       <Fragment>
-        <Menu history={ history } adminPanel={true} user={this.props.user}/>
+        <Menu history={ history } adminPanel={true} auth={this.props.auth}/>
         <div className="adminpanel">
 
 
@@ -140,7 +153,7 @@ class Adminpanel extends Component {
 
 let mapStateToProps = state => ({
     value: state.value,
-    user: state.auth.data,
+    auth: state.auth,
     questionCollections: state.questionCollections.data,
     collectionFetched: state.questionCollections.fetched,
 });

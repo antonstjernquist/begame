@@ -1,4 +1,4 @@
-import { showSnackbarError, showSnackbarMessage } from './errorHandlingActions.js';
+import { showSnackbarError } from './errorHandlingActions.js';
 
 //
 export function setUser(data) {
@@ -8,7 +8,13 @@ export function setUser(data) {
   };
 }
 
-export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) =>{
+export function logoutUserAction() {
+  return {
+    type: 'USER_LOGOUT'
+  };
+}
+
+export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) => {
   const { history, user } = data;
   const { name, password } = user;
 
@@ -28,11 +34,10 @@ export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) =>{
 
 
   const response = await rawResponse.json();
-  console.log(response);
   if(response.success){
-     localStorage.setItem('token', response.content.token);
     const data = {
       name,
+      token: response.content.token
     }
     dispatch(setUser(data))
     history.push('/admin/home');

@@ -10,15 +10,23 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case 'AUTH_RECEIVED': {
-      localStorage.setItem('jwt', action.payload.token);
+      localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('auth', JSON.stringify(action.payload));
       return {
         ...state, fetched: true, name: action.payload.name , token: action.payload.token,
       };
     }
     case 'TOKEN_RECIEVED': {
-      console.log('New state: ', { ...state, fetched: true, token: action.payload });
       return {
-        ...state, fetched: true, token: action.payload, justLoggedIn: true
+        ...state, fetched: true, token: action.payload
+      };
+    }
+    case 'USER_LOGOUT': {
+      console.log('Logging out user.');
+      localStorage.removeItem('token');
+      localStorage.removeItem('auth');
+      return {
+        ...state, fetched: true, token: null, user: null
       };
     }
     default: return state;

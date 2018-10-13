@@ -15,6 +15,7 @@ import Project from './components/Project.js'
 import HandleQuestions from './components/HandleQuestions.js'
 import ActiveUsers from './components/ActiveUsers.js'
 import Timer from './components/TimerBar.js'
+import Logout from './components/Logout.js'
 
 
 // Om någon kommer på ett schysst färgtema eller om vi ska diskutera det tillsammans, ändra färgerna nedanför,
@@ -63,6 +64,7 @@ const Router = () => (
       <Route exact path='/admin/users' component={ActiveUsers} />
       <Route exact path='/admin/home/' component={Adminpanel}/>
       <Route exact path='/project/:id' component={Project}/>
+      <Route exact path='/logout' component={Logout}/>
       <Route exact path='/timer' component={Timer}/>
     </Switch>
   </MuiThemeProvider>

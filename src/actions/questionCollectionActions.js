@@ -10,6 +10,11 @@ export function setCollection(data) {
 
 export const getQuestionCollections = (dispatch) => async (dispatch, getState) =>{
   const token = localStorage.getItem('token');
+  console.log('Token is: ', token);
+  if(!token || token === 'undefined'){
+      console.log('No token specified. No data to retrieve for you.');
+      return;
+  }
   // const token = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1YmJjYTViNzcyOGNlYTAwMDQ5MjdmZWIiLCJuYW1lIjoiam9oYW4iLCJwYXNzd29yZCI6IiQyYSQxMCRIMUN5RTl3dnp0TFQ5UEZrdmVad0ZldWg0MzlzTHBXLjl1ZnFhTDR6anFjVlV1ODJMcHp6VyIsIl9fdiI6MH0.J03YO2XbTR4iOLWnLDKAXv6lQhGMOcv-6sB1xWuTvW4"
   const rawResponse = await fetch('https://stark-ocean-61611.herokuapp.com/api/question-collection', {
     headers: {
@@ -20,7 +25,7 @@ export const getQuestionCollections = (dispatch) => async (dispatch, getState) =
   });
 
   const response = await rawResponse.json();
-  console.log("repsonse: ",response);
+  console.log('Response: ',response);
 
   if(response.success){
     dispatch(setCollection(response.content))
