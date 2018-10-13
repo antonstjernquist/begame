@@ -71,8 +71,8 @@ const questData = {
 }
 
 const initialState = {
-  fetched: true,
-  data: questData,
+  fetched: false,
+  data: {},
 }
 
 

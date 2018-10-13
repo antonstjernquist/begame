@@ -35,6 +35,7 @@ class HandleQuestions extends Component {
         imgUrl: {},
         description: '',
     }
+
   }
 
   static getDerivedStateFromProps(props, state) {

@@ -14,7 +14,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Hashids from 'hashids';
-
+import { getQuestionCollections } from '../actions/questionCollectionActions'
 /* Komponenter */
 import Menu from './Menu.js';
 
@@ -36,6 +36,13 @@ const styles = theme => ({
 
 
 class Adminpanel extends Component {
+  constructor(props){
+    const { collectionFetched, dispatch } = this.props
+    if ( !collectionFetched ){
+      // hämta data.
+      dispatch(getQuestionCollections())
+    }
+  }
 
 
   createRoom = quiz => {
@@ -128,6 +135,7 @@ let mapStateToProps = state => ({
     value: state.value,
     user: state.auth.data,
     questionCollections: state.questionCollections.data,
+    collectionFetched: state.questionCollections.fetched,
 });
 
 
