@@ -74,7 +74,7 @@ class Adminpanel extends Component {
     return Object.keys(questionCollections).map(xKey => {
       const x = questionCollections[xKey];
       return (
-        <Card key={x.id} className={classes.card}>
+        <Card key={x._id} className={classes.card}>
           <CardActionArea>
             <CardMedia
               className={classes.media}
@@ -149,8 +149,6 @@ function createRoomId(){
   console.log('Code: ', code);
   let hashids = new Hashids('begame'),
   id = hashids.encode(code);
-
-  let decoded = hashids.decode(id);
 
   return id;
 

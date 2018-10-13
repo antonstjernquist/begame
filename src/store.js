@@ -5,7 +5,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers/rootReducer.js';
 
 const initialState = {
-    value: 4,
     users: [
         {
             name: 'Johan',
