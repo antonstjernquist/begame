@@ -58,7 +58,8 @@ const Router = () => (
       <Route exact path='/room/:id' component={Room} />
       <Route exact path='/admin/' component={AdminLogin} />
       <Route exact path='/admin/settings' component={Adminpanel} />
-      <Route exact path='/admin/test' component={HandleQuestions} />
+      <Route exact path='/admin/collection' component={HandleQuestions} />
+      <Route exact path='/admin/collection/:id' component={HandleQuestions} />
       <Route exact path='/admin/users' component={ActiveUsers} />
       <Route exact path='/admin/home/' component={Adminpanel}/>
       <Route exact path='/project/:id' component={Project}/>

@@ -83,41 +83,87 @@ class Adminpanel extends Component {
 
   }
 
+  editCollection = (collectionId) => {
+    const { history } = this.props;
+    history.push(`/admin/collection/${collectionId}`);
+  }
+
+  renderCards = () =>{
+    const { questionCollections, classes } = this.props;
+    if ( Object.keys(questionCollections).length === 0 )
+      return null;
+
+    return Object.keys(questionCollections).map(xKey => {
+      const x = questionCollections[xKey];
+      return (
+        <Card key={x.id} className={classes.card}>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image={x.imgUrl}
+              title="Contemplative Reptile"
+            />
+
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {x.name}
+              </Typography>
+              <Typography component="p">
+                Programming languages all have built-in data structures, but these often differ from one language to another. This quiz attempts to list the built-in data structures available in JavaScript and what properties they have; these can be used to build other data structures.
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button size="small" color="primary" onClick={ e => {
+              this.createRoom(x);
+              }}>
+              Starta
+            </Button>
+            <Button size="small" color="primary" onClick={ e => this.editCollection(xKey) }>
+              Redigera
+            </Button>
+          </CardActions>
+        </Card>)
+    });
+  }
+
   render() {
 
     const { classes, history } = this.props;
 
-    let cardList = cards.map(x => (
-            <Card key={x.id} className={classes.card}>
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image={x.image}
-                    title="Contemplative Reptile"
-                  />
+    const cardList = this.renderCards();
 
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {x.name}
-                    </Typography>
-                    <Typography component="p">
-                        Programming languages all have built-in data structures, but these often differ from one language to another. This quiz attempts to list the built-in data structures available in JavaScript and what properties they have; these can be used to build other data structures.
-                    </Typography>
-                  </CardContent>
-
-                </CardActionArea>
-                <CardActions>
-                  <Button size="small" color="primary" onClick={ e => {
-                    this.createRoom(x);
-                  }}>
-                    Starta
-                  </Button>
-                  <Button size="small" color="primary">
-                    Redigera
-                  </Button>
-                </CardActions>
-              </Card>
-    ));
+    // let cardList = cards.map(x => (
+    //         <Card key={x.id} className={classes.card}>
+    //             <CardActionArea>
+    //               <CardMedia
+    //                 className={classes.media}
+    //                 image={x.image}
+    //                 title="Contemplative Reptile"
+    //               />
+    //
+    //               <CardContent>
+    //                 <Typography gutterBottom variant="h5" component="h2">
+    //                   {x.name}
+    //                 </Typography>
+    //                 <Typography component="p">
+    //                     Programming languages all have built-in data structures, but these often differ from one language to another. This quiz attempts to list the built-in data structures available in JavaScript and what properties they have; these can be used to build other data structures.
+    //                 </Typography>
+    //               </CardContent>
+    //
+    //             </CardActionArea>
+    //             <CardActions>
+    //               <Button size="small" color="primary" onClick={ e => {
+    //                 this.createRoom(x);
+    //               }}>
+    //                 Starta
+    //               </Button>
+    //               <Button size="small" color="primary">
+    //                 Redigera
+    //               </Button>
+    //             </CardActions>
+    //           </Card>
+    // ));
 
     return (
       <Fragment>
@@ -144,7 +190,8 @@ class Adminpanel extends Component {
 
 let mapStateToProps = state => ({
     value: state.value,
-    user: state.auth.data
+    user: state.auth.data,
+    questionCollections: state.questionCollections.data,
 });
 
 

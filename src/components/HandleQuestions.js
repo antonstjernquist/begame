@@ -5,6 +5,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddQuest from './AddQuest.js';
@@ -28,50 +29,57 @@ class HandleQuestions extends Component {
   constructor(props){
     super(props);
     this.state = {
-        questions: {
-          0: {
-            correctAnswer: 'a',
-            question: 'Hur många båtar finns det i sjön?',
-            answer: {
-              a: 123,
-              b: 12,
-              c: 32,
-              d: 23,
-            }
-          },
-        1:{
-          correctAnswer: 'b',
-          question: 'Hur månag ben finns det i en abbore?',
-          answer: {
-            a: 2,
-            b: 0,
-            c: 1,
-            d: 4,
-          }
-        },
-      }
+        isLoaded: false,
+        questions: {},
+        imgUrl: {},
     }
   }
 
-  handleChange = (event, questKey, changeKey) => {
+  static getDerivedStateFromProps(props, state) {
+    const { questionCollections } = props;
+    const { isLoaded } = state;
+    const collectionId = props.match && props.match.params && props.match.params.id;
+
+    if ( collectionId && Object.keys(questionCollections).length > 0 && !isLoaded ) {
+      const { questions, imgUrl, title } = questionCollections[collectionId];
+      return ({questions, imgUrl, title, isLoaded: true })
+    }
+    return null;
+  }
+
+  handleChangeQuestions = (event, questKey, changeKey) => {
     if(event.target.value !== undefined){
       const {questions} = { ...this.state };
 
       if(changeKey === 'correctAnswer'){
         questions[questKey][changeKey] = event.target.value;
       } else {
-        questions[questKey].answer[changeKey] = event.target.value;
+        questions[questKey].answers[changeKey] = event.target.value;
       }
 
       this.setState({ questions: questions});
     }
-
   }
 
-  renderTableView = () => {
-    const { questions } = this.state;
-    const { classes } = this.props;
+  handleChange = (event, changeKey) => {
+    if(event.target.value !== undefined){
+      this.setState({ [changeKey]: event.target.value });
+    }
+  }
 
+
+
+
+  renderTableView = () => {
+    const { classes, questionCollections } = this.props;
+    const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
+    console.log('id:', collectionId);
+    console.log('questionCollections:', questionCollections);
+    if (Object.keys(questionCollections).length === 0 || !collectionId )
+      return null;
+
+    const { questions } = questionCollections[collectionId]
+    console.log('questions: ', questions);
     return Object.keys(questions).map( (itemKey ,index) => {
         const item = questions[itemKey];
         return (
@@ -83,17 +91,17 @@ class HandleQuestions extends Component {
 
               {/*  Show all options */}
               <div className={classes.contentWrapper}>
-                {Object.keys(questions[itemKey].answer).map( optionKey =>(
+                {Object.keys(questions[itemKey].answers).map( optionKey =>(
                     <TextField
                       key={optionKey}
                       id="standard-full-width"
                       label={optionKey}
-                      value={questions[itemKey].answer[optionKey]}
+                      value={questions[itemKey].answers[optionKey]}
                       style={{ margin: 8 }}
                       placeholder="Placeholder"
                       fullWidth
                       margin="normal"
-                      onChange={(event)=> this.handleChange(event,itemKey, optionKey)}
+                      onChange={(event)=> this.handleChangeQuestions(event,itemKey, optionKey)}
                       InputLabelProps={{
                       shrink: true,
                       }}
@@ -109,7 +117,7 @@ class HandleQuestions extends Component {
                     placeholder="Placeholder"
                     fullWidth
                     margin="normal"
-                    onChange={(event)=> this.handleChange(event,itemKey, 'correctAnswer')}
+                    onChange={(event)=> this.handleChangeQuestions(event,itemKey, 'correctAnswer')}
                     InputLabelProps={{
                     shrink: true,
                     }}
@@ -123,10 +131,39 @@ class HandleQuestions extends Component {
 
   render(){
     const table = this.renderTableView();
+    const { title, imgUrl } = this.state;
 
     const { classes } = this.props;
+
+
     return (
       <div className={classes.root}>
+        <TextField
+          id="outlined-name"
+          label='Title'
+          className={classes.textField}
+          value={title}
+          onChange={(event)=> this.handleChange(event, 'title')}
+          margin="normal"
+          variant="outlined"
+        />
+        <br/>
+        <TextField
+          id="outlined-name"
+          label='Bild url'
+          value={imgUrl}
+          className={classes.textField}
+          onChange={(event)=> this.handleChange(event, 'imgUrl')}
+          margin="normal"
+          variant="outlined"
+          style={{ width: '95%' }}
+        />
+
+
+        <div style={{ display:'flex', justifyContent: 'center'}}>
+          <img src={imgUrl} alt="Bild Saknas" height="300" width='auto' style={{ margin: 50 }} />
+        </div>
+
         { table }
         <AddQuest />
       </div>
@@ -138,4 +175,10 @@ HandleQuestions.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(HandleQuestions);
+let mapStateToProps = store => ({
+    questionCollections: store.questionCollections.data,
+    fetched: store.questionCollections.fetched,
+});
+
+
+export default connect(mapStateToProps)(withStyles(styles)(HandleQuestions));
