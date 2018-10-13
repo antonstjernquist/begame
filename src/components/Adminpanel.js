@@ -61,6 +61,10 @@ class Adminpanel extends Component {
 
   }
 
+  createQuiz = () => {
+      console.log('Creating quiz');
+  }
+
   editCollection = (collectionId) => {
     const { history } = this.props;
     history.push(`/admin/collection/${collectionId}`);
@@ -119,7 +123,7 @@ class Adminpanel extends Component {
 
           <h1>Adminpanel</h1>
           <div>
-            <Button variant="contained" color="primary" className={classes.button}>
+            <Button variant="contained" color="primary" className={classes.button} onClick={this.createQuiz}>
               Skapa quiz
             </Button>
             <h2> Starta ett quiz </h2>

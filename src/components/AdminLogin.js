@@ -74,7 +74,7 @@ class AdminLogin extends Component {
     };
   }
   componentWillMount() {
-    const jwt = localStorage.getItem('jwt');
+    const jwt = localStorage.getItem('token');
     const { history } = this.props;
     if (jwt && jwt.length > 10) {
       this.setState({jwt: jwt});
