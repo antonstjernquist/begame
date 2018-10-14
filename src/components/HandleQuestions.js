@@ -193,6 +193,7 @@ HandleQuestions.propTypes = {
 let mapStateToProps = store => ({
     fetched: store.users.fetched,
     users: store.users.data,
+    questionCollections: store.questionCollections.data,
 });
 
 
