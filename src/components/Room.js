@@ -77,7 +77,6 @@ class Room extends Component {
     const roomId = this.props.match.params.id;
     const { dispatch } = this.props;
     const isRight = selected === correctAnswer;
-<<<<<<< HEAD
 
     if (isRight) {
       dispatch(getRoomFromDb(roomId)).then( ()=>{
@@ -97,25 +96,12 @@ class Room extends Component {
     }
     this.setState({rightAnswer: false,  questionClosed: true }) // dont remove this.. need for update points also.. its to deep for react to handle
 
-=======
-    console.log(isRight);
-    // här ska vi slänga in en koll mot prop och kontroller om användaren svarade rätt eller ej
-    // ska inte visas så tyldigt att grannen kan kolla :)
-    // oom användaren svarat rätt så uppdaterar vi användaren med ny poäng..
-    //
->>>>>>> 4be57c27001aea0b461cac09a83f0cc13c873a4e
   }
 
 
   createAnswerButtons = (answers, correctAnswer) => {
     const { classes } = this.props;
-<<<<<<< HEAD
     const listAlpah = ['a', 'b', 'c','d','e','f','g','h'];
-=======
-    const listAlpah = ['a', 'b', 'c', 'd'];
-
-    console.log("ROOMPROPS", this.props);
->>>>>>> 4be57c27001aea0b461cac09a83f0cc13c873a4e
     return Object.values(answers).map( (item, index ) => (
       <Fragment key={index}>
         <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)}>
