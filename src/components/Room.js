@@ -16,6 +16,8 @@ import Menu from './Menu';
 import { showSnackbarMessage } from '../actions/errorHandlingActions';
 import ErrorHandling from './ErrorHandling.js';
 import { getRoomFromDb } from '../actions/roomActions'
+import { updateUserInDb, updateUserStats} from '../actions/userActions'
+import { setUser } from '../actions/authActions'
 
 const styles = theme => ({
   root: {
@@ -44,12 +46,19 @@ class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.match.params.id
+      id: props.match.params.id,
+      rightAnswer: null,
+      questionClosed: false,
+    }
+    const userData = JSON.parse(localStorage.getItem('student'));
+    if (userData) {
+      props.dispatch(updateUserStats(userData))
+      props.dispatch(setUser(userData))
     }
 
+    // om ingen userData finns så skall vi skicka ut nissen.
+
     const roomId = (props.match && props.match.params && props.match.params.id) || false;
-    if (roomId)
-    console.log('roomId är: ', roomId);
     props.dispatch(getRoomFromDb(roomId))
 
   }
@@ -61,29 +70,34 @@ class Room extends Component {
 
 
   selectedAnswer = (selected, correctAnswer) => {
-    console.log('vald svar',selected);
-    console.log('korrekt answer', correctAnswer);
+    const roomId = this.props.match.params.id;
+    const { dispatch } = this.props;
     const isRight = selected === correctAnswer;
-    console.log(isRight);
-    // här ska vi slänga in en koll mot prop och kontroller om användaren svarade rätt eller ej
-    // ska inte visas så tyldigt att grannen kan kolla :)
-    // oom användaren svarat rätt så uppdaterar vi användaren med ny poäng..
-    //
-    if (selected === 'selectedA') {
-      this.setState({ selectedA: true, selectedB: false, selectedC: false, selectedD: false, answered: true })
-    } else if (selected === 'selectedB') {
-      this.setState({ selectedA: false, selectedB: true, selectedC: false, selectedD: false, answered: true })
-    } else if (selected === 'selectedC') {
-      this.setState({ selectedA: false, selectedB: false, selectedC: true, selectedD: false, answered: true })
-    } else if (selected === 'selectedD') {
-      this.setState({ selectedA: false, selectedB: false, selectedC: false, selectedD: true, answered: true })
+
+    if (isRight) {
+      dispatch(getRoomFromDb(roomId)).then( ()=>{
+        const { openForAnswer } = this.props.room;
+        const {questionClosed } = this.state;
+
+        // här ska vi lägga in så att openForAnswer sätts..
+
+        if ( !questionClosed || true ) {
+          let { points,uid } = this.props.user;
+          points += 10;
+          dispatch(updateUserInDb({uid,points})).then( ()=>{
+            this.setState({rightAnswer: true, questionClosed: true}) // dont remove this.. need for update points also.. its to deep for react to handle
+          })
+        }
+      })
     }
+    this.setState({rightAnswer: false,  questionClosed: true }) // dont remove this.. need for update points also.. its to deep for react to handle
+
   }
 
 
   createAnswerButtons = (answers, correctAnswer) => {
     const { classes } = this.props;
-    const listAlpah = ['a', 'b', 'c','d'];
+    const listAlpah = ['a', 'b', 'c','d','e','f','g','h'];
     return Object.values(answers).map( (item, index ) => (
       <Fragment key={index}>
         <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
@@ -131,19 +145,25 @@ class Room extends Component {
   }
 
   updateQuiz = () =>{
-    this.props.dispatch(getRoomFromDb(this.state.id));
-  }
+    const { currentQuestion } = this.props.room;
+    this.props.dispatch(getRoomFromDb(this.state.id)).then( ()=>{
+      if ( currentQuestion !== this.props.room.currentQuestion ){
+        this.setState({questionClosed:false})
+      }
+    })
+  };
+
 
 
   render() {
-    const { history, classes } = this.props;
-
+    const { history, classes, user } = this.props;
+    const score = user && user.points ? user.points : 0;
     const viewQuest = this.renderQuestion();
 
     return (
       <Fragment>
         <Menu roomId={this.state.id} history={history}/>
-
+        score: {score}
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
           <Button
@@ -168,6 +188,7 @@ let mapStateToProps = store => ({
     message: store.errorHandling.message,
     room: store.activeRoom.data,
     fetched: store.activeRoom.fetched,
+    user: store.user.data,
 });
 
 export default compose(withStyles(styles), connect(mapStateToProps))(Room);
