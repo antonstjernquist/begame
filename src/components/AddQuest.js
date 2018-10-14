@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { showSnackbarError } from '../actions/errorHandlingActions';
 
 const styles = theme => ({
   container: {
@@ -36,20 +37,18 @@ class AddQuest extends Component {
         a: '',
         b: '',
       }
-
     };
   };
 
-  handleChange = (event,type, inputKey) => {
-    const data = event.target.value
-
+  handleChange = (event, type, inputKey) => {
+    const value = event.target.value
     if (type === 'answers'){
-      const { answers } = { ...this.state };
-      answers[inputKey] = data;
-      this.setState({answers: answers})
+      const answers = this.state.answers;
+      answers[inputKey] = value;
+      this.setState({ answers: answers });
 
     } else if (type === 'question') {
-      this.setState({question: data })
+      this.setState({ question: value });
     }
   }
 
@@ -57,14 +56,14 @@ class AddQuest extends Component {
     const { answers } = this.state;
     const { classes } = this.props;
 
-    return Object.keys(answers).map( answerKey => (
+    return Object.keys(answers).map( key => (
         <TextField
-          key={answerKey}
+          key={key}
           id="outlined-name"
-          label={answerKey}
+          label={key}
           className={classes.textField}
-          value={this.state.answers[answerKey] }
-          onChange={ (event) => this.handleChange(event,'answers',answerKey)}
+          value={this.state.answers[key]}
+          onChange={ (event) => this.handleChange(event, 'answers', key)}
           margin="normal"
           variant="outlined"
         />
@@ -72,9 +71,38 @@ class AddQuest extends Component {
     )
   }
 
+
+  saveQuestion = () => {
+      let passed = true;
+      if(this.state.question.length > 4 && typeof this.state.question === 'string'){
+
+          /* Check answer lengths */
+          for (let key in this.state.answers){
+              if(this.state.answers[key].length < 2){
+                  passed = false;
+              }
+          }
+      } else {
+          passed = false;
+      }
+
+      if(passed){
+          this.props.addQuestion({ ...this.state, answers: { ...this.state.answers }});
+          this.setState({
+            question: '',
+            answers: {
+              a: '',
+              b: ''
+            }
+          });
+      } else {
+          console.log('Nein, mb add snackbar here?');
+      }
+  }
+
   // add and remove options based on listAlpah
   changeAnswersOption = (add) => {
-    const { answers } = { ...this.state};
+    const { answers } = { ...this.state };
     const indexToAdd = Object.keys(answers).length;
 
     // check if able to add more option based on listAlpah
@@ -114,7 +142,7 @@ class AddQuest extends Component {
           <Button variant="contained" color="secondary" className={classes.button} onClick={ ()=>this.changeAnswersOption(false)}>
             Ta bort svarsalternativ
           </Button>
-          <Button variant="contained" color="primary" className={classes.button} onClick= { ()=> console.log('AWESOME!!! SAVE IT :) ') }>
+          <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuestion }>
             Spara frågan
           </Button>
         </div>
