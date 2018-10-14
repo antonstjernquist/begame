@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
@@ -45,9 +45,9 @@ class ErrorHandling extends React.Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         {this.renderSnackbar()}
-      </div>
+      </Fragment>
     );
   }
 }

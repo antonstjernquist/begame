@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import { showSnackbarMessage } from '../actions/errorHandlingActions';
+import { getRoomFromDb, updateRoomInDb } from '../actions/roomActions'
 
 //Material UI
 import Typography from '@material-ui/core/Typography';
@@ -10,10 +11,11 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
-import { getRoomFromDb, updateRoomInDb } from '../actions/roomActions'
+import Paper from '@material-ui/core/Paper';
+
+//Imported components
 import ActiveUsers from './ActiveUsers';
 import TimerBar from './TimerBar';
-//Imported components
 import Menu from './Menu';
 import ErrorHandling from './ErrorHandling.js';
 
@@ -28,6 +30,10 @@ const styles = theme => ({
   card: {
     maxWidth: 380,
     marginBottom: 30
+  },
+  cardAction: {
+    width: 350,
+    maxWidth: 380,
   },
   orangeAvatar: {
     color: '#fff',
@@ -85,7 +91,7 @@ class Room extends Component {
     return Object.values(answers).map( (item, index ) => (
       <Fragment key={index}>
         <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
-          <CardActionArea>
+          <CardActionArea className={classes.cardAction}>
             <CardContent>
               <Avatar className={classes.orangeAvatar}>{listAlpah[index]}</Avatar>
               <Typography component="p">
@@ -100,18 +106,37 @@ class Room extends Component {
 
 
   renderQuestion = () => {
-
-    const { room } = this.props;
+    const { room, classes } = this.props;
     const { quiz } = room || false;
     const { questions } = quiz || false;
+    const title = room && room.quiz && room.quiz.title;
+    const description = room && room.quiz && room.quiz.description;
 
     if ( !questions )
-      return (<div>Ej startad ännu</div>)
+      return (
+        <Paper className={classes.root} elevation={1}>
+          <Typography variant="h5" component="h3">
+          {title}
+          </Typography>
+          <Typography component="p">
+          {description}
+          </Typography>
+        </Paper>
+      )
 
     let currentQuestion  = room && room.currentQuestion;
 
     if (currentQuestion === 0)
-      return (<div>Ej startad ännu</div>)
+      return (
+        <Paper className={classes.root} elevation={1}>
+          <Typography variant="h5" component="h3">
+          {title}
+          </Typography>
+          <Typography component="p">
+          {description}
+          </Typography>
+        </Paper>
+      )
 
     if (currentQuestion === -1)
       return (<div>SLUT</div>)
@@ -151,8 +176,10 @@ class Room extends Component {
 
 
   render() {
-    const { history, classes, room } = this.props;
+    const { history } = this.props;
     const viewQuest = this.renderQuestion();
+
+    console.log('props', this.props);
 
     return (
       <Fragment>

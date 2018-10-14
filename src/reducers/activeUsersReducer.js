@@ -1,5 +1,3 @@
-
-
 const initialState = {
   fetched: false,
   data: [],
