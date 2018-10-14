@@ -136,6 +136,7 @@ class Room extends Component {
 
     // if we got to the end of questions we set it to -1 to display end
     if (Object.keys(quiz.questions).length < currentQuestion ){
+      console.log('inne i fel ');
       currentQuestion = -1;
     }
 

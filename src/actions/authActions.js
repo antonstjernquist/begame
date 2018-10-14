@@ -80,11 +80,12 @@ export const loginAsStudent = (data, dispatch) => async (dispatch, getState) => 
     const data = {
       name: username,
       token: response.content.token,
-      uid: response.content['_id']
+      uid: response.content['_id'],
+      points: 0,
     }
     console.log('repsonse data in auth:', response.content);
-    dispatch(setUser(data))
-    data.points = 0;
+    // dispatch(setUser(data))
+
     dispatch(updateUserStats(data));
     history.push(`/room/${roomId}`);
   } else {
