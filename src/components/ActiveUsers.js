@@ -1,10 +1,10 @@
 import React,{ Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import People from '@material-ui/icons/People';
 import { connect } from 'react-redux';
 import { getUserInRoom } from '../actions/userActions.js'
@@ -51,7 +51,7 @@ class ActiveUsers extends Component {
     }
   }
 
-  renderAciveUsers = () => {
+  renderActiveUsers = () => {
     const { classes, users } = this.props;
     if (!users){
       return ( <div>User is missing</div>)
@@ -77,9 +77,10 @@ class ActiveUsers extends Component {
   }
 
   render(){
-    const { classes, users } = this.props;
-    console.log('användare: ', users);
-    const userList = this.renderAciveUsers();
+    const { classes, users, room } = this.props;
+    const gameMaster = room && room.createdBy;
+    console.log("PROPS ACTIVE USERS", this.props);
+    const userList = this.renderActiveUsers();
     return (
       <div className={classes.root}>
         <List>
@@ -92,12 +93,12 @@ class ActiveUsers extends Component {
         <ListItem className={classes.listitem}>
           <ListItemText
             disableTypography
-            primary={<Typography type="body2" className={classes.userText}>david</Typography>}
-            secondary={<Typography type="body2" className={classes.pointsText}>Game Master</Typography>} />
+            primary={<Typography type="body2" className={classes.userText}>{gameMaster}</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>GAME MASTER</Typography>} />
         </ListItem>
           { userList }
         </List>
-        <button onClick={this.getNewUserData}>uppdatera</button>
+        <Button color="primary" size="small" variant="contained" style={{color: '#FFF', position: 'absolute', bottom: 24, left: 24}} onClick={this.getNewUserData}>UPPDATERA ANVÄNDARE</Button>
       </div>
     )
   }
