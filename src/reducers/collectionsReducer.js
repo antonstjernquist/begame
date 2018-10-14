@@ -72,7 +72,7 @@ const questData = {
 
 const initialState = {
   fetched: false,
-  data: {},
+  data: [],
 }
 
 
@@ -88,7 +88,9 @@ export default function reducer(state = initialState, action) {
 
     case 'COLLECTION_CREATED': {
       return {
-        ...state, fetched: true, data: action.payload,
+        ...state,
+        fetched: true,
+        data: [ ...state.data, action.payload ],
       };
     }
 

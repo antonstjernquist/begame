@@ -8,14 +8,7 @@ export function setCollection(data) {
   };
 }
 
-export function createCollectionAction(data) {
-  return {
-    type: 'COLLECTION_CREATED',
-    payload: data,
-  };
-}
-
-export const getQuestionCollections = (dispatch) => async (dispatch, getState) =>{
+export const getQuestionCollections = (dispatch) => async (dispatch, getState) => {
   const token = localStorage.getItem('token');
   console.log('Token is: ', token);
   if(!token || token === 'undefined'){
@@ -39,5 +32,34 @@ export const getQuestionCollections = (dispatch) => async (dispatch, getState) =
   } else {
     dispatch(showSnackbarError('Något gick fel vid hämting Quiz.'));
   }
+}
 
+export const createCollectionAction = (data, dispatch) => async (dispatch, getState) => {
+  const token = localStorage.getItem('token');
+  console.log('Token is: ', token);
+  if(!token || token === 'undefined'){
+      console.log('No token specified. No data to post for you.');
+      return;
+  }
+
+  const rawResponse = await fetch('https://stark-ocean-61611.herokuapp.com/api/question-collection/add', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    },
+    body: JSON.stringify (
+        data
+    )
+  });
+
+  const response = await rawResponse.json();
+  console.log('Response: ',response);
+
+  if(response.success){
+    console.log('success');
+  } else {
+    dispatch(showSnackbarError('Något gick fel vid hämting Quiz.'));
+  }
 }
