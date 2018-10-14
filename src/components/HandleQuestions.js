@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddQuest from './AddQuest.js';
 import Menu from './Menu.js';
-import { createCollectionAction } from '../actions/questionCollectionActions.js';
+import { createCollectionAction, updateCollectionAction, removeCollectionAction } from '../actions/questionCollectionActions.js';
 
 const styles = theme => ({
   root: {
@@ -40,10 +40,12 @@ class HandleQuestions extends Component {
   constructor(props){
     super(props);
     this.state = {
+        _id: null,
         isLoaded: false,
         questions: {},
         imgUrl: '',
         description: '',
+        new_quiz: true
     }
   }
 
@@ -53,8 +55,8 @@ class HandleQuestions extends Component {
     const collectionId = props.match && props.match.params && props.match.params.id;
 
     if ( collectionId && Object.keys(questionCollections).length > 0 && !isLoaded ) {
-      const { questions, imgUrl, title, description } = questionCollections[collectionId];
-      return ({questions, imgUrl, title, description, isLoaded: true })
+      const { questions, imgUrl, title, description, _id } = questionCollections[collectionId];
+      return ({questions, imgUrl, title, description, _id, isLoaded: true, new_quiz: false })
     }
 
     return null;
@@ -88,6 +90,7 @@ class HandleQuestions extends Component {
       const { dispatch } = this.props;
 
       const quiz = {
+          ...this.state,
           title: this.state.title,
           description: this.state.description,
           imgUrl: this.state.imgUrl,
@@ -97,10 +100,23 @@ class HandleQuestions extends Component {
 
       if(checkQuizData(quiz)){
           console.log('Passed checks, posting quiz to database.');
-          dispatch(createCollectionAction(quiz));
+
+          /* Update / Create */
+          if(this.state.new_quiz){
+              console.log('Creating new quiz!');
+              dispatch(createCollectionAction(quiz));
+          } else {
+              console.log('Updating old quiz!');
+              dispatch(updateCollectionAction(quiz));
+          }
       } else {
           console.log('Failed to pass checks.');
       }
+  }
+
+  removeQuiz = () => {
+      const { dispatch } = this.props;
+      dispatch(removeCollectionAction(this.state._id));
   }
 
   renderTableView = () => {
@@ -174,7 +190,7 @@ class HandleQuestions extends Component {
 
     return (
       <Fragment>
-        <Menu history={ history } adminPanel={true} user={this.props.user}/>
+        <Menu history={ history } createQuiz={ true }/>
         <div className={classes.root}>
           <TextField
             id="outlined-name"
@@ -220,6 +236,13 @@ class HandleQuestions extends Component {
           <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuiz }>
             Spara frågesamling
           </Button>
+
+          {!this.state.new_quiz &&
+              <Button variant="contained" color="secondary" className={classes.button} onClick= { this.removeQuiz }>
+                Radera frågesamling
+              </Button>
+          }
+
         </div>
       </Fragment>
     );
@@ -249,6 +272,5 @@ let mapStateToProps = store => ({
     users: store.users.data,
     questionCollections: store.questionCollections.data,
 });
-
 
 export default connect(mapStateToProps)(withStyles(styles)(HandleQuestions));

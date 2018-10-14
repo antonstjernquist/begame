@@ -8,6 +8,26 @@ export function setCollection(data) {
   };
 }
 
+export function addToCollection(data) {
+  return {
+    type: 'COLLECTION_ADD',
+    payload: data,
+  };
+}
+
+export function updateCollection(data) {
+  return {
+    type: 'COLLECTION_UPDATE',
+    payload: data,
+  };
+}
+export function deleteCollection(data) {
+  return {
+    type: 'COLLECTION_DELETE',
+    payload: data,
+  };
+}
+
 export const getQuestionCollections = (dispatch) => async (dispatch, getState) => {
   const token = localStorage.getItem('token');
   console.log('Token is: ', token);
@@ -25,7 +45,7 @@ export const getQuestionCollections = (dispatch) => async (dispatch, getState) =
   });
 
   const response = await rawResponse.json();
-  console.log('Response: ',response);
+  console.log('Response: ', response);
 
   if(response.success){
     dispatch(setCollection(response.content))
@@ -34,11 +54,12 @@ export const getQuestionCollections = (dispatch) => async (dispatch, getState) =
   }
 }
 
+/* Add collection */
 export const createCollectionAction = (data, dispatch) => async (dispatch, getState) => {
   const token = localStorage.getItem('token');
-  console.log('Token is: ', token);
+
   if(!token || token === 'undefined'){
-      console.log('No token specified. No data to post for you.');
+      console.log('No token specified.');
       return;
   }
 
@@ -58,8 +79,85 @@ export const createCollectionAction = (data, dispatch) => async (dispatch, getSt
   console.log('Response: ',response);
 
   if(response.success){
-    console.log('success');
+
+    /* Add to store */
+    dispatch(addToCollection(response.content));
+    
+    /* Implement snackbar here? */
+
   } else {
-    dispatch(showSnackbarError('Något gick fel vid hämting Quiz.'));
+    dispatch(showSnackbarError('Något gick fel vid skapande av Quiz.'));
+  }
+}
+
+/* Update collection */
+export const updateCollectionAction = (data, dispatch) => async (dispatch, getState) => {
+  const token = localStorage.getItem('token');
+
+  if(!token || token === 'undefined'){
+      console.log('No token specified.');
+      return;
+  }
+
+  const url = 'https://stark-ocean-61611.herokuapp.com/api/question-collection/update/' + data._id;
+  const rawResponse = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    },
+    body: JSON.stringify (
+      data
+    )
+  });
+
+  const response = await rawResponse.json();
+  console.log('Response: ', response);
+  console.log('Data we sent: ', data);
+  console.log('Data we retrieved: ', response.content);
+  if(response.success){
+
+    /* Update in store (Updating directly, since api sends back old data) */
+    dispatch(updateCollection(data));
+
+    /* Implement snackbar here? */
+
+  } else {
+    dispatch(showSnackbarError('Något gick fel vid uppdaterande av Quiz.'));
+  }
+}
+
+/* Remove collection */
+export const removeCollectionAction = (id, dispatch) => async (dispatch, getState) => {
+  const token = localStorage.getItem('token');
+
+  if(!token || token === 'undefined'){
+      console.log('No token specified.');
+      return;
+  }
+
+  const url = 'https://stark-ocean-61611.herokuapp.com/api/question-collection/delete/' + id;
+  const rawResponse = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': token,
+    }
+  });
+
+  const response = await rawResponse.json();
+  console.log('Response: ', response);
+
+  if(response.success){
+
+      /* Remove from store */
+      dispatch(deleteCollection(response.content));
+
+      /* Implement snackbar here? */
+
+  } else {
+    dispatch(showSnackbarError('Något gick fel vid radering av Quiz.'));
   }
 }

@@ -86,14 +86,31 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    case 'COLLECTION_CREATED': {
+    case 'COLLECTION_ADD': {
       return {
         ...state,
-        fetched: true,
         data: [ ...state.data, action.payload ],
       };
     }
+    case 'COLLECTION_UPDATE': {
+      const indexOfOldCollection = state.data.findIndex(x => x._id === action.payload._id);
 
+      return {
+        ...state,
+        data: [
+          ...state.data.slice(0, indexOfOldCollection),
+          action.payload,
+          ...state.data.slice(indexOfOldCollection + 1)
+        ]
+      };
+    }
+    case 'COLLECTION_DELETE': {
+      return {
+        ...state,
+        data: state.data.filter(x => x._id !== action.payload._id),
+      };
+    }
+    /* state.itemData.present.filter(x => x.uid !== action.item.uid) */
     default:
       return state;
   }
