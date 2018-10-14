@@ -57,7 +57,7 @@ class Adminpanel extends Component {
         console.log('Setting auth: ', auth);
         dispatch(setUser(JSON.parse(localStorage.getItem('auth'))));
     } else {
-        history.push('/');
+        history.push('/admin');
     }
   }
 
@@ -81,7 +81,9 @@ class Adminpanel extends Component {
   }
 
   createQuiz = () => {
+      const { history } = this.props;
       console.log('Creating quiz');
+      history.push('/admin/collection');
   }
 
   editCollection = (collectionId) => {
