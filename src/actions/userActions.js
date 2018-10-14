@@ -32,7 +32,6 @@ export const getUserInRoom = (data, dispatch) => async (dispatch, getState) => {
 
   const response = await rawResponse.json();
   if(response.success){
-    console.log('users recived: ', response.content);
     dispatch(updateAllUserStats(response.content))
   } else {
    dispatch(showSnackbarError('Något gick fel vid hämtning av användare.'));

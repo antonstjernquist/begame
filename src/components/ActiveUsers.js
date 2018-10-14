@@ -68,7 +68,7 @@ class ActiveUsers extends Component {
   }
 
   getNewUserData = () => {
-    const {dispatch, roomId } = this.props;
+    const { dispatch, roomId } = this.props;
 
     if (roomId){
       console.log("get rooms");

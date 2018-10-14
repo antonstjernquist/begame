@@ -29,6 +29,10 @@ const styles = theme => ({
     maxWidth: 380,
     marginBottom: 30
   },
+  cardAction: {
+    width: 350,
+    maxWidth: 380,
+  },
   orangeAvatar: {
     color: '#fff',
     backgroundColor: '#a7d129',
@@ -69,27 +73,20 @@ class Room extends Component {
     // ska inte visas så tyldigt att grannen kan kolla :)
     // oom användaren svarat rätt så uppdaterar vi användaren med ny poäng..
     //
-    if (selected === 'selectedA') {
-      this.setState({ selectedA: true, selectedB: false, selectedC: false, selectedD: false, answered: true })
-    } else if (selected === 'selectedB') {
-      this.setState({ selectedA: false, selectedB: true, selectedC: false, selectedD: false, answered: true })
-    } else if (selected === 'selectedC') {
-      this.setState({ selectedA: false, selectedB: false, selectedC: true, selectedD: false, answered: true })
-    } else if (selected === 'selectedD') {
-      this.setState({ selectedA: false, selectedB: false, selectedC: false, selectedD: true, answered: true })
-    }
   }
 
 
   createAnswerButtons = (answers, correctAnswer) => {
     const { classes } = this.props;
-    const listAlpah = ['a', 'b', 'c','d'];
+    const listAlpah = ['a', 'b', 'c', 'd'];
+
+    console.log("ROOMPROPS", this.props);
     return Object.values(answers).map( (item, index ) => (
       <Fragment key={index}>
-        <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
-          <CardActionArea>
+        <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)}>
+          <CardActionArea className={classes.cardAction}>
             <CardContent>
-              <Avatar className={classes.orangeAvatar}>{listAlpah[index]}</Avatar>
+              <Avatar className={classes.orangeAvatar}>{listAlpah[index].toUpperCase()}</Avatar>
               <Typography component="p">
                 { item }
               </Typography>
