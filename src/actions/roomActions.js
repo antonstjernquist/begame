@@ -70,7 +70,7 @@ export const getRoomFromDb = (roomId, dispatch) => async (dispatch, getState) =>
 
   if(response.success){
     console.log('Response from createRoom: ', response);
-    dispatch(setRoom(response.content))
+    dispatch(setRoom(response.content[0]))
     // history.push('/project/' + response.content.roomId);
   } else {
       console.log(response);

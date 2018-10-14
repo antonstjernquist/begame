@@ -121,7 +121,7 @@ class Home extends Component {
             </div>
             <div className={classes.margin}>
               <TextField
-                type="number"
+                type="text"
                 onChange={this.handleChange('roomId')}
                 id='input-with-icon-grid2'
                 label='#ID'
