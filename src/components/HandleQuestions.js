@@ -16,7 +16,7 @@ import { createCollectionAction, updateCollectionAction, removeCollectionAction 
 
 const styles = theme => ({
   root: {
-    width: 'calc(100% - 25px)',
+    width: 'calc(100% - 75px)',
     marginLeft: 25,
   },
   heading: {
