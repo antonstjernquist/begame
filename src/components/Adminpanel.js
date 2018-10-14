@@ -104,7 +104,6 @@ class Adminpanel extends Component {
               image={x.imgUrl}
               title="Contemplative Reptile"
             />
-
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
                 {x.name}
@@ -137,17 +136,13 @@ class Adminpanel extends Component {
     return (
       <Fragment>
         <Menu history={ history } adminPanel={true} auth={this.props.auth}/>
+          <Button variant="contained" color="primary" className={classes.button} onClick={this.createQuiz}>
+            Skapa quiz
+          </Button>
         <div className="adminpanel">
-
-
-          <h1>Adminpanel</h1>
           <div>
-            <Button variant="contained" color="primary" className={classes.button} onClick={this.createQuiz}>
-              Skapa quiz
-            </Button>
-            <h2> Starta ett quiz </h2>
             <div className="listDiv">
-                {cardList}
+              {cardList}
             </div>
           </div>
         </div>
