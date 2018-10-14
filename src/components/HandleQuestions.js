@@ -13,7 +13,8 @@ import Menu from './Menu.js';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: 'calc(100% - 25px)',
+    marginLeft: 25,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -32,7 +33,7 @@ class HandleQuestions extends Component {
     this.state = {
         isLoaded: false,
         questions: {},
-        imgUrl: {},
+        imgUrl: '',
         description: '',
     }
 
@@ -76,8 +77,10 @@ class HandleQuestions extends Component {
   renderTableView = () => {
     const { classes, questionCollections } = this.props;
     const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
-    if (Object.keys(questionCollections).length === 0 || !collectionId )
-      return null;
+    if(Object.keys(questionCollections).length > 0){
+      console.log('Keep going.');
+    } else if (Object.keys(questionCollections).length === 0 || !collectionId )
+        return null;
 
     const { questions } = questionCollections[collectionId]
     return Object.keys(questions).map( (itemKey ,index) => {

@@ -83,7 +83,7 @@ class Adminpanel extends Component {
   createQuiz = () => {
       const { history } = this.props;
       console.log('Creating quiz');
-      history.push('/admin/collection');
+      history.push('/admin/collection/');
   }
 
   editCollection = (collectionId) => {
