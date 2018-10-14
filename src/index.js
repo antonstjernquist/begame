@@ -11,7 +11,6 @@ import store from './store.js';
 /* Router */
 import { BrowserRouter } from 'react-router-dom';
 
-
 ReactDOM.render((
     <Provider store={store}>
       <BrowserRouter>

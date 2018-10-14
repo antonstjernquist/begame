@@ -1,0 +1,15 @@
+.projectPanel {
+    width: 80%;
+    margin: auto;
+}
+
+.questionAndActiveUsersWrapper {
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+}
+
+
+.questionAndActiveUsersWrapper > .activeUsersDiv {
+    margin-left: 25px;
+}

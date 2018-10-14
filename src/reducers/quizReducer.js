@@ -1,16 +1,18 @@
 export const ADD_TO_VALUE_EXAMPLE = 'ADD_TO_VALUE_EXAMPLE';
 
-let reducer = (state = { value: 0 }, action ) => {
+const initialState = {
+  title: null,
+}
+
+export default function reducer(state = initialState, action ) {
 
   switch ( action.type ) {
 
     case ADD_TO_VALUE_EXAMPLE:
-      return state += action.data ? action.data : 1;
+      return {...state, title: action.payload}
 
     default:
       return state;
   }
 
 }
-
-export default reducer;
