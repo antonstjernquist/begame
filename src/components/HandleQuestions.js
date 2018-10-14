@@ -7,9 +7,11 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
+
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddQuest from './AddQuest.js';
 import Menu from './Menu.js';
+import { createCollectionAction } from '../actions/questionCollectionActions.js';
 
 const styles = theme => ({
   root: {
@@ -36,7 +38,6 @@ class HandleQuestions extends Component {
         imgUrl: '',
         description: '',
     }
-
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -48,6 +49,7 @@ class HandleQuestions extends Component {
       const { questions, imgUrl, title, description } = questionCollections[collectionId];
       return ({questions, imgUrl, title, description, isLoaded: true })
     }
+    
     return null;
   }
 
@@ -71,16 +73,13 @@ class HandleQuestions extends Component {
     }
   }
 
-
-
-
   renderTableView = () => {
     const { classes, questionCollections } = this.props;
     const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
-    if(Object.keys(questionCollections).length > 0){
-      console.log('Keep going.');
-    } else if (Object.keys(questionCollections).length === 0 || !collectionId )
+
+    if (Object.keys(questionCollections).length === 0 || !collectionId ) {
         return null;
+    }
 
     const { questions } = questionCollections[collectionId]
     return Object.keys(questions).map( (itemKey ,index) => {

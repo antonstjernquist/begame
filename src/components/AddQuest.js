@@ -72,6 +72,11 @@ class AddQuest extends Component {
     )
   }
 
+
+  saveQuestion = () => {
+      console.log('Saving.');
+  }
+
   // add and remove options based on listAlpah
   changeAnswersOption = (add) => {
     const { answers } = { ...this.state};
@@ -114,7 +119,7 @@ class AddQuest extends Component {
           <Button variant="contained" color="secondary" className={classes.button} onClick={ ()=>this.changeAnswersOption(false)}>
             Ta bort svarsalternativ
           </Button>
-          <Button variant="contained" color="primary" className={classes.button} onClick= { ()=> console.log('AWESOME!!! SAVE IT :) ') }>
+          <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuestion }>
             Spara frågan
           </Button>
         </div>

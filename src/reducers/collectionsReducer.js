@@ -79,11 +79,20 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+
     case 'COLLECTION_RECIEVED': {
       return {
         ...state, fetched: true, data: action.payload,
       };
     }
-    default: return state;
+
+    case 'COLLECTION_CREATED': {
+      return {
+        ...state, fetched: true, data: action.payload,
+      };
+    }
+
+    default:
+      return state;
   }
 }

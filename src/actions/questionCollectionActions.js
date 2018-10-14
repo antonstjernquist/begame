@@ -8,6 +8,13 @@ export function setCollection(data) {
   };
 }
 
+export function createCollectionAction(data) {
+  return {
+    type: 'COLLECTION_CREATED',
+    payload: data,
+  };
+}
+
 export const getQuestionCollections = (dispatch) => async (dispatch, getState) =>{
   const token = localStorage.getItem('token');
   console.log('Token is: ', token);
