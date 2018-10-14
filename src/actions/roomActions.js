@@ -42,3 +42,38 @@ export const createRoomAction = (data, dispatch) => async (dispatch, getState) =
   }
 
 }
+
+
+
+
+
+export const getRoomFromDb = (roomId, dispatch) => async (dispatch, getState) => {
+
+
+
+  // const token = localStorage.getItem('token');
+  console.log('RoomId is i actions: ', roomId);
+  // if(!token || token === 'undefined'){
+  //     console.log('No token specified. No data to retrieve for you.');
+  //     return;
+  // }
+
+  const rawResponse = await fetch(`https://stark-ocean-61611.herokuapp.com/api/rooms/${roomId}`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const response = await rawResponse.json();
+
+  if(response.success){
+    console.log('Response from createRoom: ', response);
+    dispatch(setRoom(response.content))
+    // history.push('/project/' + response.content.roomId);
+  } else {
+      console.log(response);
+  }
+
+}

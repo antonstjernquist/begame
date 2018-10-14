@@ -10,6 +10,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
+import { getRoomFromDb } from '../actions/roomActions'
 
 //Imported components
 import Menu from './Menu';
@@ -47,6 +48,12 @@ class Room extends Component {
       selectedD: false,
       correctAnswer: 'selectedB'
     }
+
+    const roomId = (props.match && props.match.params && props.match.params.id) || false;
+    if (roomId)
+    console.log('roomId är: ', roomId);
+    props.dispatch(getRoomFromDb(roomId))
+
   }
 
   componentWillMount(){
