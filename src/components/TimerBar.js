@@ -79,7 +79,11 @@ class TimerBar extends Component {
   };
 
   start = () => {
-    if (!this.state.lockStart){
+    const { lockStart, inProgress } = this.state;
+    if (!lockStart){
+      if ( !inProgress ) {
+        this.props.nextQuest();
+      }
       this.setState({lockStart: true, showEndTime:false }, ()=>{
         this.timer = setInterval(this.progress, 1000);
       })

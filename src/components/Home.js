@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { showSnackbarError } from '../actions/errorHandlingActions';
+import { loginAsStudent } from '../actions/authActions';
 
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
@@ -81,8 +82,13 @@ class Home extends Component {
   }
 
   login = (username, roomId) => {
-    const { history } = this.props;
-    history.push(`/room/${roomId}`, username)
+    const { history, dispatch } = this.props;
+    const data = {
+      history,
+      username,
+      roomId
+    }
+    dispatch(loginAsStudent(data));
   }
 
   render() {

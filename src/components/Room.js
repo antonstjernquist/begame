@@ -1,20 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withStyles } from '@material-ui/core/styles';
-import { showSnackbarMessage } from '../actions/errorHandlingActions';
 
 //Material UI
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
-import { getRoomFromDb } from '../actions/roomActions'
+import Button from '@material-ui/core/Button';
 
 //Imported components
 import Menu from './Menu';
+import { showSnackbarMessage } from '../actions/errorHandlingActions';
 import ErrorHandling from './ErrorHandling.js';
+import { getRoomFromDb } from '../actions/roomActions'
 
 const styles = theme => ({
   root: {
@@ -33,6 +34,9 @@ const styles = theme => ({
     backgroundColor: '#a7d129',
     margin: '0px auto',
     marginBottom: 10,
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -80,7 +84,6 @@ class Room extends Component {
   createAnswerButtons = (answers, correctAnswer) => {
     const { classes } = this.props;
     const listAlpah = ['a', 'b', 'c','d'];
-    console.log('answers:', answers);
     return Object.values(answers).map( (item, index ) => (
       <Fragment key={index}>
         <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
@@ -107,11 +110,13 @@ class Room extends Component {
     if ( !questions )
       return (<div>Ej startad ännu</div>)
 
-    let currentQuestion  = room && room.currentQuestion;
-    currentQuestion = 1;
+    const currentQuestion  = room && room.currentQuestion;
 
     if (currentQuestion === 0)
       return (<div>Ej startad ännu</div>)
+
+    if (currentQuestion === -1)
+      return (<div>SLUT</div>)
 
     const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
     const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer)
@@ -131,18 +136,26 @@ class Room extends Component {
 
 
   render() {
-    const { history, classes, room } = this.props;
+    const { history, classes } = this.props;
 
     const viewQuest = this.renderQuestion();
 
     return (
       <Fragment>
         <Menu roomId={this.state.id} history={history}/>
+
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
+          <Button
+            variant="contained"
+            className={classes.button}
+            onClick={this.updateQuiz}
+            color="primary"
+          >
+            Uppdatera quiz gå till nästa fråga
+          </Button>
         </div>
       <ErrorHandling />
-        <button onClick={this.updateQuiz}>Uppdatera quiz gå till nästa fråga</button>
       </Fragment>
     )
   }
@@ -158,57 +171,3 @@ let mapStateToProps = store => ({
 });
 
 export default compose(withStyles(styles), connect(mapStateToProps))(Room);
-
-
-
-//
-//
-// <Fragment>
-//   <h1 style={{fontSize: '3.5em', color: '#a7d129', fontWeight: 'bold', marginBottom: 100}}>What is a Lizard?</h1>
-//   <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 50, flexWrap: 'wrap'}}>
-//     <Card className={classes.card} onClick={() => this.selectedAnswer('selectedA')} raised={this.state.selectedA}>
-//     <CardActionArea>
-//       <CardContent>
-//       <Avatar className={classes.orangeAvatar}>A</Avatar>
-//         <Typography component="p">
-//           Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-//           across all continents except Antarctica
-//         </Typography>
-//       </CardContent>
-//     </CardActionArea>
-//   </Card>
-//   <Card className={classes.card} onClick={() => this.selectedAnswer('selectedB')} raised={this.state.selectedB}>
-//     <CardActionArea>
-//       <CardContent>
-//         <Avatar className={classes.orangeAvatar}>B</Avatar>
-//         <Typography component="p">
-//           Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-//           across all continents except Antarctica
-//         </Typography>
-//       </CardContent>
-//     </CardActionArea>
-//   </Card>
-//   <Card className={classes.card} onClick={() => this.selectedAnswer('selectedC')} raised={this.state.selectedC}>
-//     <CardActionArea>
-//       <CardContent>
-//         <Avatar className={classes.orangeAvatar}>C</Avatar>
-//         <Typography component="p">
-//           Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-//           across all continents except Antarctica
-//         </Typography>
-//       </CardContent>
-//     </CardActionArea>
-//   </Card>
-//   <Card className={classes.card} onClick={() => this.selectedAnswer('selectedD')} raised={this.state.selectedD}>
-//     <CardActionArea>
-//       <CardContent>
-//         <Avatar className={classes.orangeAvatar}>D</Avatar>
-//         <Typography component="p">
-//           Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-//           across all continents except Antarctica
-//         </Typography>
-//       </CardContent>
-//     </CardActionArea>
-//   </Card>
-//   </div>
-// </Fragment>)
