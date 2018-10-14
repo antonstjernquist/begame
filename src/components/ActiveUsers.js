@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -6,7 +6,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import People from '@material-ui/icons/People';
-
+import { connect } from 'react-redux';
+import { getUserInRoom } from '../actions/userActions.js'
 const styles = theme => ({
   root: {
     width: '100%',
@@ -37,60 +38,76 @@ const styles = theme => ({
   }
 });
 
-function ActiveUsers(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <List>
-      <ListItem className={classes.listitem}>
-      <People className={classes.rightIcon} />
+
+
+class ActiveUsers extends Component {
+  constructor(props){
+    super(props);
+    const { fetched, dispatch, roomId } = props;
+
+    if (!fetched && roomId){
+      console.log("get rooms");
+      dispatch(getUserInRoom({roomId}))
+    }
+  }
+
+  renderAciveUsers = () => {
+    const { classes, users } = this.props;
+    if (!users){
+      return ( <div>User is missing</div>)
+    }
+    console.log(users);
+    return users.map( user => (
+      <ListItem className={classes.listitem} key={user['_id']}>
         <ListItemText
           disableTypography
-          primary={<Typography type="body2" className={classes.onlineText}>6</Typography>} />
+          primary={<Typography type="body2" className={classes.userText}>{user.name}</Typography>}
+          secondary={<Typography type="body2" className={classes.pointsText}>{user.points}</Typography>} />
       </ListItem>
-      <ListItem className={classes.listitem}>
-        <ListItemText
-          disableTypography
-          primary={<Typography type="body2" className={classes.userText}>david</Typography>}
-          secondary={<Typography type="body2" className={classes.pointsText}>Game Master</Typography>} />
-      </ListItem>
+    ));
+  }
+
+  getNewUserData = () => {
+    const {dispatch, roomId } = this.props;
+
+    if (roomId){
+      console.log("get rooms");
+      dispatch(getUserInRoom({roomId}))
+    }
+  }
+
+  render(){
+    const { classes, users } = this.props;
+    console.log('användare: ', users);
+    const userList = this.renderAciveUsers();
+    return (
+      <div className={classes.root}>
+        <List>
         <ListItem className={classes.listitem}>
+        <People className={classes.rightIcon} />
           <ListItemText
             disableTypography
-            primary={<Typography type="body2" className={classes.userText}>sabrinawolfpalm</Typography>}
-            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 120</Typography>} />
+            primary={<Typography type="body2" className={classes.onlineText}>{users.length || 0}</Typography>} />
         </ListItem>
         <ListItem className={classes.listitem}>
           <ListItemText
             disableTypography
-            primary={<Typography type="body2" className={classes.userText}>antonstjernqvist</Typography>}
-            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 19</Typography>} />
+            primary={<Typography type="body2" className={classes.userText}>david</Typography>}
+            secondary={<Typography type="body2" className={classes.pointsText}>Game Master</Typography>} />
         </ListItem>
-        <ListItem className={classes.listitem}>
-          <ListItemText
-            disableTypography
-            primary={<Typography type="body2" className={classes.userText}>gustavkarlstrom</Typography>}
-            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 18</Typography>} />
-        </ListItem>
-        <ListItem className={classes.listitem}>
-          <ListItemText
-            disableTypography
-            primary={<Typography type="body2" className={classes.userText}>johanaugustsson</Typography>}
-            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 17</Typography>} />
-        </ListItem>
-        <ListItem className={classes.listitem}>
-          <ListItemText
-            disableTypography
-            primary={<Typography type="body2" className={classes.userText}>antonnordgren</Typography>}
-            secondary={<Typography type="body2" className={classes.pointsText}>poäng: 17</Typography>} />
-        </ListItem>
-      </List>
-    </div>
-  );
+          { userList }
+        </List>
+        <button onClick={this.getNewUserData}>uppdatera</button>
+      </div>
+    )
+  }
 }
 
-ActiveUsers.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+let mapStateToProps = store => ({
+    users: store.users.data,
+    fetched: store.users.fetched,
+    room: store.activeRoom.data
+});
 
-export default withStyles(styles)(ActiveUsers);
+
+export default connect(mapStateToProps)(withStyles(styles)(ActiveUsers));

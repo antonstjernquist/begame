@@ -4,30 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer from './reducers/rootReducer.js';
 
-const initialState = {
-    users: [
-        {
-            name: 'Johan',
-            points: 15
-        },
-        {
-            name: 'Anton S',
-            points: 17
-        },
-        {
-            name: 'Sabrina',
-            points: 15
-        },
-        {
-            name: 'Gustav',
-            points: 15
-        },
-        {
-            name: 'Anton N',
-            points: 15
-        },
-    ],
-};
+const initialState = {};
 
 export default createStore(
   rootReducer,

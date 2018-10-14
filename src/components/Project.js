@@ -157,7 +157,7 @@ class Room extends Component {
     return (
       <Fragment>
         <Menu roomId={this.state.id} history={history}/>
-        <ActiveUsers />
+        <ActiveUsers roomId={this.state.id}/>
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
           <TimerBar nextQuest={this.nextQuestion} />

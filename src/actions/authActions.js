@@ -1,6 +1,6 @@
 import { showSnackbarError } from './errorHandlingActions.js';
 import { updateUserStats } from './userActions.js';
-//
+
 export function setUser(data) {
   return {
     type: 'AUTH_RECEIVED',
@@ -52,13 +52,6 @@ export const loginAsAdmin = (data, dispatch) => async (dispatch, getState) => {
 export const loginAsStudent = (data, dispatch) => async (dispatch, getState) => {
   const { history, username, roomId } = data;
 
-
-  // lägg till användaren i rummet..
-  // logga in och byt sida
-  // getRoomFromDb().then( ()=>{
-  //
-  // })
-
   const rawResponse = await fetch('https://stark-ocean-61611.herokuapp.com/api/activeUsers/add', {
     method: 'POST',
     headers: {
@@ -83,9 +76,6 @@ export const loginAsStudent = (data, dispatch) => async (dispatch, getState) => 
       uid: response.content['_id'],
       points: 0,
     }
-    console.log('repsonse data in auth:', response.content);
-    // dispatch(setUser(data))
-
     dispatch(updateUserStats(data));
     history.push(`/room/${roomId}`);
   } else {
