@@ -16,8 +16,12 @@ import { createCollectionAction, updateCollectionAction, removeCollectionAction 
 
 const styles = theme => ({
   root: {
-    width: 'calc(100% - 75px)',
+    width: 'calc(100% - 50px)',
     marginLeft: 25,
+  },
+  expand: {
+    width: 'calc(100% - 68px)',
+    marginLeft: 10,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -98,6 +102,13 @@ class HandleQuestions extends Component {
           category: 'Temporary',
       }
 
+      /* Add order to questions */
+      let index = 1;
+      for(let q in quiz.questions){
+          quiz.questions[q].order = index;
+          index++;
+      }
+
       if(checkQuizData(quiz)){
           console.log('Passed checks, posting quiz to database.');
 
@@ -135,7 +146,7 @@ class HandleQuestions extends Component {
     return Object.keys(questions).map( (key ,index) => {
         const item = questions[key];
         return (
-          <ExpansionPanel key={index}>
+          <ExpansionPanel key={index} className={classes.expand}>
             <ExpansionPanelSummary >
               <Typography className={classes.heading}>{item.question}</Typography>
             </ExpansionPanelSummary>
