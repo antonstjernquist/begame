@@ -47,7 +47,8 @@ class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.match.params.id
+      id: props.match.params.id,
+      showTimer: true,
     }
 
     const roomId = (props.match && props.match.params && props.match.params.id) || false;
@@ -66,20 +67,15 @@ class Room extends Component {
     console.log('vald svar',selected);
     console.log('korrekt answer', correctAnswer);
     const isRight = selected === correctAnswer;
-    console.log(isRight);
+    console.log('V? ', isRight);
+    if ( isRight){
+      console.log('Rätt svar!');
+    }else {
+      console.log('Fel svar!');
+    }
     // här ska vi slänga in en koll mot prop och kontroller om användaren svarade rätt eller ej
     // ska inte visas så tyldigt att grannen kan kolla :)
     // oom användaren svarat rätt så uppdaterar vi användaren med ny poäng..
-    //
-    if (selected === 'selectedA') {
-      this.setState({ selectedA: true, selectedB: false, selectedC: false, selectedD: false, answered: true })
-    } else if (selected === 'selectedB') {
-      this.setState({ selectedA: false, selectedB: true, selectedC: false, selectedD: false, answered: true })
-    } else if (selected === 'selectedC') {
-      this.setState({ selectedA: false, selectedB: false, selectedC: true, selectedD: false, answered: true })
-    } else if (selected === 'selectedD') {
-      this.setState({ selectedA: false, selectedB: false, selectedC: false, selectedD: true, answered: true })
-    }
   }
 
 
@@ -137,8 +133,13 @@ class Room extends Component {
         </Paper>
       )
 
-    if (currentQuestion === -1)
+    if (currentQuestion === -1) {
+      if( this.state.showTimer)
+        this.setState({showTimer: false})
       return (<div>SLUT</div>)
+    } else if (!this.state.showTimer){
+      this.setState({showTimer:true})
+    }
 
     const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
     const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer)
@@ -182,6 +183,8 @@ class Room extends Component {
 
   render() {
     const { history } = this.props;
+    const { showTimer } = this.state;
+
     const viewQuest = this.renderQuestion();
 
     return (
@@ -190,7 +193,7 @@ class Room extends Component {
         <ActiveUsers roomId={this.state.id}/>
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
-          <TimerBar nextQuest={this.nextQuestion}  questionOpenForAnswer={this.questionOpenForAnswer}/>
+          {showTimer && <TimerBar nextQuest={this.nextQuestion}  questionOpenForAnswer={this.questionOpenForAnswer}/>}
         </div>
       <ErrorHandling />
       </Fragment>

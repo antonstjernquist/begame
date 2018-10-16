@@ -90,22 +90,27 @@ class Room extends Component {
     localStorage.setItem('student', JSON.stringify(student));
 
     if (isRight) {
+      console.log('rätt svar!');
       dispatch(getRoomFromDb(roomId)).then( ()=>{
         const { openForAnswer } = this.props.room;
-        const { questionClosed } = this.state;
 
-        // här ska vi lägga in så att openForAnswer sätts..
-
-        if ( !questionClosed || true ) {
+        // check if current question is open for answers
+        if ( openForAnswer ) {
+          console.log('question is open! :)');
           let { points,uid } = this.props.user;
           points += 10;
           dispatch(updateUserInDb({uid,points})).then( ()=>{
             this.setState({rightAnswer: true, questionClosed: true}) // dont remove this.. need for update points also.. its to deep for react to handle
           })
+        } else {
+          console.log('qusetion is closed :(');
         }
       })
+    } else {
+      this.setState({rightAnswer: false,  questionClosed: true }) // dont remove this.. need for update points also.. its to deep for react to handle
+      console.log('fel svar!');
     }
-    this.setState({rightAnswer: false,  questionClosed: true }) // dont remove this.. need for update points also.. its to deep for react to handle
+
 
   }
 
