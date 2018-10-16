@@ -1,46 +1,39 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-
-/* Material UI */
+import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
+import { showSnackbarMessage } from '../actions/errorHandlingActions';
+import { getRoomFromDb, updateRoomInDb } from '../actions/roomActions'
+
+//Material UI
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
 
-/* Components */
-import Menu from './Menu';
+//Imported components
 import ActiveUsers from './ActiveUsers';
 import TimerBar from './TimerBar';
+import Menu from './Menu';
+import ErrorHandling from './ErrorHandling.js';
 
-/* Denna komponent visar vilka olika quiz man kan starta samt "Skapa ny quiz" */
 const styles = theme => ({
-  main: {
-    minHeight: 'calc(100vh)',
-  },
-  input: {
-    display: 'none',
-  },
-  card: {
-    maxWidth: 380,
-    marginBottom: 30
-  },
-  media: {
-    height: 140,
-  },
   root: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     width: 450,
-    margin: 'auto'
+    margin: '50px auto'
   },
-  stepper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    width: 725,
-    margin: 'auto'
+  card: {
+    maxWidth: 380,
+    marginBottom: 30
+  },
+  cardAction: {
+    width: 350,
+    maxWidth: 380,
   },
   orangeAvatar: {
     color: '#fff',
@@ -50,73 +43,165 @@ const styles = theme => ({
   },
 });
 
-
-class Project extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        id: props.match.params.id,
-        correctAnswer: 'selectedB'
-      }
+class Room extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: props.match.params.id
     }
 
-  render() {
+    const roomId = (props.match && props.match.params && props.match.params.id) || false;
+    if (roomId)
+    console.log('roomId är: ', roomId);
+    props.dispatch(getRoomFromDb(roomId))
 
-    const { classes, history } = this.props;
+  }
+
+  componentWillMount(){
+    const { dispatch } = this.props;
+    dispatch(showSnackbarMessage(`Välkommen till rum #${this.state.id}`));
+  }
+
+
+  selectedAnswer = (selected, correctAnswer) => {
+    console.log('vald svar',selected);
+    console.log('korrekt answer', correctAnswer);
+    const isRight = selected === correctAnswer;
+    console.log(isRight);
+    // här ska vi slänga in en koll mot prop och kontroller om användaren svarade rätt eller ej
+    // ska inte visas så tyldigt att grannen kan kolla :)
+    // oom användaren svarat rätt så uppdaterar vi användaren med ny poäng..
+    //
+    if (selected === 'selectedA') {
+      this.setState({ selectedA: true, selectedB: false, selectedC: false, selectedD: false, answered: true })
+    } else if (selected === 'selectedB') {
+      this.setState({ selectedA: false, selectedB: true, selectedC: false, selectedD: false, answered: true })
+    } else if (selected === 'selectedC') {
+      this.setState({ selectedA: false, selectedB: false, selectedC: true, selectedD: false, answered: true })
+    } else if (selected === 'selectedD') {
+      this.setState({ selectedA: false, selectedB: false, selectedC: false, selectedD: true, answered: true })
+    }
+  }
+
+
+  createAnswerButtons = (answers, correctAnswer) => {
+    const { classes } = this.props;
+    const listAlpah = ['a', 'b', 'c','d'];
+    console.log('answers:', answers);
+    return Object.values(answers).map( (item, index ) => (
+      <Fragment key={index}>
+        <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
+          <CardActionArea className={classes.cardAction}>
+            <CardContent>
+              <Avatar className={classes.orangeAvatar}>{listAlpah[index]}</Avatar>
+              <Typography component="p">
+                { item }
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Fragment>
+    ))
+  }
+
+
+  renderQuestion = () => {
+    const { room, classes } = this.props;
+    const { quiz } = room || false;
+    const { questions } = quiz || false;
+    const title = room && room.quiz && room.quiz.title;
+    const description = room && room.quiz && room.quiz.description;
+
+    if ( !questions )
+      return (
+        <Paper className={classes.root} elevation={1}>
+          <Typography variant="h5" component="h3">
+          {title}
+          </Typography>
+          <Typography component="p">
+          {description}
+          </Typography>
+        </Paper>
+      )
+
+    let currentQuestion  = room && room.currentQuestion;
+
+    if (currentQuestion === 0)
+      return (
+        <Paper className={classes.root} elevation={1}>
+          <Typography variant="h5" component="h3">
+          {title}
+          </Typography>
+          <Typography component="p">
+          {description}
+          </Typography>
+        </Paper>
+      )
+
+    if (currentQuestion === -1)
+      return (<div>SLUT</div>)
+
+    const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
+    const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer)
+
     return (
-          <div className={classes.main}>
-              <Menu roomId={this.state.id} history={history}/>
-              <ActiveUsers />
-              <div style={{width: 800, height: 300, float: 'left', margin: '100px auto', textAlign: 'center', marginLeft: 400, marginTop: 50 }}>
-                <h1 style={{fontSize: '3.5em', color: '#a7d129', fontWeight: 'bold', marginBottom: 100}}>What is a Lizard?</h1>
-                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 50, flexWrap: 'wrap'}}>
-                  <Card className={classes.card} raised={this.state.selectedA}>
-                    <CardContent>
-                    <Avatar className={classes.orangeAvatar}>A</Avatar>
-                      <Typography component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-                <Card className={classes.card} raised={this.state.selectedB}>
-                    <CardContent>
-                      <Avatar className={classes.orangeAvatar}>B</Avatar>
-                      <Typography component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-                <Card className={classes.card} raised={this.state.selectedC}>
-                    <CardContent>
-                      <Avatar className={classes.orangeAvatar}>C</Avatar>
-                      <Typography component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-                <Card className={classes.card} raised={this.state.selectedD}>
-                    <CardContent>
-                      <Avatar className={classes.orangeAvatar}>D</Avatar>
-                      <Typography component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-                </div>
-                <TimerBar />
-              </div>
-          </div>
+      <Fragment>
+        <h1 style={{fontSize: '3.5em', color: '#a7d129', fontWeight: 'bold', marginBottom: 100}}>{selectedQuestion.question}</h1>
+        <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 50, flexWrap: 'wrap'}}>
+          {answer}
+        </div>
+      </Fragment>)
+  }
+
+  // switches to next question.
+  nextQuestion = () =>{
+    const roomIdInDb = this.props.room['_id'];
+    let { currentQuestion, quiz } = this.props.room
+    currentQuestion += 1;
+
+    // if we got to the end of questions we set it to -1 to display end
+    if (Object.keys(quiz.questions).length < currentQuestion ){
+      console.log('inne i fel ');
+      currentQuestion = -1;
+    }
+
+    const data = {
+      roomIdInDb,
+      update: {
+        currentQuestion
+      }
+    }
+    this.props.dispatch(updateRoomInDb(data));
+  }
+
+
+  render() {
+    const { history } = this.props;
+    const viewQuest = this.renderQuestion();
+
+    console.log('props', this.props);
+
+    return (
+      <Fragment>
+        <Menu roomId={this.state.id} history={history}/>
+        <ActiveUsers roomId={this.state.id}/>
+        <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
+          {viewQuest}
+          <TimerBar nextQuest={this.nextQuestion} />
+        </div>
+      <ErrorHandling />
+      </Fragment>
     )
   }
 }
 
 
-let mapStateToProps = state => ({
-    value: state.value
+let mapStateToProps = store => ({
+    snackbarOpen: store.errorHandling.snackbarOpen,
+    error: store.errorHandling.error,
+    message: store.errorHandling.message,
+    room: store.activeRoom.data,
+    fetched: store.activeRoom.fetched,
 });
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Project));
+export default compose(withStyles(styles), connect(mapStateToProps))(Room);

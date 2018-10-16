@@ -92,7 +92,7 @@ class AdminLogin extends Component {
     }
   }
 
-// staten sätts varje gång komponenten monteras.. böver ej sättas nedan.  
+// staten sätts varje gång komponenten monteras.. böver ej sättas nedan.
   // componentWillUnmount() {
   //   console.log('This state is: ', this.state);
   //   this.setState({
@@ -121,7 +121,6 @@ class AdminLogin extends Component {
 
   login = (user) => {
     const { dispatch, history } = this.props;
-    dispatch({type:'AUTH_RECEIVED', payload: user});
     const data = {
       history,
       user,
