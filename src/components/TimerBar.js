@@ -67,6 +67,7 @@ class TimerBar extends Component {
       console.log('finito');
       this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart: false, showEndTime:true, open: true, reseted: false, });
       clearInterval(this.timer);
+      this.props.questionOpenForAnswer(false);
     } else {
       this.setState({ completed,currentTime, inProgress: true });
     }
@@ -82,9 +83,13 @@ class TimerBar extends Component {
   start = () => {
     const { lockStart, inProgress, reseted } = this.state;
     if (!lockStart){
+      // if quest is reseted we dont want to change question
       if ( !inProgress && !reseted ) {
+        this.props.questionOpenForAnswer(true);
         this.props.nextQuest();
       }
+
+
       this.setState({lockStart: true, showEndTime:false }, ()=>{
         this.timer = setInterval(this.progress, 1000);
       })

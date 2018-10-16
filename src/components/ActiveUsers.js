@@ -46,7 +46,6 @@ class ActiveUsers extends Component {
     const { fetched, dispatch, roomId } = props;
 
     if (!fetched && roomId){
-      console.log("get rooms");
       dispatch(getUserInRoom({roomId}))
     }
   }
@@ -56,7 +55,6 @@ class ActiveUsers extends Component {
     if (!users){
       return ( <div>User is missing</div>)
     }
-    console.log(users);
     return users.map( user => (
       <ListItem className={classes.listitem} key={user['_id']}>
         <ListItemText
@@ -71,7 +69,6 @@ class ActiveUsers extends Component {
     const { dispatch, roomId } = this.props;
 
     if (roomId){
-      console.log("get rooms");
       dispatch(getUserInRoom({roomId}))
     }
   }
@@ -79,7 +76,6 @@ class ActiveUsers extends Component {
   render(){
     const { classes, users, room } = this.props;
     const gameMaster = room && room.createdBy;
-    console.log("PROPS ACTIVE USERS", this.props);
     const userList = this.renderActiveUsers();
     return (
       <div className={classes.root}>

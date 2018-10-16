@@ -30,7 +30,6 @@ export function deleteCollection(data) {
 
 export const getQuestionCollections = (dispatch) => async (dispatch, getState) => {
   const token = localStorage.getItem('token');
-  console.log('Token is: ', token);
   if(!token || token === 'undefined'){
       console.log('No token specified. No data to retrieve for you.');
       return;
@@ -45,7 +44,7 @@ export const getQuestionCollections = (dispatch) => async (dispatch, getState) =
   });
 
   const response = await rawResponse.json();
-  console.log('Response: ', response);
+
 
   if(response.success){
     dispatch(setCollection(response.content))
@@ -76,13 +75,11 @@ export const createCollectionAction = (data, dispatch) => async (dispatch, getSt
   });
 
   const response = await rawResponse.json();
-  console.log('Response: ',response);
-
   if(response.success){
 
     /* Add to store */
     dispatch(addToCollection(response.content));
-    
+
     /* Implement snackbar here? */
 
   } else {
@@ -113,9 +110,6 @@ export const updateCollectionAction = (data, dispatch) => async (dispatch, getSt
   });
 
   const response = await rawResponse.json();
-  console.log('Response: ', response);
-  console.log('Data we sent: ', data);
-  console.log('Data we retrieved: ', response.content);
   if(response.success){
 
     /* Update in store (Updating directly, since api sends back old data) */
