@@ -51,6 +51,7 @@ class TimerBar extends Component {
     inProgress: false,
     lockStart: false,
     showEndTime: false,
+    reseted: false,
     open: true,
   };
 
@@ -64,7 +65,7 @@ class TimerBar extends Component {
     currentTime += 1;
     if (completed > 100) {
       console.log('finito');
-      this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart: false, showEndTime:true, open: true });
+      this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart: false, showEndTime:true, open: true, reseted: false, });
       clearInterval(this.timer);
     } else {
       this.setState({ completed,currentTime, inProgress: true });
@@ -79,9 +80,9 @@ class TimerBar extends Component {
   };
 
   start = () => {
-    const { lockStart, inProgress } = this.state;
+    const { lockStart, inProgress, reseted } = this.state;
     if (!lockStart){
-      if ( !inProgress ) {
+      if ( !inProgress && !reseted ) {
         this.props.nextQuest();
       }
       this.setState({lockStart: true, showEndTime:false }, ()=>{
@@ -97,7 +98,8 @@ class TimerBar extends Component {
 
   clearTimer = () => {
     clearInterval(this.timer);
-    this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart:false, showEndTime: false });
+
+    this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart:false, showEndTime: false, reseted: true });
   }
 
   handleClose = () => {
