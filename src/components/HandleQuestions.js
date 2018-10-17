@@ -237,7 +237,6 @@ class HandleQuestions extends Component {
         <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuiz }>
           Spara frågesamling
         </Button>
-
         {!this.state.new_quiz &&
             <Button variant="contained" color="secondary" className={classes.button} onClick= { this.removeQuiz }>
               Radera frågesamling
@@ -256,6 +255,15 @@ class HandleQuestions extends Component {
               margin="normal"
               variant="outlined"
               fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                style: {
+                  fontSize: 13,
+                  height: 45,
+                },
+              }}
             />
             <br/>
             <TextField
@@ -268,6 +276,15 @@ class HandleQuestions extends Component {
               variant="outlined"
               multiline
               fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                style: {
+                  fontSize: 13,
+                  height: 45,
+                },
+              }}
             />
             <br/>
             <TextField
@@ -279,6 +296,15 @@ class HandleQuestions extends Component {
               margin="normal"
               variant="outlined"
               fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                style: {
+                  fontSize: 13,
+                  height: 45,
+                },
+              }}
             />
             <div style={{ display:'flex', justifyContent: 'center'}}>
               <img src={imgUrl} alt="Bild Saknas" height="300" width='auto' style={{ margin: 50 }} />
@@ -286,20 +312,6 @@ class HandleQuestions extends Component {
             </Paper>
           </div>
           <AddQuest dispatch={this.props.dispatch} addQuestion={this.addQuestion} />
-
-
-          <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuiz }>
-            Spara frågesamling
-          </Button>
-
-          {!this.state.new_quiz &&
-              <div className={classes.removeButtonDiv}>
-                  <Button variant="contained" color="secondary" className={classes.button} onClick= { this.removeQuiz }>
-                      Radera frågesamling
-                  </Button>
-              </div>
-          }
-
         <ErrorHandling />
       <div style={{width: 600, margin: '0px auto'}}>
       { table }

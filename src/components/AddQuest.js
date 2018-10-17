@@ -19,19 +19,17 @@ const styles = theme => ({
     width:'95%',
   },
   textFieldWithButton: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width:'90%',
+    width:'80%',
   },
   textFieldDiv: {
-    width:'95%',
+    width:'100%',
   },
   textFieldButton: {
-    margin: '25px 10px'
+    margin: '25px 5px'
   },
-  dense: {
-    marginTop: 16,
-  },
+  button: {
+    marginRight: 10,
+  }
 });
 
 const listAlpah = ['a', 'b', 'c', 'd'];
@@ -75,8 +73,17 @@ class AddQuest extends Component {
               onChange={ (event) => this.handleChange(event, 'answers', key)}
               margin="normal"
               variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                style: {
+                  fontSize: 13,
+                  height: 45,
+                },
+              }}
             />
-            <Button variant="contained" color={this.state.correctAnswer === key ? 'primary' : 'secondary'} className={classes.textFieldButton} onClick={ () => this.setCorrectAnswer(key) }>
+            <Button variant="contained" size="medium" color={this.state.correctAnswer === key ? 'primary' : 'secondary'} className={classes.textFieldButton} onClick={ () => this.setCorrectAnswer(key) }>
               Rätt svar
             </Button>
         </div>
@@ -159,6 +166,15 @@ class AddQuest extends Component {
           variant="outlined"
           multiline
           fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            style: {
+              fontSize: 13,
+              height: 45,
+            },
+          }}
         />
         { answersList }
         <div>
