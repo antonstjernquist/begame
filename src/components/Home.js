@@ -13,7 +13,7 @@ import { loginAsStudent } from '../actions/authActions';
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
 
-const backgroundImage = require('../resources/background_bleb.jpg');
+const backgroundImage = require('../resources/background_pleb.jpg');
 const logo = require('../resources/logo.png');
 
 const styles = () => ({
@@ -23,7 +23,7 @@ const styles = () => ({
     minHeight: 'calc(100vh - 50px)',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .8), rgba(255, 255, 255, .2)), url(${backgroundImage})`,
+    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .9), rgba(0, 0, 0, .9)), url(${backgroundImage})`,
     backgroundColor: '#fafafa',
     backgroundSize: 'cover',
   },

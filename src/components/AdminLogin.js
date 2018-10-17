@@ -18,7 +18,7 @@ import ErrorHandling from './ErrorHandling.js';
 import Register from './Register'
 
 const backgroundImage = require('../resources/background_gm.jpg');
-const logo = require('../resources/logo_blue.png');
+const logo = require('../resources/logo.png');
 
 const styles = () => ({
   main: {
@@ -27,7 +27,7 @@ const styles = () => ({
     minHeight: 'calc(100vh - 50px)',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .8), rgba(255, 255, 255, .2)), url(${backgroundImage})`,
+    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, .9), rgba(0, 0, 0, .9)), url(${backgroundImage})`,
     backgroundColor: '#fafafa',
     backgroundSize: 'cover',
   },

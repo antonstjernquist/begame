@@ -37,6 +37,9 @@ const styles = theme => ({
   media: {
     height: 140,
   },
+  button: {
+    marginBottom: 20
+  }
 });
 
 
@@ -138,10 +141,10 @@ class Adminpanel extends Component {
     return (
       <Fragment>
         <Menu history={ history } adminPanel={true} auth={this.props.auth}/>
-          <Button variant="contained" color="primary" className={classes.button} onClick={this.createQuiz}>
-            Skapa quiz
-          </Button>
         <div className="adminpanel">
+        <Button variant="contained" color="primary" className={classes.button} onClick={this.createQuiz}>
+        Skapa quiz
+        </Button>
           <div>
             <div className="listDiv">
               {cardList}

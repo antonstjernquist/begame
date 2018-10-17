@@ -5,6 +5,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -16,8 +17,7 @@ import { createCollectionAction, updateCollectionAction, removeCollectionAction 
 
 const styles = theme => ({
   root: {
-    width: 'calc(100% - 50px)',
-    marginLeft: 25,
+
   },
   expand: {
     width: 'calc(100% - 68px)',
@@ -33,6 +33,13 @@ const styles = theme => ({
   },
   button: {
       margin: 10
+  },
+  paper: {
+    width: 600,
+    padding: 20,
+    marginBottom: 20,
+    marginTop: 20,
+    margin: '0px auto'
   }
 });
 
@@ -193,68 +200,70 @@ class HandleQuestions extends Component {
   };
 
   render(){
-    const table = this.renderTableView();
     const { title, imgUrl, description } = this.state;
-
     const { classes, history } = this.props;
+    const table = this.renderTableView();
 
 
     return (
       <Fragment>
         <Menu history={ history } createQuiz={ true }/>
-        <div className={classes.root}>
-          <TextField
-            id="outlined-name"
-            label='Title'
-            className={classes.textField}
-            value={title}
-            onChange={(event)=> this.handleChange(event, 'title')}
-            margin="normal"
-            variant="outlined"
-          />
-          <br/>
-          <TextField
-            id="outlined-name"
-            label='Beskrivning'
-            value={description}
-            className={classes.textField}
-            onChange={(event)=> this.handleChange(event, 'description')}
-            margin="normal"
-            variant="outlined"
-            style={{ width: '95%' }}
-            multiline
-          />
-          <br/>
-          <TextField
-            id="outlined-name"
-            label='Bild url'
-            value={imgUrl}
-            className={classes.textField}
-            onChange={(event)=> this.handleChange(event, 'imgUrl')}
-            margin="normal"
-            variant="outlined"
-            style={{ width: '95%' }}
-          />
+        <div style={{float: 'right', marginTop: 10}}>
+        <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuiz }>
+          Spara frågesamling
+        </Button>
 
-
-          <div style={{ display:'flex', justifyContent: 'center'}}>
-            <img src={imgUrl} alt="Bild Saknas" height="300" width='auto' style={{ margin: 50 }} />
-          </div>
-
-          { table }
-          <AddQuest dispatch={this.props.dispatch} addQuestion={this.addQuestion} />
-
-          <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuiz }>
-            Spara frågesamling
-          </Button>
-
-          {!this.state.new_quiz &&
-              <Button variant="contained" color="secondary" className={classes.button} onClick= { this.removeQuiz }>
-                Radera frågesamling
-              </Button>
-          }
-
+        {!this.state.new_quiz &&
+            <Button variant="contained" color="secondary" className={classes.button} onClick= { this.removeQuiz }>
+              Radera frågesamling
+            </Button>
+        }
         </div>
+        <div className={classes.root}>
+          <Paper className={classes.paper}>
+          <Typography variant="h5" gutterBottom>Skapa quiz</Typography>
+            <TextField
+              id="outlined-name"
+              label='Title'
+              className={classes.textField}
+              value={title}
+              onChange={(event)=> this.handleChange(event, 'title')}
+              margin="normal"
+              variant="outlined"
+              fullWidth
+            />
+            <br/>
+            <TextField
+              id="outlined-name"
+              label='Beskrivning'
+              value={description}
+              className={classes.textField}
+              onChange={(event)=> this.handleChange(event, 'description')}
+              margin="normal"
+              variant="outlined"
+              multiline
+              fullWidth
+            />
+            <br/>
+            <TextField
+              id="outlined-name"
+              label='Bild url'
+              value={imgUrl}
+              className={classes.textField}
+              onChange={(event)=> this.handleChange(event, 'imgUrl')}
+              margin="normal"
+              variant="outlined"
+              fullWidth
+            />
+            <div style={{ display:'flex', justifyContent: 'center'}}>
+              <img src={imgUrl} alt="Bild Saknas" height="300" width='auto' style={{ margin: 50 }} />
+            </div>
+            </Paper>
+          </div>
+          <AddQuest dispatch={this.props.dispatch} addQuestion={this.addQuestion} />
+          <div style={{width: 600, margin: '0px auto'}}>
+          { table }
+          </div>
       </Fragment>
     );
   }

@@ -2,21 +2,11 @@ import React,{ Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 // import { showSnackbarError } from '../actions/errorHandlingActions';
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width:'95%',
-  },
-  dense: {
-    marginTop: 16,
-  },
   menu: {
     width: 200,
   },
@@ -54,18 +44,17 @@ class AddQuest extends Component {
 
   renderAnswer = () => {
     const { answers } = this.state;
-    const { classes } = this.props;
 
     return Object.keys(answers).map( key => (
         <TextField
           key={key}
           id="outlined-name"
           label={key}
-          className={classes.textField}
           value={this.state.answers[key]}
           onChange={ (event) => this.handleChange(event, 'answers', key)}
           margin="normal"
           variant="outlined"
+          fullWidth
         />
       )
     )
@@ -121,32 +110,31 @@ class AddQuest extends Component {
     const { classes } = this.props;
     const answersList = this.renderAnswer();
     return(
-      <div>
+      <Paper style={{ width: 600, padding: 20, margin: '0px auto' }}>
+      <Typography variant="h5" gutterBottom>Lägg till fråga</Typography>
         <TextField
           id="outlined-name"
           label="Fråga"
-          className={classes.textField}
           value={this.state.question}
           onChange={ (event) => this.handleChange(event, 'question')}
           margin="normal"
           variant="outlined"
           multiline
+          fullWidth
         />
-        <br/>
         { answersList }
-        <br/>
         <div>
-          <Button variant="contained" color="secondary" className={classes.button} onClick={ ()=>this.changeAnswersOption(true)}>
+          <Button variant="outlined" color="secondary" size="small" className={classes.button} onClick={ ()=>this.changeAnswersOption(true)}>
             Lägg till svarsalternativ
           </Button>
-          <Button variant="contained" color="secondary" className={classes.button} onClick={ ()=>this.changeAnswersOption(false)}>
+          <Button variant="outlined" color="secondary" size="small" className={classes.button} onClick={ ()=>this.changeAnswersOption(false)}>
             Ta bort svarsalternativ
           </Button>
-          <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuestion }>
+          <Button variant="outlined" color="primary" size="small" className={classes.button} onClick= { this.saveQuestion }>
             Spara frågan
           </Button>
         </div>
-      </div>
+      </Paper>
     )
   }
 };
