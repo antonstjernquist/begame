@@ -25,10 +25,10 @@ const styles = theme => ({
     width:'100%',
   },
   textFieldButton: {
-    margin: '25px 5px'
+    margin: '20px 5px'
   },
   button: {
-    marginRight: 10,
+    marginRight: 15,
   }
 });
 
@@ -177,7 +177,7 @@ class AddQuest extends Component {
           }}
         />
         { answersList }
-        <div>
+        <div style={{marginTop: 20}}>
           <Button variant="outlined" color="secondary" size="small" className={classes.button} onClick={ ()=>this.changeAnswersOption(true)}>
             Lägg till svarsalternativ
           </Button>
