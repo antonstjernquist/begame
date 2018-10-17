@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import AddQuest from './AddQuest.js';
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
-import { createCollectionAction, updateCollectionAction, removeCollectionAction } from '../actions/questionCollectionActions.js';
+import { createCollectionAction, updateCollectionAction, removeCollectionAction, updateCollection } from '../actions/questionCollectionActions.js';
 import { showSnackbarError } from '../actions/errorHandlingActions';
 
 const styles = theme => ({
@@ -116,7 +116,7 @@ class HandleQuestions extends Component {
           collection.questions[data.question] = data;
 
           /* Then update in store */
-          dispatch(updateCollectionAction(collection));
+          dispatch(updateCollection(collection));
 
       }
   }
@@ -180,7 +180,7 @@ class HandleQuestions extends Component {
           delete(collection.questions[question]);
 
           /* Then update in store */
-          dispatch(updateCollectionAction(collection));
+          dispatch(updateCollection(collection));
       }
 
   }
