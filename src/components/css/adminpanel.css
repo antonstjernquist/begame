@@ -20,3 +20,9 @@
     vertical-align: -1px;
     font-weight: 100;
 }
+
+/* Random css thingy */
+.MuiExpansionPanelSummary-content-328 {
+    display: flex;
+    justify-content: space-between;
+}
