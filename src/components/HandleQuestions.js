@@ -178,7 +178,7 @@ class HandleQuestions extends Component {
     return Object.keys(questions).map( (key ,index) => {
         const item = questions[key];
         return (
-          <ExpansionPanel key={index} style={{ width: 620, margin: '0px auto' }}>
+          <ExpansionPanel key={index} style={{ width: 640, margin: '20px auto', marginLeft: -20 }}>
             <ExpansionPanelSummary >
               <Typography>{item.question}</Typography>
             </ExpansionPanelSummary>
