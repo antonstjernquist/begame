@@ -104,12 +104,12 @@ class Adminpanel extends Component {
             <CardMedia
               className={classes.media}
               image={x.imgUrl}
-              title="Contemplative Reptile"
+              title={x.title}
             />
 
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                {x.name}
+                {x.title}
               </Typography>
               <Typography component="p">
                 {x.description}
@@ -140,8 +140,6 @@ class Adminpanel extends Component {
       <Fragment>
         <Menu history={ history } adminPanel={true} auth={this.props.auth}/>
         <div className="adminpanel">
-
-
           <h1>Adminpanel</h1>
           <div>
             <Button variant="contained" color="primary" className={classes.button} onClick={this.createQuiz}>
@@ -165,7 +163,6 @@ let mapStateToProps = state => ({
     questionCollections: state.questionCollections.data,
     collectionFetched: state.questionCollections.fetched,
 });
-
 
 
 function createRoomId(){
