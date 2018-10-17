@@ -37,7 +37,7 @@ const styles = theme => ({
   },
   orangeAvatar: {
     color: '#fff',
-    backgroundColor: '#a7d129',
+    backgroundColor: '#573697',
     margin: '0px auto',
     marginBottom: 10,
   },
@@ -157,7 +157,7 @@ class Room extends Component {
 
     return (
       <Fragment>
-        <h1 style={{fontSize: '3.5em', color: '#a7d129', fontWeight: 'bold', marginBottom: 100}}>{selectedQuestion.question}</h1>
+        <h1 style={{fontSize: '3.5em', color: '#573697', fontWeight: 'bold', marginBottom: 100}}>{selectedQuestion.question}</h1>
         <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 50, flexWrap: 'wrap'}}>
           {answer}
         </div>
