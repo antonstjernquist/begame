@@ -35,7 +35,6 @@ const styles = theme => ({
   button: {
       margin: 10
   },
-
   removeButtonDiv: {
       border: '1px solid #e67575',
       borderRadius: 5,
@@ -178,7 +177,7 @@ class HandleQuestions extends Component {
     return Object.keys(questions).map( (key ,index) => {
         const item = questions[key];
         return (
-          <ExpansionPanel key={index} style={{ width: 640, margin: '20px auto', marginLeft: -20 }}>
+          <ExpansionPanel key={index} style={{ width: 640, marginLeft: -20 }}>
             <ExpansionPanelSummary >
               <Typography>{item.question}</Typography>
             </ExpansionPanelSummary>
@@ -313,9 +312,10 @@ class HandleQuestions extends Component {
           </div>
           <AddQuest dispatch={this.props.dispatch} addQuestion={this.addQuestion} />
         <ErrorHandling />
-      <div style={{width: 600, margin: '0px auto'}}>
-      { table }
-      </div>
+      <Paper style={{width: 600, margin: '20px auto', padding: 20}}>
+        <Typography variant="h5" gutterBottom>Frågor</Typography>
+        { table }
+      </Paper>
       </Fragment>
     );
   }
