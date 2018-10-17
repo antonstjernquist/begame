@@ -17,7 +17,6 @@ import { createCollectionAction, updateCollectionAction, removeCollectionAction 
 
 const styles = theme => ({
   root: {
-
   },
   expand: {
     width: 'calc(100% - 68px)',
@@ -138,7 +137,7 @@ class HandleQuestions extends Component {
   }
 
   renderTableView = () => {
-    const { classes, questionCollections } = this.props;
+    const { questionCollections } = this.props;
     const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
     let new_quiz = false;
     if(Object.keys(this.state.questions).length){
@@ -153,14 +152,14 @@ class HandleQuestions extends Component {
     return Object.keys(questions).map( (key ,index) => {
         const item = questions[key];
         return (
-          <ExpansionPanel key={index} className={classes.expand}>
+          <ExpansionPanel key={index} style={{ width: 620, margin: '0px auto' }}>
             <ExpansionPanelSummary >
-              <Typography className={classes.heading}>{item.question}</Typography>
+              <Typography>{item.question}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
 
               {/*  Show all options */}
-              <div className={classes.contentWrapper}>
+              <div>
                 {Object.keys(questions[key].answers).map( optionKey => (
                     <TextField
                       key={optionKey}
@@ -261,9 +260,7 @@ class HandleQuestions extends Component {
             </Paper>
           </div>
           <AddQuest dispatch={this.props.dispatch} addQuestion={this.addQuestion} />
-          <div style={{width: 600, margin: '0px auto'}}>
           { table }
-          </div>
       </Fragment>
     );
   }
