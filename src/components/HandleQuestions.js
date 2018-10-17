@@ -47,6 +47,10 @@ const styles = theme => ({
     marginTop: 20,
     margin: '0px auto'
   },
+  expPanel: {
+      color: 'red',
+      justifyContent: 'space-between',
+  }
 
 });
 
@@ -202,11 +206,11 @@ class HandleQuestions extends Component {
         const item = questions[key];
         return (
           <ExpansionPanel key={index} style={{ width: 640, marginLeft: -20 }}>
-            <ExpansionPanelSummary style={ {justifyContent: 'space-between'} }>
+            <ExpansionPanelSummary className='expPanel'>
               <Typography>{item.question}</Typography>
               <Button onClick={e => this.removeQuestion(key)}>Remove</Button>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            <ExpansionPanelDetails >
 
               {/*  Show all options */}
               <div>
