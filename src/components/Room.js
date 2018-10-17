@@ -15,7 +15,7 @@ import FaceIcon from '@material-ui/icons/Face';
 
 //Imported components
 import Menu from './Menu';
-import { showSnackbarMessage } from '../actions/errorHandlingActions';
+import { showSnackbarMessage, showSnackbarError } from '../actions/errorHandlingActions';
 import ErrorHandling from './ErrorHandling.js';
 import { getRoomFromDb } from '../actions/roomActions'
 import { updateUserInDb, updateUserStats} from '../actions/userActions'
@@ -84,7 +84,7 @@ class Room extends Component {
     let student = JSON.parse(localStorage.getItem('student'));
 
     if(student.lastQuestion === currentQuestion){
-      console.log('You trying to cheat?!');
+      dispatch(showSnackbarMessage('Du har redan svarat på frågan 🤔'))
       return null;
     }
 
@@ -92,25 +92,24 @@ class Room extends Component {
     localStorage.setItem('student', JSON.stringify(student));
 
     if (isRight) {
-      console.log('rätt svar!');
+      dispatch(showSnackbarMessage('Rätt svar! 😎'))
       dispatch(getRoomFromDb(roomId)).then( ()=>{
         const { openForAnswer } = this.props.room;
 
         // check if current question is open for answers
         if ( openForAnswer ) {
-          console.log('question is open! :)');
           let { points,uid } = this.props.user;
           points += 10;
           dispatch(updateUserInDb({uid,points})).then( ()=>{
             this.setState({rightAnswer: true, questionClosed: true}) // dont remove this.. need for update points also.. its to deep for react to handle
           })
         } else {
-          console.log('qusetion is closed :(');
+            dispatch(showSnackbarMessage('Rätt svar! 😎'))
         }
       })
     } else {
       this.setState({rightAnswer: false,  questionClosed: true }) // dont remove this.. need for update points also.. its to deep for react to handle
-      console.log('fel svar!');
+      dispatch(showSnackbarMessage('Fel! 😫'))
     }
 
 
@@ -167,10 +166,13 @@ class Room extends Component {
   }
 
   updateQuiz = () =>{
+    const { dispatch } = this.props;
     const { currentQuestion } = this.props.room;
-    this.props.dispatch(getRoomFromDb(this.state.id)).then( ()=>{
+      dispatch(getRoomFromDb(this.state.id)).then( ()=>{
       if ( currentQuestion !== this.props.room.currentQuestion ){
         this.setState({questionClosed:false})
+      } else {
+        dispatch(showSnackbarMessage('Frågan är pågående!'))
       }
     })
   };
@@ -202,7 +204,7 @@ class Room extends Component {
             onClick={this.updateQuiz}
             color="primary"
           >
-            Uppdatera quiz gå till nästa fråga
+            Uppdatera Quiz
           </Button>
         </div>
       <ErrorHandling />
