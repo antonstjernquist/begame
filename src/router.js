@@ -23,15 +23,15 @@ import Logout from './components/Logout.js'
 const theme = createMuiTheme({
   palette: createPalette({
     primary: {
-      light: '#b6e330',
-      main: '#a7d129',
-      dark: '#90b425',
+      light: '#933f99',
+      main: '#573697',
+      dark: '#2c2828',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#1dcaff',
-      main: '#00aced',
-      dark: '#0084b4',
+      light: '#933f99',
+      main: '#573697',
+      dark: '#2c2828',
       contrastText: '#fff',
     },
   }),

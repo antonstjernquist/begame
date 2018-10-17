@@ -39,6 +39,9 @@ function Menu(props) {
           {roomId &&
             <p className={classes.roomStyleText}>{`ROOMID #${roomId}`}</p>
           }
+          {adminPanel && auth &&
+            <p className={classes.roomStyleText}>GM {auth.name}</p>
+          }
           </div>
           {!roomId && isAdmin &&
             <Button color="inherit" onClick={() => { history.push('/'); }}>Student</Button>
@@ -47,14 +50,13 @@ function Menu(props) {
             <Button color="inherit" onClick={() => { history.push('/admin'); }}>Admin</Button>
           }
           {roomId &&
-            <Button color="inherit" onClick={() => { history.goBack(); }}>Go back</Button>
+            <Button color="inherit" onClick={() => { history.push('/logout'); }}>LOGGA UT</Button>
           }
           {createQuiz &&
             <Button color="inherit" onClick={() => { history.goBack(); }}>Go back</Button>
           }
           {adminPanel && auth &&
             <div>
-              <span className="loggedInSpan">{auth.name}</span>
               <Button color="inherit" onClick={() => { history.push('/logout'); }}>Logga ut</Button>
             </div>
           }

@@ -5,6 +5,9 @@ import Button from '@material-ui/core/Button';
 import { showSnackbarError, showSnackbarMessage } from '../actions/errorHandlingActions';
 import { connect } from 'react-redux';
 
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -29,12 +32,6 @@ const styles = theme => ({
   dense: {
     marginTop: 16,
   },
-  menu: {
-    width: 200,
-  },
-  button: {
-    margin: 10,
-  }
 });
 
 const listAlpah = ['a', 'b', 'c', 'd'];
@@ -151,32 +148,31 @@ class AddQuest extends Component {
     const { classes } = this.props;
     const answersList = this.renderAnswer();
     return(
-      <div>
+      <Paper style={{ width: 600, padding: 20, margin: '0px auto' }}>
+      <Typography variant="h5" gutterBottom>Lägg till fråga</Typography>
         <TextField
           id="outlined-name"
           label="Fråga"
-          className={classes.textField}
           value={this.state.question}
           onChange={ (event) => this.handleChange(event, 'question')}
           margin="normal"
           variant="outlined"
           multiline
+          fullWidth
         />
-        <br/>
         { answersList }
-        <br/>
         <div>
-          <Button variant="contained" color="secondary" className={classes.button} onClick={ ()=>this.changeAnswersOption(true)}>
+          <Button variant="outlined" color="secondary" size="small" className={classes.button} onClick={ ()=>this.changeAnswersOption(true)}>
             Lägg till svarsalternativ
           </Button>
-          <Button variant="contained" color="secondary" className={classes.button} onClick={ ()=>this.changeAnswersOption(false)}>
+          <Button variant="outlined" color="secondary" size="small" className={classes.button} onClick={ ()=>this.changeAnswersOption(false)}>
             Ta bort svarsalternativ
           </Button>
-          <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuestion }>
+          <Button variant="outlined" color="primary" size="small" className={classes.button} onClick= { this.saveQuestion }>
             Spara frågan
           </Button>
         </div>
-      </div>
+      </Paper>
     )
   }
 };
