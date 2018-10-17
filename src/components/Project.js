@@ -89,7 +89,7 @@ class Room extends Component {
         <Card className={rightAnswer === listAlpah[index] ? classes.cardRight : classes.card } onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
           <CardActionArea className={classes.cardAction}>
             <CardContent>
-              <Avatar className={classes.orangeAvatar}>{listAlpah[index]}</Avatar>
+              <Avatar className={classes.orangeAvatar}>{listAlpah[index].toUpperCase()}</Avatar>
               <Typography component="p">
                 { item }
               </Typography>
@@ -137,7 +137,7 @@ class Room extends Component {
     if (currentQuestion === -1) {
       if( this.state.showTimer)
         this.setState({showTimer: false})
-      return (<div>SLUT</div>)
+      return (<div><Typography component="h2" variant="h1" gutterBottom>SLUT</Typography></div>)
     } else if (!this.state.showTimer){
       this.setState({showTimer:true})
     }
