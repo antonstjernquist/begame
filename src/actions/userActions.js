@@ -25,7 +25,7 @@ export function updateUserPoints(data) {
 
 
 export const getUserInRoom = (data, dispatch) => async (dispatch, getState) => {
-  const { roomId } = data;
+  const { roomId, failMsg } = data;
 
   const rawResponse = await fetch(`https://stark-ocean-61611.herokuapp.com/api/activeUsers/${roomId}`, {
     method: 'GET',
@@ -39,7 +39,9 @@ export const getUserInRoom = (data, dispatch) => async (dispatch, getState) => {
   if(response.success){
     dispatch(updateAllUserStats(response.content))
   } else {
-   dispatch(showSnackbarError('Något gick fel vid hämtning av användare.'));
+    if( failMsg ){
+      dispatch(showSnackbarError('Något gick fel vid hämtning av användare.'));
+    }
   }
 }
 

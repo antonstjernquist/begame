@@ -204,7 +204,7 @@ class Room extends Component {
             onClick={this.updateQuiz}
             color="primary"
           >
-            Uppdatera Quiz
+            Visa fråga
           </Button>
         </div>
       <ErrorHandling />

@@ -201,9 +201,6 @@ class Room extends Component {
 
     const viewQuest = this.renderQuestion();
 
-    console.log(this.props);
-    console.log(this.state);
-
     return (
       <Fragment>
         <Menu roomId={this.state.id} history={history}/>

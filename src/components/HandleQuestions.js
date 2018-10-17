@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import AddQuest from './AddQuest.js';
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
-import { createCollectionAction, updateCollectionAction, removeCollectionAction } from '../actions/questionCollectionActions.js';
+import { createCollectionAction, updateCollectionAction, removeCollectionAction, updateCollection } from '../actions/questionCollectionActions.js';
 import { showSnackbarError } from '../actions/errorHandlingActions';
 
 const styles = theme => ({
@@ -46,7 +46,12 @@ const styles = theme => ({
     marginBottom: 20,
     marginTop: 20,
     margin: '0px auto'
+  },
+  expPanel: {
+      color: 'red',
+      justifyContent: 'space-between',
   }
+
 });
 
 const min_title_length  = 4;
@@ -115,7 +120,7 @@ class HandleQuestions extends Component {
           collection.questions[data.question] = data;
 
           /* Then update in store */
-          dispatch(updateCollectionAction(collection));
+          dispatch(updateCollection(collection));
 
       }
   }
@@ -161,6 +166,29 @@ class HandleQuestions extends Component {
       dispatch(removeCollectionAction(this.state._id));
   }
 
+  removeQuestion = question => {
+      const { dispatch } = this.props;
+
+      if ( this.state.new_quiz ){
+          console.log('Removing question.');
+          let questions = { ...this.state.questions };
+          delete(questions[question]);
+          this.setState({ questions: questions });
+      } else {
+
+          /* Define the collection we shall edit */
+          const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
+          let collection = this.props.questionCollections[collectionId];
+
+          /* Add question to the collection */
+          delete(collection.questions[question]);
+
+          /* Then update in store */
+          dispatch(updateCollection(collection));
+      }
+
+  }
+
   renderTableView = () => {
     const { questionCollections } = this.props;
     const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
@@ -178,28 +206,29 @@ class HandleQuestions extends Component {
         const item = questions[key];
         return (
           <ExpansionPanel key={index} style={{ width: 640, marginLeft: -20 }}>
-            <ExpansionPanelSummary >
+            <ExpansionPanelSummary className='expPanel'>
               <Typography>{item.question}</Typography>
+              <Button onClick={e => this.removeQuestion(key)}>Remove</Button>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            <ExpansionPanelDetails >
 
               {/*  Show all options */}
               <div>
                 {Object.keys(questions[key].answers).map( optionKey => (
                     <TextField
-                      key={optionKey}
-                      id="standard-full-width"
-                      label={optionKey}
-                      value={questions[key].answers[optionKey]}
-                      style={{ margin: 8 }}
-                      placeholder="Placeholder"
-                      fullWidth
-                      margin="normal"
-                      onChange={(event)=> this.handleChangeQuestions(event, key, optionKey)}
-                      InputLabelProps={{
-                      shrink: true,
-                      }}
-                    />
+                        key={optionKey}
+                        id="standard-full-width"
+                        label={optionKey}
+                        value={questions[key].answers[optionKey]}
+                        style={{ margin: 8 }}
+                        placeholder="Placeholder"
+                        fullWidth
+                        margin="normal"
+                        onChange={(event)=> this.handleChangeQuestions(event, key, optionKey)}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        />
                   ))}
 
                   {/* Shows correct answer.. not completed yet */}
