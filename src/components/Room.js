@@ -15,7 +15,7 @@ import FaceIcon from '@material-ui/icons/Face';
 
 //Imported components
 import Menu from './Menu';
-import { showSnackbarMessage, showSnackbarError } from '../actions/errorHandlingActions';
+import { showSnackbarMessage } from '../actions/errorHandlingActions';
 import ErrorHandling from './ErrorHandling.js';
 import { getRoomFromDb } from '../actions/roomActions'
 import { updateUserInDb, updateUserStats} from '../actions/userActions'
