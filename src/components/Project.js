@@ -31,6 +31,11 @@ const styles = theme => ({
     maxWidth: 380,
     marginBottom: 30
   },
+  cardRight: {
+    maxWidth: 380,
+    marginBottom: 30,
+    backgroundColor: 'lightblue',
+  },
   cardAction: {
     width: 350,
     maxWidth: 380,
@@ -49,6 +54,7 @@ class Room extends Component {
     this.state = {
       id: props.match.params.id,
       showTimer: true,
+      rightAnswer: null,
     }
 
     const roomId = (props.match && props.match.params && props.match.params.id) || false;
@@ -64,28 +70,23 @@ class Room extends Component {
 
 
   selectedAnswer = (selected, correctAnswer) => {
-    console.log('vald svar',selected);
-    console.log('korrekt answer', correctAnswer);
     const isRight = selected === correctAnswer;
-    console.log('V? ', isRight);
     if ( isRight){
       console.log('Rätt svar!');
     }else {
       console.log('Fel svar!');
     }
-    // här ska vi slänga in en koll mot prop och kontroller om användaren svarade rätt eller ej
-    // ska inte visas så tyldigt att grannen kan kolla :)
-    // oom användaren svarat rätt så uppdaterar vi användaren med ny poäng..
   }
 
 
   createAnswerButtons = (answers, correctAnswer) => {
     const { classes } = this.props;
+    const { rightAnswer } = this.state;
     const listAlpah = ['a', 'b', 'c','d'];
-    console.log('answers:', answers);
+
     return Object.values(answers).map( (item, index ) => (
       <Fragment key={index}>
-        <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
+        <Card className={rightAnswer === listAlpah[index] ? classes.cardRight : classes.card } onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
           <CardActionArea className={classes.cardAction}>
             <CardContent>
               <Avatar className={classes.orangeAvatar}>{listAlpah[index]}</Avatar>
@@ -175,10 +176,23 @@ class Room extends Component {
 
   // open question for answer
   questionOpenForAnswer = (isOpen) =>{
-    console.log('questionOpenForAnswer is going: ', isOpen);
     const { dispatch } = this.props;
     const roomIdInDb = this.props.room['_id'];
       dispatch(updateRoomInDb({update: {openForAnswer: isOpen}, roomIdInDb}))
+  }
+
+  showRightAnswer = (showIt) => {
+    if ( showIt ){
+      const { room } = this.props;
+      const { currentQuestion } = room;
+      const { questions } = room.quiz
+      const filtered = Object.values(questions).filter(question => question.order === currentQuestion)[0]
+      const { correctAnswer } = filtered
+
+      this.setState({rightAnswer: correctAnswer})
+    } else {
+      this.setState({rightAnswer: null})
+    }
   }
 
   render() {
@@ -193,7 +207,7 @@ class Room extends Component {
         <ActiveUsers roomId={this.state.id}/>
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
-          {showTimer && <TimerBar nextQuest={this.nextQuestion}  questionOpenForAnswer={this.questionOpenForAnswer}/>}
+          {showTimer && <TimerBar nextQuest={this.nextQuestion}  questionOpenForAnswer={this.questionOpenForAnswer} showRightAnswer={this.showRightAnswer}/>}
         </div>
       <ErrorHandling />
       </Fragment>
