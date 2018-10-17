@@ -88,7 +88,7 @@ class Room extends Component {
         <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)} raised={this.state.selectedA}>
           <CardActionArea className={classes.cardAction}>
             <CardContent>
-              <Avatar className={classes.orangeAvatar}>{listAlpah[index]}</Avatar>
+              <Avatar className={classes.orangeAvatar}>{listAlpah[index].toUpperCase()}</Avatar>
               <Typography component="p">
                 { item }
               </Typography>
@@ -186,6 +186,9 @@ class Room extends Component {
     const { showTimer } = this.state;
 
     const viewQuest = this.renderQuestion();
+
+    console.log(this.props);
+    console.log(this.state);
 
     return (
       <Fragment>
