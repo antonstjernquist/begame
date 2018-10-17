@@ -10,6 +10,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
 
 //Imported components
 import Menu from './Menu';
@@ -183,7 +185,15 @@ class Room extends Component {
     return (
       <Fragment>
         <Menu roomId={this.state.id} history={history}/>
-        score: {score}
+        <div style={{margin: 10}}>
+        <Chip
+          icon={<FaceIcon />}
+          label={`${user.name}: ${score} poäng`}
+          clickable
+          className={classes.chip}
+          color="primary"
+        />
+        </div>
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
           <Button
