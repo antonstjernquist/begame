@@ -13,7 +13,9 @@ import Button from '@material-ui/core/Button';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddQuest from './AddQuest.js';
 import Menu from './Menu.js';
+import ErrorHandling from './ErrorHandling.js';
 import { createCollectionAction, updateCollectionAction, removeCollectionAction } from '../actions/questionCollectionActions.js';
+import { showSnackbarError } from '../actions/errorHandlingActions';
 
 const styles = theme => ({
   root: {
@@ -32,6 +34,12 @@ const styles = theme => ({
   },
   button: {
       margin: 10
+  },
+
+  removeButtonDiv: {
+      border: '1px solid #e67575',
+      borderRadius: 5,
+      display: 'inline-block'
   },
   paper: {
     width: 600,
@@ -93,7 +101,24 @@ class HandleQuestions extends Component {
   }
 
   addQuestion = data => {
-      this.setState({ questions: { ...this.state.questions, [data.question]: data }});
+
+      const { dispatch } = this.props;
+
+      if ( this.state.new_quiz ){
+          this.setState({ questions: { ...this.state.questions, [data.question]: data }});
+      } else {
+
+          /* Define the collection we shall edit */
+          const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
+          let collection = this.props.questionCollections[collectionId];
+
+          /* Add question to the collection */
+          collection.questions[data.question] = data;
+
+          /* Then update in store */
+          dispatch(updateCollectionAction(collection));
+
+      }
   }
 
   saveQuiz = () => {
@@ -127,6 +152,7 @@ class HandleQuestions extends Component {
               dispatch(updateCollectionAction(quiz));
           }
       } else {
+          dispatch(showSnackbarError('Frågesamlingen uppfyller inte alla krav!'));
           console.log('Failed to pass checks.');
       }
   }
@@ -260,7 +286,24 @@ class HandleQuestions extends Component {
             </Paper>
           </div>
           <AddQuest dispatch={this.props.dispatch} addQuestion={this.addQuestion} />
-          { table }
+
+
+          <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuiz }>
+            Spara frågesamling
+          </Button>
+
+          {!this.state.new_quiz &&
+              <div className={classes.removeButtonDiv}>
+                  <Button variant="contained" color="secondary" className={classes.button} onClick= { this.removeQuiz }>
+                      Radera frågesamling
+                  </Button>
+              </div>
+          }
+
+        <ErrorHandling />
+      <div style={{width: 600, margin: '0px auto'}}>
+      { table }
+      </div>
       </Fragment>
     );
   }

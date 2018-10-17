@@ -107,11 +107,11 @@ class Adminpanel extends Component {
             <CardMedia
               className={classes.media}
               image={x.imgUrl}
-              title="Contemplative Reptile"
+              title={x.title}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                {x.name}
+                {x.title}
               </Typography>
               <Typography component="p">
                 {x.description}
@@ -163,7 +163,6 @@ let mapStateToProps = state => ({
     questionCollections: state.questionCollections.data,
     collectionFetched: state.questionCollections.fetched,
 });
-
 
 
 function createRoomId(){

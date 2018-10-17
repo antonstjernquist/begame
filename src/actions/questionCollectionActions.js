@@ -1,4 +1,4 @@
-import { showSnackbarError } from '../actions/errorHandlingActions';
+import { showSnackbarError, showSnackbarMessage } from '../actions/errorHandlingActions';
 
 
 export function setCollection(data) {
@@ -77,10 +77,14 @@ export const createCollectionAction = (data, dispatch) => async (dispatch, getSt
   const response = await rawResponse.json();
   if(response.success){
 
-    /* Add to store */
-    dispatch(addToCollection(response.content));
+      if(response.content){
 
-    /* Implement snackbar here? */
+          /* Add to store */
+          dispatch(addToCollection(response.content));
+
+          /* Implement snackbar here? */
+          dispatch(showSnackbarMessage('Frågesamlingen sparades'));
+      }
 
   } else {
     dispatch(showSnackbarError('Något gick fel vid skapande av Quiz.'));
@@ -112,10 +116,17 @@ export const updateCollectionAction = (data, dispatch) => async (dispatch, getSt
   const response = await rawResponse.json();
   if(response.success){
 
-    /* Update in store (Updating directly, since api sends back old data) */
-    dispatch(updateCollection(data));
+    if(response.content){
 
-    /* Implement snackbar here? */
+        /* Update in store (Updating directly, since api sends back old data) */
+        dispatch(updateCollection(data));
+
+        /* Implement snackbar here? */
+        dispatch(showSnackbarMessage('Frågesamlingen uppdaterades'));
+
+    } else {
+        dispatch(showSnackbarError('Inget svar ifrån databasen'));
+    }
 
   } else {
     dispatch(showSnackbarError('Något gick fel vid uppdaterande av Quiz.'));
@@ -146,10 +157,18 @@ export const removeCollectionAction = (id, dispatch) => async (dispatch, getStat
 
   if(response.success){
 
-      /* Remove from store */
-      dispatch(deleteCollection(response.content));
+      if(response.content){
 
-      /* Implement snackbar here? */
+          /* Remove from store */
+          dispatch(deleteCollection(response.content));
+
+          /* Implement snackbar here? */
+          dispatch(showSnackbarMessage('Frågesamlingen raderades'));
+
+      } else {
+          dispatch(showSnackbarError('Frågesamlingen existerar inte'));
+      }
+
 
   } else {
     dispatch(showSnackbarError('Något gick fel vid radering av Quiz.'));

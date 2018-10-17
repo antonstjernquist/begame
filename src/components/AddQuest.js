@@ -2,21 +2,39 @@ import React,{ Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
+import { showSnackbarError, showSnackbarMessage } from '../actions/errorHandlingActions';
+import { connect } from 'react-redux';
+
 import Typography from '@material-ui/core/Typography';
-// import { showSnackbarError } from '../actions/errorHandlingActions';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
-  menu: {
-    width: 200,
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
   },
-  button: {
-    margin: 10,
-  }
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width:'95%',
+  },
+  textFieldWithButton: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width:'90%',
+  },
+  textFieldDiv: {
+    width:'95%',
+  },
+  textFieldButton: {
+    margin: '25px 10px'
+  },
+  dense: {
+    marginTop: 16,
+  },
 });
 
-const listAlpah = ['a', 'b', 'c','d'];
-
+const listAlpah = ['a', 'b', 'c', 'd'];
 
 class AddQuest extends Component {
   constructor(props){
@@ -26,7 +44,8 @@ class AddQuest extends Component {
       answers: {
         a: '',
         b: '',
-      }
+    },
+      correctAnswer: null
     };
   };
 
@@ -44,48 +63,67 @@ class AddQuest extends Component {
 
   renderAnswer = () => {
     const { answers } = this.state;
+    const { classes } = this.props;
 
     return Object.keys(answers).map( key => (
-        <TextField
-          key={key}
-          id="outlined-name"
-          label={key}
-          value={this.state.answers[key]}
-          onChange={ (event) => this.handleChange(event, 'answers', key)}
-          margin="normal"
-          variant="outlined"
-          fullWidth
-        />
+        <div key={key} className={classes.textFieldDiv}>
+            <TextField
+              id="outlined-name"
+              label={key}
+              className={classes.textFieldWithButton}
+              value={this.state.answers[key]}
+              onChange={ (event) => this.handleChange(event, 'answers', key)}
+              margin="normal"
+              variant="outlined"
+            />
+            <Button variant="contained" color={this.state.correctAnswer === key ? 'primary' : 'secondary'} className={classes.textFieldButton} onClick={ () => this.setCorrectAnswer(key) }>
+              Rätt svar
+            </Button>
+        </div>
       )
     )
   }
 
 
-  saveQuestion = () => {
-      let passed = true;
-      if(this.state.question.length > 4 && typeof this.state.question === 'string'){
+  setCorrectAnswer = data => {
+      this.setState({ correctAnswer: data });
+      console.log('Typeof data: ', typeof data);
+  }
 
-          /* Check answer lengths */
-          for (let key in this.state.answers){
-              if(this.state.answers[key].length < 2){
-                  passed = false;
-              }
-          }
-      } else {
+  saveQuestion = () => {
+
+      const { dispatch } = this.props;
+      let passed = true;
+
+      if(this.state.question.length < 4 && typeof this.state.question !== 'string'){
           passed = false;
       }
 
+      /* Check answer lengths */
+      for (let key in this.state.answers){
+          if(this.state.answers[key].length === 0){
+              passed = false;
+          }
+      }
+
+      /* Check for correctAnswer */
+      if(!this.state.correctAnswer){
+            passed = false;
+      }
+
       if(passed){
+          dispatch(showSnackbarMessage('Du la till en fråga'));
           this.props.addQuestion({ ...this.state, answers: { ...this.state.answers }});
           this.setState({
             question: '',
             answers: {
               a: '',
               b: ''
-            }
+            },
+            correctAnswer: null
           });
       } else {
-          console.log('Nein, mb add snackbar here?');
+          dispatch(showSnackbarError('Frågan uppfyller inte kraven.'));
       }
   }
 
@@ -139,5 +177,10 @@ class AddQuest extends Component {
   }
 };
 
+const mapStateToProps = store => ({
+  snackbarOpen: store.errorHandling.snackbarOpen,
+  error: store.errorHandling.error,
+  message: store.errorHandling.message,
+});
 
-export default withStyles(styles)(AddQuest);
+export default connect(mapStateToProps)(withStyles(styles)(AddQuest));
