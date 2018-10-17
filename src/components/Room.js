@@ -148,7 +148,7 @@ class Room extends Component {
     const currentQuestion  = room && room.currentQuestion;
 
     if (currentQuestion === 0)
-      return (<div>Ej startad ännu</div>)
+      return (<div><Typography component="h2" variant="h1" gutterBottom>Quiz ej startat</Typography></div>)
 
     if (currentQuestion === -1)
       return (<div><Typography component="h2" variant="h1" gutterBottom>SLUT</Typography></div>)
