@@ -73,38 +73,54 @@ class Room extends Component {
   }
 
 
-  selectedAnswer = (selected, correctAnswer) => {
+  selectedAnswer = (selected, correctAnswer, currentQuestion) => {
     const roomId = this.props.match.params.id;
     const { dispatch } = this.props;
+
     const isRight = selected === correctAnswer;
 
+    let student = JSON.parse(localStorage.getItem('student'));
+
+    if(student.lastQuestion === currentQuestion){
+      console.log('You trying to cheat?!');
+      return null;
+    }
+
+    student.lastQuestion = currentQuestion;
+    localStorage.setItem('student', JSON.stringify(student));
+
     if (isRight) {
+      console.log('rätt svar!');
       dispatch(getRoomFromDb(roomId)).then( ()=>{
         const { openForAnswer } = this.props.room;
-        const {questionClosed } = this.state;
 
-        // här ska vi lägga in så att openForAnswer sätts..
-
-        if ( !questionClosed || true ) {
+        // check if current question is open for answers
+        if ( openForAnswer ) {
+          console.log('question is open! :)');
           let { points,uid } = this.props.user;
           points += 10;
           dispatch(updateUserInDb({uid,points})).then( ()=>{
             this.setState({rightAnswer: true, questionClosed: true}) // dont remove this.. need for update points also.. its to deep for react to handle
           })
+        } else {
+          console.log('qusetion is closed :(');
         }
       })
+    } else {
+      this.setState({rightAnswer: false,  questionClosed: true }) // dont remove this.. need for update points also.. its to deep for react to handle
+      console.log('fel svar!');
     }
-    this.setState({rightAnswer: false,  questionClosed: true }) // dont remove this.. need for update points also.. its to deep for react to handle
+
 
   }
 
 
-  createAnswerButtons = (answers, correctAnswer) => {
+  createAnswerButtons = (answers, correctAnswer, currentQuestion) => {
     const { classes } = this.props;
     const listAlpah = ['a', 'b', 'c','d','e','f','g','h'];
     return Object.values(answers).map( (item, index ) => (
       <Fragment key={index}>
-        <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer)}>
+        <Card className={classes.card} onClick={() => this.selectedAnswer(listAlpah[index], correctAnswer, currentQuestion)}>
           <CardActionArea className={classes.cardAction}>
             <CardContent>
               <Avatar className={classes.orangeAvatar}>{listAlpah[index].toUpperCase()}</Avatar>
@@ -137,7 +153,7 @@ class Room extends Component {
       return (<div>SLUT</div>)
 
     const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
-    const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer)
+    const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer, currentQuestion)
 
     return (
       <Fragment>

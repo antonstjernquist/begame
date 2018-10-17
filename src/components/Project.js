@@ -47,19 +47,19 @@ class Room extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: props.match.params.id
+      id: props.match.params.id,
+      showTimer: true,
     }
 
     const roomId = (props.match && props.match.params && props.match.params.id) || false;
     if (roomId)
-    console.log('roomId är: ', roomId);
     props.dispatch(getRoomFromDb(roomId))
 
   }
 
   componentWillMount(){
     const { dispatch } = this.props;
-    dispatch(showSnackbarMessage(`Välkommen till rum #${this.state.id}`));
+    dispatch(showSnackbarMessage(`Välkommen till rum ${this.state.id}`));
   }
 
 
@@ -67,20 +67,15 @@ class Room extends Component {
     console.log('vald svar',selected);
     console.log('korrekt answer', correctAnswer);
     const isRight = selected === correctAnswer;
-    console.log(isRight);
+    console.log('V? ', isRight);
+    if ( isRight){
+      console.log('Rätt svar!');
+    }else {
+      console.log('Fel svar!');
+    }
     // här ska vi slänga in en koll mot prop och kontroller om användaren svarade rätt eller ej
     // ska inte visas så tyldigt att grannen kan kolla :)
     // oom användaren svarat rätt så uppdaterar vi användaren med ny poäng..
-    //
-    if (selected === 'selectedA') {
-      this.setState({ selectedA: true, selectedB: false, selectedC: false, selectedD: false, answered: true })
-    } else if (selected === 'selectedB') {
-      this.setState({ selectedA: false, selectedB: true, selectedC: false, selectedD: false, answered: true })
-    } else if (selected === 'selectedC') {
-      this.setState({ selectedA: false, selectedB: false, selectedC: true, selectedD: false, answered: true })
-    } else if (selected === 'selectedD') {
-      this.setState({ selectedA: false, selectedB: false, selectedC: false, selectedD: true, answered: true })
-    }
   }
 
 
@@ -138,8 +133,13 @@ class Room extends Component {
         </Paper>
       )
 
-    if (currentQuestion === -1)
+    if (currentQuestion === -1) {
+      if( this.state.showTimer)
+        this.setState({showTimer: false})
       return (<div>SLUT</div>)
+    } else if (!this.state.showTimer){
+      this.setState({showTimer:true})
+    }
 
     const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
     const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer)
@@ -153,7 +153,7 @@ class Room extends Component {
       </Fragment>)
   }
 
-  // switches to next question.
+  // switches to next question in timer.
   nextQuestion = () =>{
     const roomIdInDb = this.props.room['_id'];
     let { currentQuestion, quiz } = this.props.room
@@ -161,7 +161,6 @@ class Room extends Component {
 
     // if we got to the end of questions we set it to -1 to display end
     if (Object.keys(quiz.questions).length < currentQuestion ){
-      console.log('inne i fel ');
       currentQuestion = -1;
     }
 
@@ -174,12 +173,19 @@ class Room extends Component {
     this.props.dispatch(updateRoomInDb(data));
   }
 
+  // open question for answer
+  questionOpenForAnswer = (isOpen) =>{
+    console.log('questionOpenForAnswer is going: ', isOpen);
+    const { dispatch } = this.props;
+    const roomIdInDb = this.props.room['_id'];
+      dispatch(updateRoomInDb({update: {openForAnswer: isOpen}, roomIdInDb}))
+  }
 
   render() {
     const { history } = this.props;
-    const viewQuest = this.renderQuestion();
+    const { showTimer } = this.state;
 
-    console.log('props', this.props);
+    const viewQuest = this.renderQuestion();
 
     return (
       <Fragment>
@@ -187,7 +193,7 @@ class Room extends Component {
         <ActiveUsers roomId={this.state.id}/>
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
-          <TimerBar nextQuest={this.nextQuestion} />
+          {showTimer && <TimerBar nextQuest={this.nextQuestion}  questionOpenForAnswer={this.questionOpenForAnswer}/>}
         </div>
       <ErrorHandling />
       </Fragment>
