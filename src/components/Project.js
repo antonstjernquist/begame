@@ -34,7 +34,7 @@ const styles = theme => ({
   cardRight: {
     maxWidth: 380,
     marginBottom: 30,
-    backgroundColor: 'lightblue',
+    backgroundColor: '#a1c45a',
   },
   cardAction: {
     width: 350,
@@ -137,7 +137,7 @@ class Room extends Component {
     if (currentQuestion === -1) {
       if( this.state.showTimer)
         this.setState({showTimer: false})
-      return (<div><Typography component="h2" variant="h1" gutterBottom>SLUT</Typography></div>)
+      return (<div><Typography variant="h3" gutterBottom>SLUT</Typography></div>)
     } else if (!this.state.showTimer){
       this.setState({showTimer:true})
     }

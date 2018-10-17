@@ -102,7 +102,6 @@ class ActiveUsers extends Component {
         </ListItem>
           { userList }
         </List>
-        <Button color="primary" size="small" variant="contained" style={{color: '#FFF', position: 'absolute', bottom: 24, left: 24}} onClick={()=> this.getNewUserData(true) }>UPPDATERA ANVÄNDARE</Button>
       </div>
     )
   }

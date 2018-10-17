@@ -143,15 +143,17 @@ class Room extends Component {
     const { questions } = quiz || false;
 
     if ( !questions )
-      return (<div>Ej startad ännu</div>)
+      return (<div><Typography variant="h3" gutterBottom>
+        Ej startad ännu
+      </Typography></div>)
 
     const currentQuestion  = room && room.currentQuestion;
 
     if (currentQuestion === 0)
-      return (<div><Typography component="h2" variant="h1" gutterBottom>Quiz ej startat</Typography></div>)
+      return (<div><Typography variant="h3" gutterBottom>Quiz ej startat</Typography></div>)
 
     if (currentQuestion === -1)
-      return (<div><Typography component="h2" variant="h1" gutterBottom>SLUT</Typography></div>)
+      return (<div><Typography variant="h3" gutterBottom>SLUT</Typography></div>)
 
     const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
     const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer, currentQuestion)
