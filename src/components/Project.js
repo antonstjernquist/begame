@@ -137,7 +137,7 @@ class Room extends Component {
     if (currentQuestion === -1) {
       if( this.state.showTimer)
         this.setState({showTimer: false})
-      return (<div>SLUT</div>)
+      return (<div><Typography component="h2" variant="h1" gutterBottom>SLUT</Typography></div>)
     } else if (!this.state.showTimer){
       this.setState({showTimer:true})
     }

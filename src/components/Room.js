@@ -151,7 +151,7 @@ class Room extends Component {
       return (<div>Ej startad ännu</div>)
 
     if (currentQuestion === -1)
-      return (<div>SLUT</div>)
+      return (<div><Typography component="h2" variant="h1" gutterBottom>SLUT</Typography></div>)
 
     const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
     const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer, currentQuestion)
