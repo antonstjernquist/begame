@@ -35,6 +35,7 @@ function Menu(props) {
     <div className={classes.root}>
       <AppBar position="static" color={setColor} >
         <Toolbar className={classes.appHeight}>
+          <span>PAGES</span>
           <div className={classes.grow} color="inherit">
           {roomId &&
             <p className={classes.roomStyleText}>{`ROOMID #${roomId}`}</p>
