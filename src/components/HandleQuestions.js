@@ -193,7 +193,7 @@ class HandleQuestions extends Component {
     const { questionCollections } = this.props;
     const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
     let new_quiz = false;
-    if(Object.keys(this.state.questions).length){
+    if( !this.state._id ){
         new_quiz = true;
     } else if (Object.keys(questionCollections).length === 0 || !collectionId ) {
         return null;
@@ -201,7 +201,7 @@ class HandleQuestions extends Component {
 
     /* If we're creating a quiz, set the questions from state */
     const { questions } = new_quiz ? this.state : questionCollections[collectionId];
-
+    if( !questions) return 'Inga frågor finns i samlingen';
     return Object.keys(questions).map( (key ,index) => {
         const item = questions[key];
         return (
@@ -341,7 +341,7 @@ class HandleQuestions extends Component {
           </div>
           <AddQuest dispatch={this.props.dispatch} addQuestion={this.addQuestion} />
         <ErrorHandling />
-      <Paper style={{width: 600, margin: '20px auto', padding: 20}}>
+      <Paper style={{width: 600, margin: '20px auto', padding: 20, marginBottom: '500px'}}>
         <Typography variant="h5" gutterBottom>Frågor</Typography>
         { table }
       </Paper>

@@ -19,7 +19,7 @@ import Hashids from 'hashids';
 import { getQuestionCollections } from '../actions/questionCollectionActions.js';
 import { setUser } from '../actions/authActions.js';
 import { createRoomAction } from '../actions/roomActions.js';
-
+// import { showSnackbarMessage } from '../actions/errorHandlingActions';
 /* Komponenter */
 import Menu from './Menu.js';
 
@@ -46,19 +46,20 @@ const styles = theme => ({
 class Adminpanel extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      update: false
+    }
     const { collectionFetched, dispatch, history } = props
-    console.log('Fetched collections: ', collectionFetched);
+
 
     if ( !collectionFetched ){
       // hämta data.
-      console.log('Retrieving collection');
       dispatch(getQuestionCollections());
     }
 
     let auth = JSON.parse(localStorage.getItem('auth'));
     if(auth && auth.token && auth.token.length > 10){
-        console.log('Setting auth: ', auth);
-        dispatch(setUser(JSON.parse(localStorage.getItem('auth'))));
+          dispatch(setUser(JSON.parse(localStorage.getItem('auth'))));
     } else {
         history.push('/admin');
     }
@@ -67,6 +68,10 @@ class Adminpanel extends Component {
   createRoom = quiz => {
     const { dispatch, history } = this.props;
     const roomId = createRoomId(this.props.auth.name, quiz._id);
+    if (quiz.numberOfQuestions === 0) {
+      // dispatch(showSnackbarMessage('Samlingen saknar frågor'));
+      return null;
+    }
     const room = {
       roomId,
       quiz,
@@ -77,7 +82,6 @@ class Adminpanel extends Component {
       name: roomId,
       created: Date.now()
     }
-    console.log('Creating room: ', room);
 
     dispatch(createRoomAction({history, room}));
 
@@ -85,7 +89,6 @@ class Adminpanel extends Component {
 
   createQuiz = () => {
       const { history } = this.props;
-      console.log('Creating quiz');
       history.push('/admin/collection/');
   }
 
@@ -101,6 +104,7 @@ class Adminpanel extends Component {
 
     return Object.keys(questionCollections).map(xKey => {
       const x = questionCollections[xKey];
+      x.numberOfQuestions = x.questions ? Object.keys(x.questions).length : 0;
       return (
         <Card key={x._id} className={classes.card}>
           <CardActionArea>
@@ -115,6 +119,9 @@ class Adminpanel extends Component {
               </Typography>
               <Typography component="p">
                 {x.description}
+              </Typography>
+              <Typography variant="caption" style={{marginTop: '5px'}}>
+                Frågor {x.numberOfQuestions}st
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -168,7 +175,6 @@ let mapStateToProps = state => ({
 function createRoomId(){
 
   let code = Math.ceil(Date.now() - 1539264714045);
-  console.log('Code: ', code);
   let hashids = new Hashids('begame'),
   id = hashids.encode(code);
 

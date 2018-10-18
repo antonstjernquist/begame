@@ -27,7 +27,6 @@ export default function reducer(state = initialState, action) {
       };
     }
     case 'USER_LOGOUT': {
-      console.log('Logging out user.');
       localStorage.removeItem('token');
       localStorage.removeItem('auth');
       return {
