@@ -211,7 +211,7 @@ class HandleQuestions extends Component {
               <div id="expPanel">
                 <Typography>{item.question}</Typography>
               </div>
-              <Button onClick={e => this.removeQuestion(key)}>Remove</Button>
+              <Button style={{paddingRight: 0}} variant="outlined" color="secondary" onClick={e => this.removeQuestion(key)}><p style={{paddingRight: 15}}>Remove</p></Button>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails >
 
