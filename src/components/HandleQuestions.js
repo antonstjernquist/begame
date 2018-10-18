@@ -108,15 +108,16 @@ class HandleQuestions extends Component {
 
       const { dispatch } = this.props;
 
-      if ( this.state.new_quiz ){
-          this.setState({ questions: { ...this.state.questions, [data.question]: data }});
-      } else {
+      this.setState({ questions: { ...this.state.questions, [data.question]: data }});
+      
+      if ( !this.state.new_quiz ){
 
           /* Define the collection we shall edit */
           const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
           let collection = this.props.questionCollections[collectionId];
 
           /* Add question to the collection */
+          collection.questions = collection.questions ? collection.questions : {}
           collection.questions[data.question] = data;
 
           /* Then update in store */
@@ -146,7 +147,7 @@ class HandleQuestions extends Component {
 
       if(checkQuizData(quiz)){
           console.log('Passed checks, posting quiz to database.');
-
+          console.log('Quiz is: ', quiz);
           /* Update / Create */
           if(this.state.new_quiz){
               console.log('Creating new quiz!');
@@ -206,8 +207,10 @@ class HandleQuestions extends Component {
         const item = questions[key];
         return (
           <ExpansionPanel key={index} style={{ width: 640, marginLeft: -20 }}>
-            <ExpansionPanelSummary className='expPanel'>
-              <Typography>{item.question}</Typography>
+            <ExpansionPanelSummary>
+              <div id="expPanel">
+                <Typography>{item.question}</Typography>
+              </div>
               <Button onClick={e => this.removeQuestion(key)}>Remove</Button>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails >
