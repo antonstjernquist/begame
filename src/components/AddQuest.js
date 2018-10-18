@@ -83,7 +83,7 @@ class AddQuest extends Component {
                 },
               }}
             />
-            <Button variant="contained" size="medium" color={this.state.correctAnswer === key ? 'primary' : 'secondary'} className={classes.textFieldButton} onClick={ () => this.setCorrectAnswer(key) }>
+            <Button variant="contained" size="medium" color={this.state.correctAnswer === key ? 'secondary' : 'primary'} className={classes.textFieldButton} onClick={ () => this.setCorrectAnswer(key) }>
               Rätt svar
             </Button>
         </div>
