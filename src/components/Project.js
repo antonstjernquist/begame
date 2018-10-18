@@ -136,10 +136,10 @@ class Room extends Component {
 
     if (currentQuestion === -1) {
       if( this.state.showTimer)
-        this.setState({showTimer: false})
+        // this.setState({showTimer: false})
       return (<div><Typography variant="h3" gutterBottom>SLUT</Typography></div>)
     } else if (!this.state.showTimer){
-      this.setState({showTimer:true})
+      // this.setState({showTimer:true})
     }
 
     const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
@@ -194,20 +194,33 @@ class Room extends Component {
       this.setState({rightAnswer: null})
     }
   }
+  showTimer = () => {
+    const { room } = this.props;
+
+    let currentQuestion  = room && room.currentQuestion ? room.currentQuestion : 0;
+
+    if (currentQuestion === 0) {
+      return true
+    } else if( currentQuestion === -1){
+      return false
+    } else {
+      return true;
+    }
+  }
 
   render() {
     const { history } = this.props;
-    const { showTimer } = this.state;
+
 
     const viewQuest = this.renderQuestion();
-
+    const showTime = this.showTimer();
     return (
       <Fragment>
         <Menu roomId={this.state.id} history={history}/>
         <ActiveUsers roomId={this.state.id}/>
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
-          {showTimer && <TimerBar nextQuest={this.nextQuestion}  questionOpenForAnswer={this.questionOpenForAnswer} showRightAnswer={this.showRightAnswer}/>}
+          {showTime && <TimerBar nextQuest={this.nextQuestion}  questionOpenForAnswer={this.questionOpenForAnswer} showRightAnswer={this.showRightAnswer}/>}
         </div>
       <ErrorHandling />
       </Fragment>
