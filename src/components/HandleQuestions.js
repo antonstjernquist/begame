@@ -211,7 +211,7 @@ class HandleQuestions extends Component {
               <div id="expPanel">
                 <Typography>{item.question}</Typography>
               </div>
-              <Button style={{paddingRight: 0}} variant="outlined" color="secondary" onClick={e => this.removeQuestion(key)}><p style={{paddingRight: 15}}>Remove</p></Button>
+              <Button style={{paddingRight: 0}} variant="outlined" color="secondary" onClick={e => this.removeQuestion(key)}><p style={{paddingRight: 15}}>Ta bort</p></Button>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails >
 
@@ -266,11 +266,11 @@ class HandleQuestions extends Component {
         <Menu history={ history } createQuiz={ true }/>
         <div style={{float: 'right', marginTop: 10}}>
         <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuiz }>
-          Spara frågesamling
+          Spara Quiz
         </Button>
         {!this.state.new_quiz &&
             <Button variant="contained" color="secondary" className={classes.button} onClick= { this.removeQuiz }>
-              Radera frågesamling
+              Ta bort Quiz
             </Button>
         }
         </div>
