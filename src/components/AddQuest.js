@@ -16,16 +16,16 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width:'95%',
+    width:'90%',
   },
   textFieldWithButton: {
-    width:'80%',
+    width:'75%',
   },
   textFieldDiv: {
-    width:'100%',
+    width:'103%',
   },
   textFieldButton: {
-    margin: '20px 5px'
+    margin: '20px 20px'
   },
   button: {
     marginRight: 15,
