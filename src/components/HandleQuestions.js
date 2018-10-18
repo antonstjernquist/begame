@@ -146,19 +146,14 @@ class HandleQuestions extends Component {
       }
 
       if(checkQuizData(quiz)){
-          console.log('Passed checks, posting quiz to database.');
-          console.log('Quiz is: ', quiz);
           /* Update / Create */
           if(this.state.new_quiz){
-              console.log('Creating new quiz!');
               dispatch(createCollectionAction(quiz));
           } else {
-              console.log('Updating old quiz!');
               dispatch(updateCollectionAction(quiz));
           }
       } else {
           dispatch(showSnackbarError('Frågesamlingen uppfyller inte alla krav!'));
-          console.log('Failed to pass checks.');
       }
   }
 
@@ -171,7 +166,6 @@ class HandleQuestions extends Component {
       const { dispatch } = this.props;
 
       if ( this.state.new_quiz ){
-          console.log('Removing question.');
           let questions = { ...this.state.questions };
           delete(questions[question]);
           this.setState({ questions: questions });

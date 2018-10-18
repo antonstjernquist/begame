@@ -66,7 +66,6 @@ class Project extends Component {
   };
 
   handleRegister = () => {
-    console.log('State is: ', this.state);
     if(!this.state.pw1.length || !this.state.pw2.length || !this.state.inputname.length){
       this.props.dispatch(showSnackbarError('Tomma fält, vänligen försök igen'));
     } else if(this.state.pw1.length < 6){
