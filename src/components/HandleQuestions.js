@@ -109,7 +109,7 @@ class HandleQuestions extends Component {
       const { dispatch } = this.props;
 
       this.setState({ questions: { ...this.state.questions, [data.question]: data }});
-      
+
       if ( !this.state.new_quiz ){
 
           /* Define the collection we shall edit */
@@ -307,13 +307,13 @@ class HandleQuestions extends Component {
               variant="outlined"
               multiline
               fullWidth
+              rows={2}
               InputLabelProps={{
                 shrink: true,
               }}
               InputProps={{
                 style: {
                   fontSize: 13,
-                  height: 45,
                 },
               }}
             />

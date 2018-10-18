@@ -172,7 +172,6 @@ class AddQuest extends Component {
           InputProps={{
             style: {
               fontSize: 13,
-              height: 45,
             },
           }}
         />

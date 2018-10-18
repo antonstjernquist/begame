@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
@@ -21,8 +22,13 @@ const styles = {
     minHeight: 50,
   },
   roomStyleText: {
-    fontWeight: 500,
-  }
+   fontWeight: 500,
+   verticalAlign: -12,
+   marginLeft: 10
+ },
+ avatar: {
+   float: 'left',
+ },
 };
 
 function Menu(props) {
@@ -40,8 +46,13 @@ function Menu(props) {
             <p className={classes.roomStyleText}>{`ROOMID #${roomId}`}</p>
           }
           {adminPanel && auth &&
-            <p className={classes.roomStyleText}>GM {auth.name}</p>
-          }
+           <Fragment>
+           <Avatar alt={auth.name} src="https://upload.wikimedia.org/wikipedia/commons/3/38/Wikipedia_User-ICON_byNightsight.png" width="50px" className={classes.avatar} />
+           <span className={classes.roomStyleText}>
+             GM {auth.name.toUpperCase()}
+           </span>
+           </Fragment>
+         }
           </div>
           {!roomId && isAdmin &&
             <Button color="inherit" onClick={() => { history.push('/'); }}>Student</Button>
