@@ -15,7 +15,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import ErrorHandling from './ErrorHandling';
-import { showSnackbarError } from '../actions/errorHandlingActions.js';
+import { showSnackbarError, showSnackbarMessage } from '../actions/errorHandlingActions.js';
 
 /* Denna komponent visar vilka olika quiz man kan starta samt "Skapa ny quiz" */
 const styles = theme => ({
@@ -90,10 +90,9 @@ class Project extends Component {
         return response.json();
       })
       .then(json => {
-        console.log(json);
+        this.props.dispatch(showSnackbarMessage(`Grattis! Konto skapat.`));
       })
       .catch(err => console.log(err));
-
     }
   };
 
