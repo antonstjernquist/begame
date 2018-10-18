@@ -20,7 +20,6 @@ export const createRoomAction = (data, dispatch) => async (dispatch, getState) =
   const token = localStorage.getItem('token');
 
   if(!token || token === 'undefined'){
-      console.log('No token specified. No data to retrieve for you.');
       return;
   }
 
@@ -41,8 +40,6 @@ export const createRoomAction = (data, dispatch) => async (dispatch, getState) =
   if(response.success){
     dispatch(setRoom(response.content))
     history.push('/project/' + response.content.roomId);
-  } else {
-      console.log(response);
   }
 
 }
@@ -62,8 +59,6 @@ export const getRoomFromDb = (roomId, dispatch) => async (dispatch, getState) =>
 
   if(response.success){
     dispatch(setRoom(response.content[0]))
-  } else {
-      console.log(response);
   }
 }
 
@@ -72,7 +67,6 @@ export const updateRoomInDb = (data, dispatch) => async (dispatch, getState) => 
   const token = localStorage.getItem('token');
   const { roomIdInDb } = data;
   if(!token || token === 'undefined'){
-    console.log('No token specified. No data to retrieve for you.');
     return;
   }
 
@@ -92,8 +86,6 @@ export const updateRoomInDb = (data, dispatch) => async (dispatch, getState) => 
 
   if(response.success){
     dispatch(setRoom(response.content))
-  } else {
-    console.log(response);
   }
 
 }

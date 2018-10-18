@@ -18,7 +18,7 @@ import ErrorHandling from './ErrorHandling.js';
 import Register from './Register'
 
 const backgroundImage = require('../resources/background_gm.jpg');
-const logo = require('../resources/logo.png');
+const logo = require('../resources/logo_gm.png');
 
 const styles = () => ({
   main: {

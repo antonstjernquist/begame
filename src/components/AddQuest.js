@@ -16,19 +16,19 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width:'95%',
+    width:'90%',
   },
   textFieldWithButton: {
-    width:'80%',
+    width:'75%',
   },
   textFieldDiv: {
-    width:'100%',
+    width:'103%',
   },
   textFieldButton: {
-    margin: '25px 5px'
+    margin: '20px 20px'
   },
   button: {
-    marginRight: 10,
+    marginRight: 15,
   }
 });
 
@@ -83,7 +83,7 @@ class AddQuest extends Component {
                 },
               }}
             />
-            <Button variant="contained" size="medium" color={this.state.correctAnswer === key ? 'primary' : 'secondary'} className={classes.textFieldButton} onClick={ () => this.setCorrectAnswer(key) }>
+            <Button variant="contained" size="medium" color={this.state.correctAnswer === key ? 'secondary' : 'primary'} className={classes.textFieldButton} onClick={ () => this.setCorrectAnswer(key) }>
               Rätt svar
             </Button>
         </div>
@@ -172,12 +172,11 @@ class AddQuest extends Component {
           InputProps={{
             style: {
               fontSize: 13,
-              height: 45,
             },
           }}
         />
         { answersList }
-        <div>
+        <div style={{marginTop: 20}}>
           <Button variant="outlined" color="secondary" size="small" className={classes.button} onClick={ ()=>this.changeAnswersOption(true)}>
             Lägg till svarsalternativ
           </Button>

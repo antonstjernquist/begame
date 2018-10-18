@@ -10,6 +10,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
 
 //Imported components
 import Menu from './Menu';
@@ -37,7 +39,7 @@ const styles = theme => ({
   },
   orangeAvatar: {
     color: '#fff',
-    backgroundColor: '#a7d129',
+    backgroundColor: '#573697',
     margin: '0px auto',
     marginBottom: 10,
   },
@@ -82,7 +84,7 @@ class Room extends Component {
     let student = JSON.parse(localStorage.getItem('student'));
 
     if(student.lastQuestion === currentQuestion){
-      console.log('You trying to cheat?!');
+      dispatch(showSnackbarMessage('Du har redan svarat på frågan 🤔'))
       return null;
     }
 
@@ -90,25 +92,24 @@ class Room extends Component {
     localStorage.setItem('student', JSON.stringify(student));
 
     if (isRight) {
-      console.log('rätt svar!');
+      dispatch(showSnackbarMessage('Rätt svar! 😎'))
       dispatch(getRoomFromDb(roomId)).then( ()=>{
         const { openForAnswer } = this.props.room;
 
         // check if current question is open for answers
         if ( openForAnswer ) {
-          console.log('question is open! :)');
           let { points,uid } = this.props.user;
           points += 10;
           dispatch(updateUserInDb({uid,points})).then( ()=>{
             this.setState({rightAnswer: true, questionClosed: true}) // dont remove this.. need for update points also.. its to deep for react to handle
           })
         } else {
-          console.log('qusetion is closed :(');
+            dispatch(showSnackbarMessage('Rätt svar! 😎'))
         }
       })
     } else {
       this.setState({rightAnswer: false,  questionClosed: true }) // dont remove this.. need for update points also.. its to deep for react to handle
-      console.log('fel svar!');
+      dispatch(showSnackbarMessage('Fel! 😫'))
     }
 
 
@@ -142,22 +143,24 @@ class Room extends Component {
     const { questions } = quiz || false;
 
     if ( !questions )
-      return (<div>Ej startad ännu</div>)
+      return (<div><Typography variant="h3" gutterBottom>
+        Ej startad ännu
+      </Typography></div>)
 
     const currentQuestion  = room && room.currentQuestion;
 
     if (currentQuestion === 0)
-      return (<div>Ej startad ännu</div>)
+      return (<div><Typography variant="h3" gutterBottom>Quiz ej startat</Typography></div>)
 
     if (currentQuestion === -1)
-      return (<div>SLUT</div>)
+      return (<div><Typography variant="h3" gutterBottom>SLUT</Typography></div>)
 
     const selectedQuestion = Object.values(questions).filter(question => question.order === currentQuestion)[0];
     const answer = this.createAnswerButtons(selectedQuestion.answers, selectedQuestion.correctAnswer, currentQuestion)
 
     return (
       <Fragment>
-        <h1 style={{fontSize: '3.5em', color: '#a7d129', fontWeight: 'bold', marginBottom: 100}}>{selectedQuestion.question}</h1>
+        <h1 style={{fontSize: '3.5em', color: '#573697', fontWeight: 'bold', marginBottom: 100}}>{selectedQuestion.question}</h1>
         <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 50, flexWrap: 'wrap'}}>
           {answer}
         </div>
@@ -165,10 +168,13 @@ class Room extends Component {
   }
 
   updateQuiz = () =>{
+    const { dispatch } = this.props;
     const { currentQuestion } = this.props.room;
-    this.props.dispatch(getRoomFromDb(this.state.id)).then( ()=>{
+      dispatch(getRoomFromDb(this.state.id)).then( ()=>{
       if ( currentQuestion !== this.props.room.currentQuestion ){
         this.setState({questionClosed:false})
+      } else {
+        dispatch(showSnackbarMessage('Frågan är pågående!'))
       }
     })
   };
@@ -183,7 +189,15 @@ class Room extends Component {
     return (
       <Fragment>
         <Menu roomId={this.state.id} history={history}/>
-        score: {score}
+        <div style={{margin: 10}}>
+        <Chip
+          icon={<FaceIcon />}
+          label={`${user.name}: ${score} poäng`}
+          clickable
+          className={classes.chip}
+          color="primary"
+        />
+        </div>
         <div style={{width: 800, height: 300, margin: '100px auto', textAlign: 'center' }}>
           {viewQuest}
           <Button
@@ -192,7 +206,7 @@ class Room extends Component {
             onClick={this.updateQuiz}
             color="primary"
           >
-            Uppdatera quiz gå till nästa fråga
+            Visa fråga
           </Button>
         </div>
       <ErrorHandling />

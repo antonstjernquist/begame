@@ -19,7 +19,7 @@ const styles = {
     background: red[500],
   },
   success: {
-    background: '#333',
+    background: '#FB8C00',
     color: '#FAFAFA'
   },
 };

@@ -4,11 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+// import Dialog from '@material-ui/core/Dialog';
+// import DialogActions from '@material-ui/core/DialogActions';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
   root: {
@@ -63,12 +63,12 @@ class TimerBar extends Component {
     let { completed, time, currentTime } = this.state;
     completed += (100/time)
     currentTime += 1;
-    if (completed > 100) {
-      console.log('finito');
+    if (completed > 100) { // time is ended.
       this.setState({ completed: 0, inProgress: false, currentTime:0, lockStart: false, showEndTime:true, open: true, reseted: false, });
       clearInterval(this.timer);
       this.props.questionOpenForAnswer(false);
-    } else {
+      this.props.showRightAnswer(true);
+    } else { // still in progress
       this.setState({ completed,currentTime, inProgress: true });
     }
   };
@@ -85,8 +85,9 @@ class TimerBar extends Component {
     if (!lockStart){
       // if quest is reseted we dont want to change question
       if ( !inProgress && !reseted ) {
-        this.props.questionOpenForAnswer(true);
-        this.props.nextQuest();
+        this.props.questionOpenForAnswer(true); // open current quetsion for answers
+        this.props.showRightAnswer(false); // removes earlier answer from state
+        this.props.nextQuest(); // change to next question
       }
 
 
@@ -113,7 +114,8 @@ class TimerBar extends Component {
 
   render() {
     const { classes } = this.props;
-    const { inProgress, lockStart, showEndTime, open } = this.state;
+    // const { inProgress, lockStart, showEndTime, open } = this.state;
+    const { inProgress, lockStart } = this.state;
     return (
       <div>
         <div className={classes.root}>
@@ -161,7 +163,7 @@ class TimerBar extends Component {
           />
         }
         </div>
-        { open && showEndTime &&
+        {/* { open && showEndTime &&
         <Dialog
           style={{ width: 600, marginLeft: 750, marginTop: -100 }}
           open={this.state.open}
@@ -181,7 +183,7 @@ class TimerBar extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-      }
+      } */}
       </div>
     );
   }

@@ -4,16 +4,17 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import People from '@material-ui/icons/People';
 import { connect } from 'react-redux';
-import { getUserInRoom } from '../actions/userActions.js'
+import { getUserInRoom } from '../actions/userActions.js';
+
 const styles = theme => ({
   root: {
     width: '100%',
     maxWidth: 250,
     height: '95vh',
-    backgroundColor: '#a7d129',
+    backgroundColor: '#573697',
     float: 'left',
   },
   userText: {
@@ -46,8 +47,15 @@ class ActiveUsers extends Component {
     const { fetched, dispatch, roomId } = props;
 
     if (!fetched && roomId){
-      dispatch(getUserInRoom({roomId}))
+      dispatch(getUserInRoom({roomId,failMsg: false}))
     }
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {this.getNewUserData(false) }, 2000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   renderActiveUsers = () => {
@@ -65,11 +73,11 @@ class ActiveUsers extends Component {
     ));
   }
 
-  getNewUserData = () => {
+  getNewUserData = (failMsg) => {
     const { dispatch, roomId } = this.props;
 
     if (roomId){
-      dispatch(getUserInRoom({roomId}))
+      dispatch(getUserInRoom({roomId,failMsg}))
     }
   }
 
@@ -94,7 +102,6 @@ class ActiveUsers extends Component {
         </ListItem>
           { userList }
         </List>
-        <Button color="primary" size="small" variant="contained" style={{color: '#FFF', position: 'absolute', bottom: 24, left: 24}} onClick={this.getNewUserData}>UPPDATERA ANVÄNDARE</Button>
       </div>
     )
   }

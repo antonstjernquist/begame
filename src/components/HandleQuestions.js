@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import AddQuest from './AddQuest.js';
 import Menu from './Menu.js';
 import ErrorHandling from './ErrorHandling.js';
-import { createCollectionAction, updateCollectionAction, removeCollectionAction } from '../actions/questionCollectionActions.js';
+import { createCollectionAction, updateCollectionAction, removeCollectionAction, updateCollection } from '../actions/questionCollectionActions.js';
 import { showSnackbarError } from '../actions/errorHandlingActions';
 
 const styles = theme => ({
@@ -35,7 +35,6 @@ const styles = theme => ({
   button: {
       margin: 10
   },
-
   removeButtonDiv: {
       border: '1px solid #e67575',
       borderRadius: 5,
@@ -47,7 +46,12 @@ const styles = theme => ({
     marginBottom: 20,
     marginTop: 20,
     margin: '0px auto'
+  },
+  expPanel: {
+      color: 'red',
+      justifyContent: 'space-between',
   }
+
 });
 
 const min_title_length  = 4;
@@ -104,19 +108,20 @@ class HandleQuestions extends Component {
 
       const { dispatch } = this.props;
 
-      if ( this.state.new_quiz ){
-          this.setState({ questions: { ...this.state.questions, [data.question]: data }});
-      } else {
+      this.setState({ questions: { ...this.state.questions, [data.question]: data }});
+
+      if ( !this.state.new_quiz ){
 
           /* Define the collection we shall edit */
           const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
           let collection = this.props.questionCollections[collectionId];
 
           /* Add question to the collection */
+          collection.questions = collection.questions ? collection.questions : {}
           collection.questions[data.question] = data;
 
           /* Then update in store */
-          dispatch(updateCollectionAction(collection));
+          dispatch(updateCollection(collection));
 
       }
   }
@@ -141,19 +146,14 @@ class HandleQuestions extends Component {
       }
 
       if(checkQuizData(quiz)){
-          console.log('Passed checks, posting quiz to database.');
-
           /* Update / Create */
           if(this.state.new_quiz){
-              console.log('Creating new quiz!');
               dispatch(createCollectionAction(quiz));
           } else {
-              console.log('Updating old quiz!');
               dispatch(updateCollectionAction(quiz));
           }
       } else {
           dispatch(showSnackbarError('Frågesamlingen uppfyller inte alla krav!'));
-          console.log('Failed to pass checks.');
       }
   }
 
@@ -162,11 +162,33 @@ class HandleQuestions extends Component {
       dispatch(removeCollectionAction(this.state._id));
   }
 
+  removeQuestion = question => {
+      const { dispatch } = this.props;
+
+      if ( this.state.new_quiz ){
+          let questions = { ...this.state.questions };
+          delete(questions[question]);
+          this.setState({ questions: questions });
+      } else {
+
+          /* Define the collection we shall edit */
+          const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
+          let collection = this.props.questionCollections[collectionId];
+
+          /* Add question to the collection */
+          delete(collection.questions[question]);
+
+          /* Then update in store */
+          dispatch(updateCollection(collection));
+      }
+
+  }
+
   renderTableView = () => {
     const { questionCollections } = this.props;
     const collectionId = this.props.match && this.props.match.params && this.props.match.params.id;
     let new_quiz = false;
-    if(Object.keys(this.state.questions).length){
+    if( !this.state._id ){
         new_quiz = true;
     } else if (Object.keys(questionCollections).length === 0 || !collectionId ) {
         return null;
@@ -174,33 +196,36 @@ class HandleQuestions extends Component {
 
     /* If we're creating a quiz, set the questions from state */
     const { questions } = new_quiz ? this.state : questionCollections[collectionId];
-
+    if( !questions) return 'Inga frågor finns i samlingen';
     return Object.keys(questions).map( (key ,index) => {
         const item = questions[key];
         return (
-          <ExpansionPanel key={index} style={{ width: 620, margin: '0px auto' }}>
-            <ExpansionPanelSummary >
-              <Typography>{item.question}</Typography>
+          <ExpansionPanel key={index} style={{ width: 640, marginLeft: -20 }}>
+            <ExpansionPanelSummary>
+              <div id="expPanel">
+                <Typography>{item.question}</Typography>
+              </div>
+              <Button style={{paddingRight: 0}} variant="outlined" color="secondary" onClick={e => this.removeQuestion(key)}><p style={{paddingRight: 15}}>Ta bort</p></Button>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            <ExpansionPanelDetails >
 
               {/*  Show all options */}
               <div>
                 {Object.keys(questions[key].answers).map( optionKey => (
                     <TextField
-                      key={optionKey}
-                      id="standard-full-width"
-                      label={optionKey}
-                      value={questions[key].answers[optionKey]}
-                      style={{ margin: 8 }}
-                      placeholder="Placeholder"
-                      fullWidth
-                      margin="normal"
-                      onChange={(event)=> this.handleChangeQuestions(event, key, optionKey)}
-                      InputLabelProps={{
-                      shrink: true,
-                      }}
-                    />
+                        key={optionKey}
+                        id="standard-full-width"
+                        label={optionKey}
+                        value={questions[key].answers[optionKey]}
+                        style={{ margin: 8 }}
+                        placeholder="Placeholder"
+                        fullWidth
+                        margin="normal"
+                        onChange={(event)=> this.handleChangeQuestions(event, key, optionKey)}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        />
                   ))}
 
                   {/* Shows correct answer.. not completed yet */}
@@ -235,11 +260,11 @@ class HandleQuestions extends Component {
         <Menu history={ history } createQuiz={ true }/>
         <div style={{float: 'right', marginTop: 10}}>
         <Button variant="contained" color="primary" className={classes.button} onClick= { this.saveQuiz }>
-          Spara frågesamling
+          Spara Quiz
         </Button>
         {!this.state.new_quiz &&
             <Button variant="contained" color="secondary" className={classes.button} onClick= { this.removeQuiz }>
-              Radera frågesamling
+              Ta bort Quiz
             </Button>
         }
         </div>
@@ -276,13 +301,13 @@ class HandleQuestions extends Component {
               variant="outlined"
               multiline
               fullWidth
+              rows={2}
               InputLabelProps={{
                 shrink: true,
               }}
               InputProps={{
                 style: {
                   fontSize: 13,
-                  height: 45,
                 },
               }}
             />
@@ -313,9 +338,10 @@ class HandleQuestions extends Component {
           </div>
           <AddQuest dispatch={this.props.dispatch} addQuestion={this.addQuestion} />
         <ErrorHandling />
-      <div style={{width: 600, margin: '0px auto'}}>
-      { table }
-      </div>
+      <Paper style={{width: 600, margin: '20px auto', padding: 20, marginBottom: '500px'}}>
+        <Typography variant="h5" gutterBottom>Frågor</Typography>
+        { table }
+      </Paper>
       </Fragment>
     );
   }
