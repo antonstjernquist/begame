@@ -14,7 +14,7 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 250,
     height: '95vh',
-    backgroundColor: '#573697',
+    backgroundColor: '#512DA8',
     float: 'left',
   },
   userText: {
