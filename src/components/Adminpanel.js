@@ -173,13 +173,10 @@ let mapStateToProps = state => ({
 
 
 function createRoomId(){
-
   let code = Math.ceil(Date.now() - 1539264714045);
   let hashids = new Hashids('begame'),
   id = hashids.encode(code);
-
   return id;
-
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(Adminpanel));

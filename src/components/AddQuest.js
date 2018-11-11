@@ -91,10 +91,8 @@ class AddQuest extends Component {
     )
   }
 
-
   setCorrectAnswer = data => {
       this.setState({ correctAnswer: data });
-      console.log('Typeof data: ', typeof data);
   }
 
   saveQuestion = () => {
@@ -102,23 +100,23 @@ class AddQuest extends Component {
       const { dispatch } = this.props;
       let passed = true;
 
-      if(this.state.question.length < 4 && typeof this.state.question !== 'string'){
+      if (this.state.question.length < 4 && typeof this.state.question !== 'string') {
           passed = false;
       }
 
       /* Check answer lengths */
-      for (let key in this.state.answers){
+      for (let key in this.state.answers) {
           if(this.state.answers[key].length === 0){
               passed = false;
           }
       }
 
       /* Check for correctAnswer */
-      if(!this.state.correctAnswer){
+      if (!this.state.correctAnswer) {
             passed = false;
       }
 
-      if(passed){
+      if (passed) {
           dispatch(showSnackbarMessage('Du la till en fråga'));
           this.props.addQuestion({ ...this.state, answers: { ...this.state.answers }});
           this.setState({
@@ -135,7 +133,7 @@ class AddQuest extends Component {
   }
 
   // add and remove options based on listAlpah
-  changeAnswersOption = (add) => {
+  changeAnswersOption = add => {
     const { answers } = { ...this.state };
     const indexToAdd = Object.keys(answers).length;
 
@@ -151,10 +149,10 @@ class AddQuest extends Component {
       }
   }
 
-  render(){
+  render() {
     const { classes } = this.props;
     const answersList = this.renderAnswer();
-    return(
+    return (
       <Paper style={{ width: 600, padding: 20, margin: '0px auto' }}>
       <Typography variant="h5" gutterBottom>Lägg till fråga</Typography>
         <TextField
@@ -188,7 +186,7 @@ class AddQuest extends Component {
           </Button>
         </div>
       </Paper>
-    )
+  );
   }
 };
 

@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Hashids from 'hashids';
 
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddQuest from './AddQuest.js';
@@ -107,8 +108,10 @@ class HandleQuestions extends Component {
   addQuestion = data => {
 
       const { dispatch } = this.props;
+      const hashids = new Hashids(data.question);
+      const question_id = hashids.encode(Math.ceil(Math.random() * 1000));
 
-      this.setState({ questions: { ...this.state.questions, [data.question]: data }});
+      this.setState({ questions: { ...this.state.questions, [question_id]: data }});
 
       if ( !this.state.new_quiz ){
 
@@ -128,7 +131,6 @@ class HandleQuestions extends Component {
 
   saveQuiz = () => {
       const { dispatch } = this.props;
-
       const quiz = {
           ...this.state,
           title: this.state.title,
@@ -146,7 +148,7 @@ class HandleQuestions extends Component {
       }
 
       if(checkQuizData(quiz)){
-          /* Update / Create */
+          /* Update / Create tbe quiz collection */
           if(this.state.new_quiz){
               dispatch(createCollectionAction(quiz));
           } else {
