@@ -20,19 +20,19 @@ self.__precacheManifest = [
     "url": "/begame/static/js/runtime~main.15aa1dab.js"
   },
   {
-    "revision": "0eccbc828da70e3ebf7e",
-    "url": "/begame/static/js/main.0eccbc82.chunk.js"
+    "revision": "6f4c38f0f48ce51a2e9d",
+    "url": "/begame/static/js/main.6f4c38f0.chunk.js"
   },
   {
-    "revision": "1bdd1616c1a6d6906be2",
-    "url": "/begame/static/js/1.1bdd1616.chunk.js"
+    "revision": "258a30e76abdafe88252",
+    "url": "/begame/static/js/1.258a30e7.chunk.js"
   },
   {
-    "revision": "0eccbc828da70e3ebf7e",
-    "url": "/begame/static/css/main.65974b87.chunk.css"
+    "revision": "6f4c38f0f48ce51a2e9d",
+    "url": "/begame/static/css/main.56fef6e5.chunk.css"
   },
   {
-    "revision": "faa17d9dad28fef492e40e8aeb5dd3f5",
+    "revision": "0f94f70d6bca78520aac3a915f2b96f1",
     "url": "/begame/index.html"
   }
 ];
