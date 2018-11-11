@@ -1,7 +1,7 @@
 {
   "main.css": "/begame/static/css/main.56fef6e5.chunk.css",
-  "main.js": "/begame/static/js/main.6f4c38f0.chunk.js",
-  "main.js.map": "/begame/static/js/main.6f4c38f0.chunk.js.map",
+  "main.js": "/begame/static/js/main.3f9adcf3.chunk.js",
+  "main.js.map": "/begame/static/js/main.3f9adcf3.chunk.js.map",
   "static/js/1.258a30e7.chunk.js": "/begame/static/js/1.258a30e7.chunk.js",
   "static/js/1.258a30e7.chunk.js.map": "/begame/static/js/1.258a30e7.chunk.js.map",
   "runtime~main.js": "/begame/static/js/runtime~main.15aa1dab.js",
@@ -12,6 +12,6 @@
   "static/media/logo.png": "/begame/static/media/logo.32d04031.png",
   "static/css/main.56fef6e5.chunk.css.map": "/begame/static/css/main.56fef6e5.chunk.css.map",
   "index.html": "/begame/index.html",
-  "precache-manifest.efcccdb181b34368eb0f9ac49f1066fc.js": "/begame/precache-manifest.efcccdb181b34368eb0f9ac49f1066fc.js",
+  "precache-manifest.1c579450128d2bea33d07ea5e984b18d.js": "/begame/precache-manifest.1c579450128d2bea33d07ea5e984b18d.js",
   "service-worker.js": "/begame/service-worker.js"
 }
